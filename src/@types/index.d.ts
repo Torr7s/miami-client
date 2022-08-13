@@ -9,8 +9,8 @@ interface CommandOptions {
   restricted?: boolean;
   options?: ApplicationCommandOptionData[];
   permissions?: {
-    appPerms: PermissionResolvable[];
-    memberPerms: PermissionResolvable[];
+    appPerms?: PermissionResolvable[];
+    memberPerms?: PermissionResolvable[];
   };
 }
 
