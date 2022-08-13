@@ -4,7 +4,7 @@ import { MiamiClient } from './client';
  * Represents the basic structure for events
  * 
  * @class 
- * @classdesc Base structure for other events to extend
+ * @classdesc Basic structure for events
  * 
  * @prop {MiamiClient} client - The MiamiClient instance
  * @prop {String} name - The event name
@@ -14,8 +14,6 @@ export class EventBase {
   name: string;
 
   /**
-   * Extends EventBase and its properties
-   * 
    * @constructs EventBase
    * 
    * @param {MiamiClient} client - The MiamiClient instance
