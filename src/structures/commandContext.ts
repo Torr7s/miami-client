@@ -21,9 +21,9 @@ import { MiamiClient } from './client';
  * @classdesc Responsible for handle interactions and its options
  * 
  * @prop {ChatInputCommandInteraction} interaction - The handled interaction
- * @prop {Array<User>} resolvedUsers - The resolved users array of a command interaction
- * @prop {Array<Role | APIRole>} resolvedRoles - The resolved roles array of a command interaction
- * @prop {Array<Channel | APIInteractionDataResolvedChannel>} resolvedChannels - The resolved channels array of a command interaction 
+ * @prop {Array<User>} [resolvedUsers] - The resolved users array of a command interaction
+ * @prop {Array<Role | APIRole>} [resolvedRoles] - The resolved roles array of a command interaction
+ * @prop {Array<Channel | APIInteractionDataResolvedChannel>} [resolvedChannels] - The resolved channels array of a command interaction 
 */
 export class CommandContext {
   private readonly client: MiamiClient;
