@@ -20,12 +20,15 @@ import { Button } from '@shared/builders/button';
  * 
  * @prop {config} config - The main client environment variables
  * @prop {Array<Command>} commands - The commands array 
+ * @prop {DatabaseManager} db - The database manager
+ * @prop {Button} button - The button builder
+ * @prop {Embed} embed - The embed builder
  */
 export class MiamiClient extends Discord.Client {
   private readonly logger: Logger;
 
-  commands: Command[];
   config: typeof config;
+  commands: Command[];
   db: DatabaseManager;
   button: typeof Button;
   embed: typeof Embed;
