@@ -10,7 +10,7 @@ export class Embed extends EmbedBuilder {
       color: 2895667,
       author: {
         name: options.author?.name ?? 'Miami#7102',
-        icon_url: options.author.iconURL ?? config.avatarURL
+        icon_url: options.author?.iconURL ?? config.avatarURL
       },
       title: options.title,
       description: options.description,
