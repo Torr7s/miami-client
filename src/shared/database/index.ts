@@ -4,27 +4,14 @@ import config from '../../config';
 
 import { Logger } from '@shared/utils/logger';
 
-import { guildsDb } from './models/guild';
-import { usersDb } from './models/user';
+const logger: Logger = Logger.it('Mongoose');
 
-export class DatabaseManager {
-  private readonly logger: Logger;
+logger.clear();
 
-  guilds: typeof guildsDb;
-  users: typeof usersDb;
+((): void => {
+  const connection: Connection = createConnection(config.mongoURI);
 
-  constructor() {
-    this.logger = Logger.it(this.constructor.name);
-    this.logger.clear();
-
-    this.connect();
-  }
-
-  private connect(): void {
-    const connection: Connection = createConnection(config.mongoURI);
-
-    connection.once('open', (): void => {
-      this.logger.info('✔ Conexão estabelecida com sucesso');
-    });
-  }
-}
+  connection.once('open', (): void => {
+    logger.info('✔ Conexão estabelecida com sucesso');
+  });
+})();
