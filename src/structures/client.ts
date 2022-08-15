@@ -73,11 +73,15 @@ export class MiamiClient extends Discord.Client {
     for (const category of categories) {
       const events: string[] = fs.readdirSync(`${path}/${category}`);
 
-      for (const event of events) {
-        const Event = require(join(process.cwd(), `${path}/${category}/${event}`)).default;
-        const evt = new (Event)(this);
+      for (const evt of events) {
+        const Event = require(join(process.cwd(), `${path}/${category}/${evt}`)).default;
+        const event = new (Event)(this);
 
-        this.on(evt.name, evt.run);
+        if (event.name === 'ready') {
+          super.once('ready', (...args) => event.run(...args))
+        } else {
+          super.on(event.name, (...args) => event.run(...args));
+        }
       }
     }
   }
