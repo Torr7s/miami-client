@@ -26,6 +26,6 @@ export default class ReadyEvent extends EventBase {
   run = async (): Promise<void> => {
     await this.client.loadSlashCommands();
 
-    this.logger.info('Client connected successfully');
+    this.logger.info(`✔ ${this.client.user.tag} conectado com sucesso`);
   }
 }
