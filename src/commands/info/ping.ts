@@ -1,7 +1,4 @@
-import { CommandBase } from '@structures/command';
-import { CommandContext } from '@structures/commandContext';
-
-import { MiamiClient } from '@structures/client';
+import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
 
 /**
  * Represents a Ping slash command

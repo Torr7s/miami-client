@@ -1,5 +1,4 @@
-import { MiamiClient } from '@structures/client';
-import { EventBase } from '@structures/event';
+import { EventBase, MiamiClient } from '@structures/index';
 
 import { Logger } from '@shared/utils/logger';
 
