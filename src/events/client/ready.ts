@@ -23,7 +23,9 @@ export default class ReadyEvent extends EventBase {
     this.logger = Logger.it(this.constructor.name);
   }
 
-  run = (): void => {
+  run = async (): Promise<void> => {
+    await this.client.loadSlashCommands();
+
     this.logger.info('Client connected successfully');
   }
 }
