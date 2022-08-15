@@ -55,7 +55,18 @@ export class MiamiClient extends Discord.Client {
     this.commands = [];
 
     this.loadEvents();
-    // this.loadCommands();
+    this.loadCommands();
+  }
+
+  /**
+   * Load client slash commands
+   * 
+   * @returns {Promise<void>} void
+   */
+  public async loadSlashCommands(): Promise<void> {
+    const slashes: Discord.Collection<string, Discord.ApplicationCommand<{}>> = await this.guilds.cache.get(this.config.guildId).commands.set(this.commands);
+
+    this.logger.info(`Comandos em barra carregados: [${slashes.size}]`);
   }
 
   /**
