@@ -1,14 +1,17 @@
+import '@shared/database';
+
 import fs from 'node:fs';
 import config from '../config';
 
-import * as Discord from 'discord.js';
+import Discord from 'discord.js';
+
+import guilds from '@shared/database/models/guild';
+import users from '@shared/database/models/user';
 
 import { join } from 'node:path';
 import { Command } from '@types';
 
 import { Logger } from '@shared/utils/logger';
-
-import { DatabaseManager } from '@shared/database';
 
 import { Embed } from '@shared/builders/embed';
 import { Button } from '@shared/builders/button';
@@ -27,9 +30,10 @@ import { Button } from '@shared/builders/button';
 export class MiamiClient extends Discord.Client {
   private readonly logger: Logger;
 
-  config: typeof config;
   commands: Command[];
-  db: DatabaseManager;
+  config: typeof config;
+  guildsDb: typeof guilds;
+  usersDb: typeof users;
   button: typeof Button;
   embed: typeof Embed;
 
@@ -70,7 +74,8 @@ export class MiamiClient extends Discord.Client {
     this.loadEvents();
     this.loadCommands();
 
-    this.db = new DatabaseManager();
+    this.guildsDb = guilds;
+    this.usersDb = users;
   }
 
   /**
