@@ -19,6 +19,7 @@ import { EventBase } from '@structures/event';
  */
 export default class InteractionCreateEvent extends EventBase {
   private readonly logger: Logger;
+
   client: MiamiClient;
 
   /**
@@ -40,7 +41,7 @@ export default class InteractionCreateEvent extends EventBase {
    * 
    * @returns {Promise<InteractionResponse<boolean> | void>} interaction | void 
    */
-  run = async (interaction: Interaction): Promise<InteractionResponse<boolean> | void> => {
+  async run(interaction: Interaction): Promise<InteractionResponse<boolean> | void> {
     try {
       if (interaction.guild && interaction.isChatInputCommand()) {
         const command: Command = this.client.commands.find((cmd: Command): boolean => cmd.name === interaction.commandName);

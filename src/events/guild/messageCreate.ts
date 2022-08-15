@@ -32,7 +32,7 @@ export default class MessageCreateEvent extends EventBase {
    * 
    * @returns {Promise<Message<boolean> | void>} message | void 
    */
-  run = async (message: Message): Promise<Message<boolean> | void> => {
+  async run(message: Message): Promise<Message<boolean> | void> {
     const { author, channel } = message;
 
     if (author.bot || channel.type === ChannelType.DM) return;
