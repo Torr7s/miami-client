@@ -5,9 +5,13 @@ import * as Discord from 'discord.js';
 
 import { join } from 'node:path';
 import { Command } from '@types';
+
 import { Logger } from '@shared/utils/logger';
 
 import { DatabaseManager } from '@shared/database';
+
+import { Embed } from '@shared/builders/embed';
+import { Button } from '@shared/builders/button';
 
 /**
  * Represents the main Miami client
@@ -20,9 +24,11 @@ import { DatabaseManager } from '@shared/database';
 export class MiamiClient extends Discord.Client {
   private readonly logger: Logger;
 
-  config: typeof config;
   commands: Command[];
+  config: typeof config;
   db: DatabaseManager;
+  button: typeof Button;
+  embed: typeof Embed;
 
   /**
    * Create a new MiamiClient instance
@@ -55,6 +61,8 @@ export class MiamiClient extends Discord.Client {
 
     this.config = config;
     this.commands = [];
+    this.button = Button;
+    this.embed = Embed;
 
     this.loadEvents();
     this.loadCommands();
