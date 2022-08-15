@@ -26,7 +26,9 @@ export default class MessageCreateEvent extends EventBase {
   }
 
   /**
-   * Triggered as soon as a message is created
+   * Used to handle created messages
+   * 
+   * @public @method @async
    * 
    * @param {Message} message - The created message
    * 

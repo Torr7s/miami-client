@@ -35,7 +35,9 @@ export default class InteractionCreateEvent extends EventBase {
   }
 
   /**
-   * Triggered as soon as an interaction is created
+   * Used to handle created interactions
+   * 
+   * @public @method @async
    * 
    * @param {Interaction} interaction - The created interaction
    * 
