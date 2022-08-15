@@ -20,7 +20,7 @@ import { CommandOptions } from '@types';
  * @prop {Array<PermissionResolvable>} [permissions.appPerms] - The required permissions for the app to execute the command
  * @prop {Array<PermissionResolvable>} [permissions.memberPerms] - The required permissions for the member to execute a command
  */ 
-export class Command implements CommandOptions {
+export class CommandBase implements CommandOptions {
   client: MiamiClient;
 
   name: string;
