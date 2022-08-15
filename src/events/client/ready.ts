@@ -3,6 +3,14 @@ import { EventBase } from '@structures/event';
 
 import Logger from '@shared/utils/logger';
 
+/**
+ * Represents a Ready client event
+ * 
+ * @class @extends EventBase
+ * @classdesc Emitted when the client becomes ready to start working
+ * 
+ * @prop {MiamiClient} client - The MiamiClient instance
+ */
 export default class ReadyEvent extends EventBase {
   private readonly logger: Logger;
 
