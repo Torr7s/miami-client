@@ -9,5 +9,6 @@ export default {
     DARKER_GREY: 8359053
   },
   guildId: process.env.DISCORD_GUILD_ID as string,
-  devId: process.env.DISCORD_DEV_ID as string
+  devId: process.env.DISCORD_DEV_ID as string,
+  mongoURI: process.env.MONGO_URI
 }
