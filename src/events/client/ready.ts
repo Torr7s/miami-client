@@ -1,7 +1,7 @@
 import { MiamiClient } from '@structures/client';
 import { EventBase } from '@structures/event';
 
-import Logger from '@shared/utils/logger';
+import { Logger } from '@shared/utils/logger';
 
 /**
  * Represents a Ready client event

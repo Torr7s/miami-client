@@ -1,12 +1,11 @@
 import fs from 'node:fs';
+import config from '../config';
+
 import * as Discord from 'discord.js';
 
 import { join } from 'node:path';
 import { Command } from '@types';
-
-import config from '../config';
-
-import Logger from '@shared/utils/logger';
+import { Logger } from '@shared/utils/logger';
 
 /**
  * Represents the main Miami client
@@ -50,7 +49,7 @@ export class MiamiClient extends Discord.Client {
     super(clientOptions);
 
     this.logger = Logger.it(this.constructor.name);
-    
+
     this.config = config;
     this.commands = [];
 
@@ -61,7 +60,7 @@ export class MiamiClient extends Discord.Client {
   /**
    * Load client slash commands
    * 
-   * @public @method
+   * @public @method @async
    * 
    * @returns {Promise<void>} void
    */
@@ -122,7 +121,7 @@ export class MiamiClient extends Discord.Client {
       }
     }
   }
-  
+
   /**
    * Log the client in
    * 
