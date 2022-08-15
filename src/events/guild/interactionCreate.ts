@@ -48,7 +48,7 @@ export default class InteractionCreateEvent extends EventBase {
 
         if (command) {
           if (command.category === 'Dev' || command.restricted) {
-            if (interaction.user.id !== this.client.config.devId) {
+            if (interaction.user.id !== this.client.config.ownerId) {
               return interaction.reply({
                 ephemeral: true,
                 content: `Comando restrito.`
