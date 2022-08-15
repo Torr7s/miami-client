@@ -7,6 +7,8 @@ import { join } from 'node:path';
 import { Command } from '@types';
 import { Logger } from '@shared/utils/logger';
 
+import { DatabaseManager } from '@shared/database';
+
 /**
  * Represents the main Miami client
  * 
@@ -20,6 +22,7 @@ export class MiamiClient extends Discord.Client {
 
   config: typeof config;
   commands: Command[];
+  db: DatabaseManager;
 
   /**
    * Create a new MiamiClient instance
@@ -55,6 +58,8 @@ export class MiamiClient extends Discord.Client {
 
     this.loadEvents();
     this.loadCommands();
+
+    this.db = new DatabaseManager();
   }
 
   /**
@@ -65,9 +70,7 @@ export class MiamiClient extends Discord.Client {
    * @returns {Promise<void>} void
    */
   public async loadSlashCommands(): Promise<void> {
-    const slashes: Discord.Collection<string, Discord.ApplicationCommand<{}>> = await this.guilds.cache.get(this.config.guildId).commands.set(this.commands);
-
-    this.logger.info(`Comandos em barra carregados: [${slashes.size}]`);
+    await this.guilds.cache.get(this.config.guildId).commands.set(this.commands);
   }
 
   /**
