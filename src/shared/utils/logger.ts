@@ -4,7 +4,7 @@
  * @class
  * @classdesc Log messages of the application
  */
-export default class Logger {
+export class Logger {
   private readonly colors = {
     PURPLE: '\u001b[34m',
     GREEN: '\x1b[32m',
