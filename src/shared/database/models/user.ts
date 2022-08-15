@@ -1,4 +1,4 @@
-import mongoose, { Model, Schema, SchemaTypes } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
 
 interface UserSchema {
   userId: string;
@@ -10,26 +10,28 @@ interface UserSchema {
 
 const userSchema = new Schema<UserSchema>({
   userId: {
-    type: SchemaTypes.String,
+    type: String,
     required: true,
     unique: true
   },
   guildId: {
-    type: SchemaTypes.String,
+    type: String,
     required: true
   },
   rp: {
-    type: SchemaTypes.Number,
+    type: Number,
     default: 0
   },
   level: {
-    type: SchemaTypes.Number,
+    type: Number,
     default: 1
   },
   createdAt: {
-    type: SchemaTypes.Date,
+    type: Date,
     default: Date.now()
   }
 });
 
-export const usersDb: Model<UserSchema> = mongoose.model<UserSchema>('users', userSchema);
+const users: Model<UserSchema> = mongoose.model<UserSchema>('users', userSchema);
+
+export default users;

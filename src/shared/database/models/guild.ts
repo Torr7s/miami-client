@@ -1,4 +1,4 @@
-import mongoose, { Model, Schema, SchemaTypes } from 'mongoose';
+import mongoose, { Model, Schema } from 'mongoose';
 
 interface GuildSchema {
   guildId: string;
@@ -9,21 +9,23 @@ interface GuildSchema {
 
 const guildSchema = new Schema<GuildSchema>({
   guildId: {
-    type: SchemaTypes.String,
+    type: String,
     required: true,
     unique: true
   },
   ownerId: {
-    type: SchemaTypes.String
+    type: String
   },
   locale: {
-    type: SchemaTypes.String,
+    type: String,
     default: 'pt-BR'    
   },
   createdAt: {
-    type: SchemaTypes.Date,
+    type: Date,
     default: Date.now()
   }
 });
 
-export const guildsDb: Model<GuildSchema> = mongoose.model<GuildSchema>('guilds', guildSchema);
+const guilds: Model<GuildSchema> = mongoose.model<GuildSchema>('guilds', guildSchema);
+
+export default guilds;
