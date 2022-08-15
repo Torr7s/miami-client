@@ -61,6 +61,8 @@ export class MiamiClient extends Discord.Client {
   /**
    * Load client slash commands
    * 
+   * @public @method
+   * 
    * @returns {Promise<void>} void
    */
   public async loadSlashCommands(): Promise<void> {
