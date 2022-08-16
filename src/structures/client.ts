@@ -21,17 +21,18 @@ import { Button } from '@shared/builders/button';
  * 
  * @class @extends Discord.Client
  * 
- * @prop {config} config - The main client environment variables
+ * @prop {config} config - The client configuration file
  * @prop {Array<Command>} commands - The commands array 
- * @prop {DatabaseManager} db - The database manager
+ * @prop {Model<GuildSchema>} guildsDb - The mongoose guild model
+ * @prop {Model<UserSchema>} usersDb - The mongoose user model   
  * @prop {Button} button - The button builder
  * @prop {Embed} embed - The embed builder
  */
 export class MiamiClient extends Discord.Client {
   private readonly logger: Logger;
 
-  commands: Command[];
   config: typeof config;
+  commands: Command[];
   guildsDb: typeof guilds;
   usersDb: typeof users;
   button: typeof Button;
