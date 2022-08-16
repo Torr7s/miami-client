@@ -1,6 +1,7 @@
 import mongoose, { Model, Schema } from 'mongoose';
+import database from '..';
 
-interface UserSchema {
+export interface UserSchema extends mongoose.Document {
   userId: string;
   guildId: string;
   rp: number;
@@ -32,6 +33,6 @@ const userSchema = new Schema<UserSchema>({
   }
 });
 
-const users: Model<UserSchema> = mongoose.model<UserSchema>('users', userSchema);
+const users: Model<UserSchema> = database.model<UserSchema>('users', userSchema);
 
 export default users;

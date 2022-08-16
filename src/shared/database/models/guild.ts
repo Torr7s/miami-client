@@ -1,6 +1,7 @@
 import mongoose, { Model, Schema } from 'mongoose';
+import database from '..';
 
-interface GuildSchema {
+export interface GuildSchema extends mongoose.Document {
   guildId: string;
   ownerId?: string;
   locale?: string;
@@ -26,6 +27,6 @@ const guildSchema = new Schema<GuildSchema>({
   }
 });
 
-const guilds: Model<GuildSchema> = mongoose.model<GuildSchema>('guilds', guildSchema);
+const guilds: Model<GuildSchema> = database.model<GuildSchema>('guilds', guildSchema);
 
 export default guilds;
