@@ -7,7 +7,7 @@ import { CommandOptions } from '@types';
 /**
  * Represents the basic structure for commands
  * 
- * @class
+ * @class @implements {CommandOptions}
  * @classdesc Basic structure for commands 
  * 
  * @prop {MiamiClient} client - The MiamiClient instance
