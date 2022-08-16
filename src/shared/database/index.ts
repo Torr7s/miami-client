@@ -1,17 +1,14 @@
-import { createConnection, Connection } from 'mongoose';
+import { Connection, createConnection } from 'mongoose';
+import { Logger } from '@shared/utils/logger';
 
 import config from '../../config';
-
-import { Logger } from '@shared/utils/logger';
 
 const logger: Logger = Logger.it('Mongoose');
 
 logger.clear();
 
-((): void => {
-  const connection: Connection = createConnection(config.mongoURI);
+const database: Connection = createConnection(config.mongoURI);
 
-  connection.once('open', (): void => {
-    logger.info('✔ Conexão estabelecida com sucesso');
-  });
-})();
+database.once('open', (): void => logger.info('✔ Conexão estabelecida com sucesso'));
+
+export default database;
