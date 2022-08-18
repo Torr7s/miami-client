@@ -4,6 +4,13 @@ import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
 
 import { Logger } from '@shared/utils/logger';
 
+/**
+ * Represents an AddEmoji slash command
+ * 
+ * @prop {Object} guildEmojisPerBoostLevel - The number of emojis allowed per guild boost level
+ * @prop {Logger} logger - The command logger
+ * @prop {MiamiClient} client - The MiamiClient instance
+ */
 export default class AddEmojiCommand extends CommandBase {
   private readonly guildEmojisPerBoostLevel = {
     0: 50,
@@ -15,6 +22,11 @@ export default class AddEmojiCommand extends CommandBase {
 
   client: MiamiClient;
 
+  /**
+   * @constructs AddEmojiCommand
+   * 
+   * @param {MiamiClient} client - The MiamiClient instance 
+   */
   constructor(client: MiamiClient) {
     super(client, {
       name: 'addemoji',
@@ -56,6 +68,15 @@ export default class AddEmojiCommand extends CommandBase {
     this.logger = Logger.it(this.constructor.name);
   }
 
+  /**
+   * Used to handle the incoming interaction
+   * 
+   * @public @method @async
+   * 
+   * @param {CommandContext} ctx - The command context  
+   * 
+   * @returns {InteractionReplyOptions} options - The given options
+   */
   async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
     const attachment: string = ctx.interaction.options.getString('anexo', true);
     const name: string = ctx.interaction.options.getString('nome', true);
