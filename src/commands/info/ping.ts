@@ -1,5 +1,6 @@
-import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
 import { InteractionReplyOptions } from 'discord.js';
+
+import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
 
 /**
  * Represents a Ping slash command
