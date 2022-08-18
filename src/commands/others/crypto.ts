@@ -87,7 +87,7 @@ export default class CryptoCommand extends CommandBase {
     const embed: Embed = new this.client.embed(ctx.user, {
       author: {
         name: `[${metrics.symbol}] ${metrics.name} (${metrics.id})`,
-        url: this.client.user.displayAvatarURL()
+        iconURL: this.client.user.displayAvatarURL()
       },
       description: description.join('\n')
     });
