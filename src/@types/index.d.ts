@@ -29,7 +29,7 @@ import { CommandBase } from '@structures/command';
 interface CommandOptions {
   name: string;
   description: string;
-  category?: 'Mod' | 'Dev' | 'Info';
+  category?: 'Mod' | 'Dev' | 'Info' | 'Others';
   restricted?: boolean;
   options?: ApplicationCommandOptionData[];
   permissions?: {
@@ -98,4 +98,26 @@ interface EmbedOptions {
   timestamp?: number;
   title?: string;
   url?: string;
+}
+
+interface MessariAssetMarketData {
+  market_data: {
+    price_usd: number;
+    volume_last_24_hours: number;
+    percent_change_usd_last_24_hours: number;
+    last_trade_at: string;
+  }
+}
+
+interface MessariAssetMetrics {
+  data: {
+    id: string;
+    symbol: string;
+    name: string;
+    marketcap: {
+      rank: number;
+      marketcap_dominance_percent: number;
+      current_marketcap_usd: number;
+    };
+  } & MessariAssetMarketData;
 }
