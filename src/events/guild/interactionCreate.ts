@@ -7,6 +7,9 @@ import { resolvePermissions } from '@shared/utils/discord/resolvables/permission
 
 import { CommandContext, EventBase, MiamiClient } from '@structures/index';
 
+import { GuildSchema } from '@shared/database/models/guild';
+import { UserSchema } from '@shared/database/models/user';
+
 /**
  * Represents a InteractionCreate client event
  * 
@@ -43,6 +46,8 @@ export default class InteractionCreateEvent extends EventBase {
    */
   async run(interaction: Interaction): Promise<InteractionResponse<boolean> | void> {
     try {
+      const { user, guild } = interaction;
+
       if (interaction.guild && interaction.isChatInputCommand()) {
         const command: Command = this.client.commands.find((cmd: Command): boolean => cmd.name === interaction.commandName);
 
@@ -55,35 +60,45 @@ export default class InteractionCreateEvent extends EventBase {
               });
             }
           }
-        }
 
-        const { appPerms, memberPerms } = command.permissions;
-
-        if (appPerms && appPerms.length) {
-          if (!interaction.appPermissions.has(appPerms)) {
-            const { permissions } = resolvePermissions(appPerms);
-
-            return interaction.reply({
-              ephemeral: true,
-              content: `Preciso das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
-            });
+          if (command.requiresDatabase) {
+            if (interaction.guild.available) {
+              let mongoGUILD: GuildSchema = await this.client.guildsDb.findOne({ guildId: guild.id, ownerId: guild.ownerId });
+              let mongoUSER: UserSchema = await this.client.usersDb.findOne({ userId: user.id, guildId: guild.id });
+        
+              if (!mongoGUILD) await this.client.guildsDb.create({ guildId: guild.id, ownerId: guild.ownerId });
+              if (!mongoUSER) await this.client.usersDb.create({ userId: user.id, guildId: guild.id }); 
+            }
           }
-        }
 
-        if (memberPerms && memberPerms.length) {
-          if(!interaction.memberPermissions.has(memberPerms)) {
-            const { permissions } = resolvePermissions(memberPerms);
+          const { appPerms, memberPerms } = command.permissions;
 
-            return interaction.reply({
-              ephemeral: true,
-              content: `Você precisa das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
-            });
-          }
-        }
-
-        const context: CommandContext = new CommandContext(this.client, interaction);
+          if (appPerms && appPerms.length) {
+            if (!interaction.appPermissions.has(appPerms)) {
+              const { permissions } = resolvePermissions(appPerms);
   
-        command.run(context);
+              return interaction.reply({
+                ephemeral: true,
+                content: `Preciso das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
+              });
+            }
+          }
+  
+          if (memberPerms && memberPerms.length) {
+            if(!interaction.memberPermissions.has(memberPerms)) {
+              const { permissions } = resolvePermissions(memberPerms);
+  
+              return interaction.reply({
+                ephemeral: true,
+                content: `Você precisa das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
+              });
+            }
+          }
+  
+          const context: CommandContext = new CommandContext(this.client, interaction);
+    
+          command.run(context);
+        }
       }
     } catch (error) {
       this.logger.error('Um erro foi encontrado: ', error);
