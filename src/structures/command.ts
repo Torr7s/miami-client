@@ -25,7 +25,7 @@ export class CommandBase implements CommandOptions {
 
   name: string;
   description: string;
-  category?: 'Mod' | 'Dev' | 'Info';
+  category?: 'Mod' | 'Dev' | 'Info' | 'Others';
   restricted?: boolean;
   options?: ApplicationCommandOptionData[];
   permissions?: {
