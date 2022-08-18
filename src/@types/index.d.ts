@@ -25,17 +25,19 @@ import { CommandBase } from '@structures/command';
  * @prop {Object} [permissions] - The command required permissions 
  * @prop {Array<PermissionResolvable>} [permissions.appPerms] - The required permissions for the app to execute the command
  * @prop {Array<PermissionResolvable>} [permissions.memberPerms] - The required permissions for the member to execute a command
+ * @prop {Boolean} [requiresDatabase] - Whether the command requires the database 
  */
 interface CommandOptions {
   name: string;
   description: string;
-  category?: 'Mod' | 'Dev' | 'Info' | 'Others';
+  category?: 'Dev' | 'Economy' | 'Info' | 'Mod' | 'Others';
   restricted?: boolean;
   options?: ApplicationCommandOptionData[];
   permissions?: {
     appPerms?: PermissionResolvable[];
     memberPerms?: PermissionResolvable[];
   };
+  requiresDatabase?: boolean;
 }
 
 /**
