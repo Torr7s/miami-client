@@ -12,13 +12,15 @@ import { toCurrency, format } from '@shared/utils/functions/number';
 /**
  * Represents a Crypto slash command
  * 
+ * @class @extends CommandBase
+ * 
  * @prop {MiamiClient} client - The MiamiClient instance
  */
 export default class CryptoCommand extends CommandBase {
   client: MiamiClient;
 
   /**
-   * @constructs RequestCommand
+   * @constructs CryptoCommand
    * 
    * @param {MiamiClient} client - The MiamiClient instance 
    */
@@ -53,9 +55,9 @@ export default class CryptoCommand extends CommandBase {
    * 
    * @param {CommandContext} ctx - The command context  
    * 
-   * @returns {void} void
+   * @returns {InteractionReplyOptions} options - The given options for ctx
    */
-  async run(ctx: CommandContext): Promise<InteractionReplyOptions | void> {
+  async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
     const option: string = ctx.interaction.options.getString('ativo', true);
 
     const asset: MessariAssetMetrics = await getAssetMetrics(option);

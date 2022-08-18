@@ -18,6 +18,14 @@ import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
 
 import { Logger } from '@shared/utils/logger';
 
+/**
+ * Represents a Eval slash command
+ * 
+ * @class @extends CommandBase
+ * 
+ * @prop {Logger} logger - The command logger
+ * @prop {MiamiClient} client - The MiamiClient instance
+ */
 export default class EvalCommand extends CommandBase {
   private readonly logger: Logger;
 
@@ -43,6 +51,15 @@ export default class EvalCommand extends CommandBase {
     this.logger = Logger.it(this.constructor.name);
   }
 
+  /**
+   * Used to handle the incoming interaction
+   * 
+   * @public @method @async
+   * 
+   * @param {CommandContext} ctx - The command context  
+   * 
+   * @returns {void} void
+   */
   async run(ctx: CommandContext): Promise<void> {
     const user: User = ctx.user;
 

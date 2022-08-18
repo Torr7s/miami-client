@@ -7,6 +7,8 @@ import { Logger } from '@shared/utils/logger';
 /**
  * Represents an AddEmoji slash command
  * 
+ * @class @extends CommandBase
+ * 
  * @prop {Object} guildEmojisPerBoostLevel - The number of emojis allowed per guild boost level
  * @prop {Logger} logger - The command logger
  * @prop {MiamiClient} client - The MiamiClient instance
@@ -75,7 +77,7 @@ export default class AddEmojiCommand extends CommandBase {
    * 
    * @param {CommandContext} ctx - The command context  
    * 
-   * @returns {InteractionReplyOptions} options - The given options
+   * @returns {InteractionReplyOptions} options - The given options for ctx
    */
   async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
     const attachment: string = ctx.interaction.options.getString('anexo', true);

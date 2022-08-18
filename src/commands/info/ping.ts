@@ -4,6 +4,8 @@ import { InteractionReplyOptions } from 'discord.js';
 /**
  * Represents a Ping slash command
  * 
+ * @class @extends CommandBase
+ * 
  * @prop {MiamiClient} client - The MiamiClient instance
  */
 export default class PingCommand extends CommandBase {
@@ -31,7 +33,7 @@ export default class PingCommand extends CommandBase {
    * 
    * @param {CommandContext} ctx - The command context  
    * 
-   * @returns {InteractionReplyOptions} options - The given options
+   * @returns {InteractionReplyOptions} options - The given options for ctx
    */
   async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
     return ctx.reply({
