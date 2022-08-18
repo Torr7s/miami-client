@@ -15,7 +15,7 @@ export class MessariAssetMetricsModel {
   private constructor(props: MessariAssetMetrics) {
     this.id = props.data.id;
     this.symbol = props.data.symbol;
-    this.name = props.data.symbol;
+    this.name = props.data.name;
     this.priceUsd = props.data.market_data.price_usd;
     this.volumeLast24h = props.data.market_data.volume_last_24_hours;
     this.percentChangeUsdLast24h = props.data.market_data.percent_change_usd_last_24_hours;
