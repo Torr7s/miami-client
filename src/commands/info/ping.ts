@@ -1,4 +1,5 @@
 import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
+import { InteractionReplyOptions } from 'discord.js';
 
 /**
  * Represents a Ping slash command
@@ -30,10 +31,10 @@ export default class PingCommand extends CommandBase {
    * 
    * @param {CommandContext} ctx - The command context  
    * 
-   * @returns {void} void
+   * @returns {InteractionReplyOptions} options - The given options
    */
-  async run(ctx: CommandContext): Promise<void> {
-    await ctx.reply({
+  async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
+    return ctx.reply({
       content: `Latência atual do client: \`${this.client.ws.ping}ms\`!`
     });
   }
