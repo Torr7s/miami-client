@@ -38,11 +38,11 @@ export default class AddEmojiCommand extends CommandBase {
         {
           name: 'anexo',
           nameLocalizations: {
-            "en-US": 'asset'
+            'en-US': 'asset'
           },
           description: 'O anexo do emoji (URL)',
           descriptionLocalizations: {
-            "en-US": 'The emoji asset (URL)'
+            'en-US': 'The emoji asset (URL)'
           },
           type: ApplicationCommandOptionType.String,
           required: true

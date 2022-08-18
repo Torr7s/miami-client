@@ -33,11 +33,11 @@ export default class CryptoCommand extends CommandBase {
         {
           name: 'ativo',
           nameLocalizations: {
-            "en-US": 'asset'
+            'en-US': 'asset'
           },
           description: 'Nome da moeda',
           descriptionLocalizations: {
-            "en-US": 'The currency name'
+            'en-US': 'The currency name'
           },
           type: ApplicationCommandOptionType.String,
           required: true
