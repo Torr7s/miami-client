@@ -19,19 +19,21 @@ import { CommandOptions } from '@types';
  * @prop {Object} [permissions] - The command required permissions 
  * @prop {Array<PermissionResolvable>} [permissions.appPerms] - The required permissions for the app to execute the command
  * @prop {Array<PermissionResolvable>} [permissions.memberPerms] - The required permissions for the member to execute a command
+ * @prop {Boolean} [requiresDatabase] - Whether the command requires the database 
  */ 
 export class CommandBase implements CommandOptions {
   client: MiamiClient;
 
   name: string;
   description: string;
-  category?: 'Mod' | 'Dev' | 'Info' | 'Others';
+  category?: 'Dev' | 'Economy' | 'Info' | 'Mod' | 'Others';
   restricted?: boolean;
   options?: ApplicationCommandOptionData[];
   permissions?: {
     appPerms?: PermissionResolvable[];
     memberPerms?: PermissionResolvable[];
   };
+  requiresDatabase?: boolean
 
   /**
    * @constructs Command
@@ -46,6 +48,7 @@ export class CommandBase implements CommandOptions {
    * @param {Object} [options.permissions] - The command required permissions
    * @param {Array<PermissionResolvable>} [options.permissions.appPerms] - The required permissions for the app to execute the command
    * @param {Array<PermissionResolvable>} [options.permissions.memberPerms] - The required permissions for the member to execute a command
+   * @param {Boolean} [requiresDatabase] - Whether the command requires the database 
    */
   constructor(client: MiamiClient, options: CommandOptions) {
     this.client = client;
@@ -59,5 +62,6 @@ export class CommandBase implements CommandOptions {
       appPerms: options.permissions?.appPerms ?? [],
       memberPerms: options.permissions?.memberPerms ?? []
     };
+    this.requiresDatabase = options.requiresDatabase ?? false;
   }
 }
