@@ -1,11 +1,11 @@
-import { APIEmbed, EmbedBuilder, EmbedData } from 'discord.js';
+import { APIEmbed, EmbedBuilder, EmbedData, User } from 'discord.js';
 
 import { EmbedOptions } from '@types';
 
 import config from '../../config';
 
 /**
- * Represents the main Embed builder
+ * Represents the client Embed 
  * 
  * @class @extends EmbedBuilder
  */
@@ -14,6 +14,7 @@ export class Embed extends EmbedBuilder {
   /**
    * @constructor 
    * 
+   * @param {User} user - The current user
    * @param {EmbedOptions} options - The embed options
    * @param {EmbedAuthorOptions} [options.author] - The embed author options
    * @param {Number} [options.color] - The embed color
@@ -25,7 +26,7 @@ export class Embed extends EmbedBuilder {
    * @param {String} [options.title] - The embed title
    * @param {String} [options.url] - The embed URL
    */
-  constructor(options: EmbedOptions) {    
+  constructor(user: User, options: EmbedOptions) {    
     const data: EmbedData | APIEmbed = {
       color: 2895667,
       author: {
@@ -37,8 +38,8 @@ export class Embed extends EmbedBuilder {
       fields: options.fields,
       thumbnail: options.thumbnail,
       footer: {
-        text: options.footer?.text ?? 'Executado por ',
-        icon_url: options.footer?.iconURL
+        text: `${user.tag} (${user.id})`,
+        icon_url: `${user.displayAvatarURL()}`
       }
     }
 
