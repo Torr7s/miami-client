@@ -32,8 +32,8 @@ export default class EvalCommand extends CommandBase {
       options: [
         {
           name: 'código',
-          type: ApplicationCommandOptionType.String,
           description: 'Código a ser executado',
+          type: ApplicationCommandOptionType.String,
           required: true
         }
       ]
