@@ -1,8 +1,10 @@
-export const toCurrency = (numb: number, locale: string = 'pt-BR'): string => {
-  const result: Intl.NumberFormat = new Intl.NumberFormat(locale, {
-    style: 'currency', 
-    currency: 'USD'
-  });
+export const toCurrency = (numb: number, currency: string = 'USD'): string => {
+  return new Intl.NumberFormat('pt-BR', {
+    style: 'currency',
+    currency
+  }).format(numb);
+}
 
-  return result.format(numb);
+export function format(numb: number): string {
+  return new Intl.NumberFormat('pt-BR').format(numb);
 }
