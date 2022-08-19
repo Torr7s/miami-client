@@ -1,6 +1,6 @@
-import { MessariAssetMetrics } from '@types';
+import { MessariAssetMetrics, MessariAssetMetricsModelProps } from '@types';
 
-export class MessariAssetMetricsModel {
+export class MessariAssetMetricsModel implements MessariAssetMetricsModelProps {
   id: string;
   symbol: string;
   name: string;
@@ -13,16 +13,22 @@ export class MessariAssetMetricsModel {
   currentMarketCapUsd: number;
 
   private constructor(props: MessariAssetMetrics) {
+    const marketData = props.data.market_data;
+    const marketCap = props.data.marketcap;
+
     this.id = props.data.id;
+
     this.symbol = props.data.symbol;
     this.name = props.data.name;
-    this.priceUsd = props.data.market_data.price_usd;
-    this.volumeLast24h = props.data.market_data.volume_last_24_hours;
-    this.percentChangeUsdLast24h = props.data.market_data.percent_change_usd_last_24_hours;
-    this.lastTradeAt = props.data.market_data.last_trade_at;
-    this.rank = props.data.marketcap.rank;
-    this.marketCapDominancePercent = props.data.marketcap.marketcap_dominance_percent;
-    this.currentMarketCapUsd = props.data.marketcap.current_marketcap_usd;
+    
+    this.priceUsd = marketData.price_usd;
+    this.volumeLast24h = marketData.volume_last_24_hours;
+    this.percentChangeUsdLast24h = marketData.percent_change_usd_last_24_hours;
+    this.lastTradeAt = marketData.last_trade_at;
+    
+    this.rank = marketCap.rank;
+    this.marketCapDominancePercent = marketCap.marketcap_dominance_percent;
+    this.currentMarketCapUsd = marketCap.current_marketcap_usd;
   }
 
   static build(props: MessariAssetMetrics): MessariAssetMetricsModel {
