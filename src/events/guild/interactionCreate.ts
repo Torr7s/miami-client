@@ -48,56 +48,56 @@ export default class InteractionCreateEvent extends EventBase {
     try {
       const { user, guild } = interaction;
 
-      if (interaction.guild && interaction.isChatInputCommand()) {
-        const command: Command = this.client.commands.find((cmd: Command): boolean => cmd.name === interaction.commandName);
+      if (guild.available) {
+        if (interaction.isChatInputCommand()) {
+          const command: Command = this.client.commands.find((cmd: Command): boolean => cmd.name === interaction.commandName);
 
-        if (command) {
-          if (command.category === 'Dev' || command.restricted) {
-            if (interaction.user.id !== this.client.config.ownerId) {
-              return interaction.reply({
-                ephemeral: true,
-                content: `Comando restrito.`
-              });
+          if (command) {
+            if (command.category === 'Dev' || command.restricted) {
+              if (interaction.user.id !== this.client.config.ownerId) {
+                return interaction.reply({
+                  ephemeral: true,
+                  content: `Comando restrito.`
+                });
+              }
             }
-          }
 
-          if (command.requiresDatabase) {
-            if (interaction.guild.available) {
+            if (command.requiresDatabase) {
               let mongoGUILD: GuildSchema = await this.client.guildsDb.findOne({ guildId: guild.id, ownerId: guild.ownerId });
               let mongoUSER: UserSchema = await this.client.usersDb.findOne({ userId: user.id, guildId: guild.id });
-        
+
               if (!mongoGUILD) await this.client.guildsDb.create({ guildId: guild.id, ownerId: guild.ownerId });
-              if (!mongoUSER) await this.client.usersDb.create({ userId: user.id, guildId: guild.id }); 
+              if (!mongoUSER) await this.client.usersDb.create({ userId: user.id, guildId: guild.id });
             }
-          }
 
-          const { appPerms, memberPerms } = command.permissions;
+            const { appPerms, memberPerms } = command.permissions;
 
-          if (appPerms && appPerms.length) {
-            if (!interaction.appPermissions.has(appPerms)) {
-              const { permissions } = resolvePermissions(appPerms);
-  
-              return interaction.reply({
-                ephemeral: true,
-                content: `Preciso das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
-              });
+            if (appPerms && appPerms.length) {
+              if (!interaction.appPermissions.has(appPerms)) {
+                const { permissions } = resolvePermissions(appPerms);
+
+                return interaction.reply({
+                  ephemeral: true,
+                  content: `Preciso das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
+                });
+              }
             }
-          }
-  
-          if (memberPerms && memberPerms.length) {
-            if(!interaction.memberPermissions.has(memberPerms)) {
-              const { permissions } = resolvePermissions(memberPerms);
-  
-              return interaction.reply({
-                ephemeral: true,
-                content: `Você precisa das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
-              });
+
+            if (memberPerms && memberPerms.length) {
+              if (!interaction.memberPermissions.has(memberPerms)) {
+                const { permissions } = resolvePermissions(memberPerms);
+
+                return interaction.reply({
+                  ephemeral: true,
+                  content: `Você precisa das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
+                });
+              }
             }
+
+            const context: CommandContext = new CommandContext(this.client, interaction);
+
+            command.run(context);
           }
-  
-          const context: CommandContext = new CommandContext(this.client, interaction);
-    
-          command.run(context);
         }
       }
     } catch (error) {
