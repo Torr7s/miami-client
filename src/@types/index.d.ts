@@ -122,6 +122,18 @@ interface MessariAssetMetrics {
       marketcap_dominance_percent: number;
       current_marketcap_usd: number;
     };
-    alert_messages?: string | null;
   } & MessariAssetMarketData;
+}
+
+interface MessariAssetMetricsModelProps {
+  id: string;
+  symbol: string;
+  name: string;
+  priceUsd: number;
+  volumeLast24h: number;
+  percentChangeUsdLast24h: number;
+  lastTradeAt: string;
+  rank: number;
+  marketCapDominancePercent: number;
+  currentMarketCapUsd: number;
 }
