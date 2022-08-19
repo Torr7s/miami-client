@@ -3,7 +3,7 @@ import '@shared/database';
 import fs from 'node:fs';
 import config from '../config';
 
-import Discord from 'discord.js';
+import Discord, { Collection } from 'discord.js';
 
 import guilds from '@shared/database/models/guild';
 import users from '@shared/database/models/user';
@@ -23,8 +23,9 @@ import { Button } from '@shared/builders/button';
  * 
  * @prop {config} config - The client configuration file
  * @prop {Array<Command>} commands - The commands array 
- * @prop {Model<GuildSchema>} guildsDb - The mongoose guild model
+ * @prop {Collection} cooldowns - The collection of command cooldowns
  * @prop {Model<UserSchema>} usersDb - The mongoose user model   
+ * @prop {Model<GuildSchema>} guildsDb - The mongoose guild model
  * @prop {Button} button - The button builder
  * @prop {Embed} embed - The embed builder
  */
@@ -33,8 +34,9 @@ export class MiamiClient extends Discord.Client {
 
   config: typeof config;
   commands: Command[];
-  guildsDb: typeof guilds;
+  cooldowns: Collection<string, Collection<string, number>>;
   usersDb: typeof users;
+  guildsDb: typeof guilds;
   button: typeof Button;
   embed: typeof Embed;
 
@@ -71,6 +73,8 @@ export class MiamiClient extends Discord.Client {
     this.commands = [];
     this.button = Button;
     this.embed = Embed;
+    
+    this.cooldowns = new Collection();
 
     this.loadEvents();
     this.loadCommands();
