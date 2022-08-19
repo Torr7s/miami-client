@@ -103,6 +103,25 @@ interface EmbedOptions {
   url?: string;
 }
 
+/**
+ * Interface for typing return response from Messari api
+ * 
+ * @interface
+ * 
+ * @prop {Object} data - The current asset data;
+ * @prop {String} data.id - The asset id
+ * @prop {String} data.symbol - The asset symbol
+ * @prop {String} data.name - The asset name
+ * @prop {Object} data.marketcap - The asset marketcap
+ * @prop {Number} data.marketcap.rank - The asset marketcap rank
+ * @prop {Number} data.marketcap.marketcap_dominance_percent - The asset market capital dominance percentage
+ * @prop {Number} data.marketcap.current_marketcap_usd - The asset current market capital value in USD 
+ * @prop {Object} data.market_data - The asset market data
+ * @prop {number} data.market_data.price_usd - The price of a single asset in USD
+ * @prop {Number} data.market_data.volume_last_24_hours - The asset volume in the last 24h
+ * @prop {Number} data.market_data.percent_change_usd_last_24_hours - The asset 24h change percentage
+ * @prop {String} data.market_data.last_trade_at - The asset last trade timestamp
+ */
 interface MessariAssetMetrics {
   data: {
     id: string;
@@ -122,6 +141,22 @@ interface MessariAssetMetrics {
   }
 }
 
+/**
+ * Interface for messari asset metrics model 
+ * 
+ * @interface
+ * 
+ * @prop {String} id - The asset id
+ * @prop {String} symbol - The asset symbol
+ * @prop {String} name - The asset name
+ * @prop {Number} priceUsd - The asset price in USD
+ * @prop {Number} volumeLast24h - The asset volume in the last 24h
+ * @prop {Number} percentChangeUsdLast24h - The asset 24h change percentage
+ * @prop {String} lastTradeAt - The asset last trade timestamp
+ * @prop {Number} rank - The asset rank
+ * @prop {Number} marketCapDominancePercent - The asset market capital dominance percentage
+ * @prop {Number} currentMarketCapUsd - The asset current market capital value in USD 
+ */
 interface MessariAssetMetricsModelProps {
   id: string;
   symbol: string;
