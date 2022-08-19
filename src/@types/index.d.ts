@@ -38,6 +38,7 @@ interface CommandOptions {
     memberPerms?: PermissionResolvable[];
   };
   requiresDatabase?: boolean;
+  cooldown?: number;
 }
 
 /**
@@ -121,5 +122,6 @@ interface MessariAssetMetrics {
       marketcap_dominance_percent: number;
       current_marketcap_usd: number;
     };
+    alert_messages?: string | null;
   } & MessariAssetMarketData;
 }
