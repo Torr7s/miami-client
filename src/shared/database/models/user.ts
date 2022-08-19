@@ -1,11 +1,18 @@
-import mongoose, { Model, Schema } from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import database from '..';
 
 export interface UserSchema extends mongoose.Document {
   userId: string;
   guildId: string;
-  rp: number;
-  level: number;
+  cooldowns: {
+    daily: number;
+  }
+  status: {
+    rp: number;
+    level: number;
+    coins: number;
+    vip: boolean
+  };
   createdAt: Date;
 }
 
@@ -19,13 +26,29 @@ const userSchema = new Schema<UserSchema>({
     type: String,
     required: true
   },
-  rp: {
-    type: Number,
-    default: 0
+  cooldowns: {
+    daily: {
+      type: Number,
+      default: 0
+    }
   },
-  level: {
-    type: Number,
-    default: 1
+  status: {
+    rp: {
+      type: Number,
+      default: 0
+    },
+    level: {
+      type: Number,
+      default: 1
+    },
+    vip: {
+      type: Boolean,
+      default: false
+    },
+    coins: {
+      type: Number,
+      default: 5000
+    }
   },
   createdAt: {
     type: Date,
@@ -33,6 +56,4 @@ const userSchema = new Schema<UserSchema>({
   }
 });
 
-const users: Model<UserSchema> = database.model<UserSchema>('users', userSchema);
-
-export default users;
+export default database.model<UserSchema>('users', userSchema);
