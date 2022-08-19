@@ -45,7 +45,7 @@ export default class UserInfo extends CommandBase {
     this.client = client;
   }
 
-  getStatus(status: string | null): string {
+  getStatus(status: string): string {
     const statuses = {
       online: 'Online',
       dnd: 'Não Perturbe',
