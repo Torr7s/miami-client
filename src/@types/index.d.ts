@@ -103,15 +103,6 @@ interface EmbedOptions {
   url?: string;
 }
 
-interface MessariAssetMarketData {
-  market_data: {
-    price_usd: number;
-    volume_last_24_hours: number;
-    percent_change_usd_last_24_hours: number;
-    last_trade_at: string;
-  }
-}
-
 interface MessariAssetMetrics {
   data: {
     id: string;
@@ -122,7 +113,13 @@ interface MessariAssetMetrics {
       marketcap_dominance_percent: number;
       current_marketcap_usd: number;
     };
-  } & MessariAssetMarketData;
+    market_data: {
+      price_usd: number;
+      volume_last_24_hours: number;
+      percent_change_usd_last_24_hours: number;
+      last_trade_at: string;
+    }
+  }
 }
 
 interface MessariAssetMetricsModelProps {
