@@ -20,6 +20,7 @@ import { CommandOptions } from '@types';
  * @prop {Array<PermissionResolvable>} [permissions.appPerms] - The required permissions for the app to execute the command
  * @prop {Array<PermissionResolvable>} [permissions.memberPerms] - The required permissions for the member to execute a command
  * @prop {Boolean} [requiresDatabase] - Whether the command requires the database 
+ * @prop {Number} [cooldown] - The command cooldown
  */ 
 export class CommandBase implements CommandOptions {
   client: MiamiClient;
@@ -34,6 +35,7 @@ export class CommandBase implements CommandOptions {
     memberPerms?: PermissionResolvable[];
   };
   requiresDatabase?: boolean
+  cooldown?: number;
 
   /**
    * @constructs Command
@@ -48,7 +50,9 @@ export class CommandBase implements CommandOptions {
    * @param {Object} [options.permissions] - The command required permissions
    * @param {Array<PermissionResolvable>} [options.permissions.appPerms] - The required permissions for the app to execute the command
    * @param {Array<PermissionResolvable>} [options.permissions.memberPerms] - The required permissions for the member to execute a command
-   * @param {Boolean} [requiresDatabase] - Whether the command requires the database 
+   * @param {Boolean} [options.requiresDatabase] - Whether the command requires the database 
+   * @param {Number} [options.cooldown] - The command cooldown
+   * 
    */
   constructor(client: MiamiClient, options: CommandOptions) {
     this.client = client;
@@ -63,5 +67,6 @@ export class CommandBase implements CommandOptions {
       memberPerms: options.permissions?.memberPerms ?? []
     };
     this.requiresDatabase = options.requiresDatabase ?? false;
+    this.cooldown = options.cooldown || 3;
   }
 }
