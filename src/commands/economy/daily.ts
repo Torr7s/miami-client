@@ -45,7 +45,7 @@ export default class DailyCommand extends CommandBase {
    * 
    * @param {CommandContext} ctx - The command context  
    * 
-   * @returns {InteractionReplyOptions} options - The given options for ctx
+   * @returns {Promise<InteractionReplyOptions>} options - The given options for ctx
    */
   async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
     const mongoUSER: UserSchema = await this.client.usersDb.findOne({ 

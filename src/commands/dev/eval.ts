@@ -58,7 +58,7 @@ export default class EvalCommand extends CommandBase {
    * 
    * @param {CommandContext} ctx - The command context  
    * 
-   * @returns {void} void
+   * @returns {Promise<void>} void
    */
   async run(ctx: CommandContext): Promise<void> {
     const user: User = ctx.user;
