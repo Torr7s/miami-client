@@ -1,4 +1,4 @@
-import { Interaction, InteractionResponse } from 'discord.js';
+import { Collection, Interaction, InteractionResponse } from 'discord.js';
 
 import { Command } from '@types';
 
@@ -95,6 +95,39 @@ export default class InteractionCreateEvent extends EventBase {
             }
 
             const context: CommandContext = new CommandContext(this.client, interaction);
+
+            if (!this.client.cooldowns.has(command.name)) {
+              this.client.cooldowns.set(
+                command.name, 
+                new Collection()
+              );
+            };
+
+            const now: number = Date.now();
+
+            const timestamps: Collection<string, number> = this.client.cooldowns.get(command.name);
+            const cooldownAmount: number = (command.cooldown ?? 3) * 1000;
+
+            if (timestamps.has(user.id) && user.id !== this.client.config.ownerId) {
+              const expiresAt: number = (timestamps.get(user.id) as number) + cooldownAmount;
+
+              if (now < expiresAt) {
+                const remainingTime: number = (expiresAt - now) / 1000;
+
+                return interaction.reply({
+                  ephemeral: true,
+                  content: `Aguarde ${remainingTime.toFixed(1)} para usar o comando \`${command.name}\` novamente.`
+                });
+              }
+            }
+
+            if (timestamps) {
+              timestamps.set(user.id, now);
+
+              setTimeout((): void => {
+                timestamps.delete(user.id);
+              }, cooldownAmount);
+            }
 
             command.run(context);
           }
