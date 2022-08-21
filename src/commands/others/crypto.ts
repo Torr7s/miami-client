@@ -3,7 +3,7 @@ import { ApplicationCommandOptionType, InteractionReplyOptions } from 'discord.j
 import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
 
 import { MessariAssetMetrics } from '@types';
-import { MessariAssetMetricsModel, getAssetMetrics } from 'helpers/messari';
+import { MessariAssetMetricsModel, messariRequest } from '@helpers/messari'
 
 import { Embed } from '@shared/builders/embed';
 
@@ -60,7 +60,7 @@ export default class CryptoCommand extends CommandBase {
   async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
     const option: string = ctx.interaction.options.getString('ativo', true);
 
-    const asset: MessariAssetMetrics = await getAssetMetrics(option);
+    const asset: MessariAssetMetrics = await messariRequest<MessariAssetMetrics>(`v1/assets/${option}/metrics`);
 
     if (!asset) {
       return ctx.reply({
