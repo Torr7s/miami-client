@@ -103,6 +103,20 @@ interface EmbedOptions {
   url?: string;
 }
 
+interface MessariAssetMetricsProps {
+  marketcap: {
+    rank: number;
+    marketcap_dominance_percent: number;
+    current_marketcap_usd: number;
+  };
+  market_data: {
+    price_usd: number;
+    volume_last_24_hours: number;
+    percent_change_usd_last_24_hours: number;
+    last_trade_at: string;
+  }
+}
+
 /**
  * Interface for typing return response from Messari api
  * 
@@ -127,18 +141,16 @@ interface MessariAssetMetrics {
     id: string;
     symbol: string;
     name: string;
-    marketcap: {
-      rank: number;
-      marketcap_dominance_percent: number;
-      current_marketcap_usd: number;
-    };
-    market_data: {
-      price_usd: number;
-      volume_last_24_hours: number;
-      percent_change_usd_last_24_hours: number;
-      last_trade_at: string;
-    }
-  }
+  } & MessariAssetMetricsProps;
+}
+
+interface MessariAllAssets {
+  data: Array<{
+    id: string;
+    symbol: string;
+    name: string;
+    metrics: MessariAssetMetricsProps
+  }>
 }
 
 /**
