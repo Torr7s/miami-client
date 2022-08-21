@@ -12,6 +12,9 @@
       "@controllers/*": [
         "controllers/*"
       ],
+      "@helpers/*": [
+        "helpers/*"
+      ],
       "@shared/*": [
         "shared/*"
       ],
