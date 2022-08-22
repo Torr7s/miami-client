@@ -52,7 +52,7 @@ export default class EvalCommand extends CommandBase {
   }
 
   /**
-   * Used to handle the incoming interaction
+   * Handle the incoming interaction as a command
    * 
    * @public @method @async
    * 

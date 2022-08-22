@@ -39,7 +39,7 @@ export default class DailyCommand extends CommandBase {
   }
 
   /**
-   * Used to handle the incoming interaction
+   * Handle the incoming interaction as a command
    * 
    * @public @method @async
    * 
