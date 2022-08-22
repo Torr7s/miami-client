@@ -59,6 +59,13 @@ export default class CryptoCommand extends CommandBase {
     this.client = client;
   }
 
+  /**
+   * Format an asset percentage accordingly
+   * 
+   * @param {Number} percent - The asset change percentage
+   * 
+   * @returns {String} result - The formatted result 
+   */
   formatPercent(percent: number): string {
     let result: string = String(percent);
     const fixed: string = percent.toFixed(2);
@@ -71,7 +78,7 @@ export default class CryptoCommand extends CommandBase {
   }
 
   /**
-   * Used to handle the incoming interaction
+   * Handle the incoming interaction as a command
    * 
    * @public @method @async
    * 
