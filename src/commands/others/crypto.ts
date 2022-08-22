@@ -161,7 +161,7 @@ export default class CryptoCommand extends CommandBase {
 
       switch (target.customId) {
         case 'next':
-          row.components[0].setDisabled(true)
+          row.components[0].setDisabled(true);
           row.components[1].setDisabled(false);
 
           const res: MessariAllAssets = await messariRequest<MessariAllAssets>('v2/assets');
@@ -205,7 +205,7 @@ export default class CryptoCommand extends CommandBase {
           break;
 
         case 'previous':
-          row.components[0].setDisabled(false)
+          row.components[0].setDisabled(false);
           row.components[1].setDisabled(true);
           
           await ctx.interaction.editReply({
