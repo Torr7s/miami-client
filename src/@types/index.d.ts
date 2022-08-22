@@ -13,7 +13,7 @@ import { CommandContext } from '@structures/commandContext';
 import { CommandBase } from '@structures/command';
 
 /**
- * Options interface for Commands
+ * Interface type for Command options
  * 
  * @interface
  * 
@@ -42,7 +42,7 @@ interface CommandOptions {
 }
 
 /**
- * Interface that represents a Command
+ * Interface type for Commands
  * 
  * @interface
  */
@@ -58,7 +58,7 @@ interface Command extends CommandOptions {
 }
 
 /**
- * Options interface for a Button
+ * Interface type for Button options
  * 
  * @prop {String} custom_id - The buttom custom id
  * @prop {Boolean} [disabled] - Wether the button is disabled
@@ -76,7 +76,7 @@ interface ButtonOptions {
 }
 
 /**
- * Options interface for an Embed
+ * Interface type for Embed options
  * 
  * @interface
  * 
@@ -103,6 +103,21 @@ interface EmbedOptions {
   url?: string;
 }
 
+/**
+ * Interface type for an asset properties
+ * 
+ * @interface
+ * 
+ * @prop {Object} marketcap - The asset market capital
+ * @prop {Number} marketcap.rank - The asset rank in the market
+ * @prop {Number} marketcap.marketcap_dominance_percent - The asset percentage of market dominance
+ * @prop {Number} marketcap.current_marketcap_usd - The asset current value in USD
+ * @prop {Object} market_data - The asset market data
+ * @prop {Number} market_data.price_usd - The asset price in USD
+ * @prop {Number} market_data.volume_last_24_hours - The asset volume in the last 24h
+ * @prop {Number} market_data.percent_change_usd_last_24_hours - The asset change percentage in the last 24h
+ * @prop {Number} market_data.last_trade_at - The asset last trade timestamp
+ */
 interface MessariAssetMetricsProps {
   marketcap: {
     rank: number;
@@ -118,7 +133,7 @@ interface MessariAssetMetricsProps {
 }
 
 /**
- * Interface for typing return response from Messari api
+ * Interface type for an asset
  * 
  * @interface
  * 
@@ -126,15 +141,8 @@ interface MessariAssetMetricsProps {
  * @prop {String} data.id - The asset id
  * @prop {String} data.symbol - The asset symbol
  * @prop {String} data.name - The asset name
- * @prop {Object} data.marketcap - The asset marketcap
- * @prop {Number} data.marketcap.rank - The asset marketcap rank
- * @prop {Number} data.marketcap.marketcap_dominance_percent - The asset market capital dominance percentage
- * @prop {Number} data.marketcap.current_marketcap_usd - The asset current market capital value in USD 
- * @prop {Object} data.market_data - The asset market data
- * @prop {number} data.market_data.price_usd - The price of a single asset in USD
- * @prop {Number} data.market_data.volume_last_24_hours - The asset volume in the last 24h
- * @prop {Number} data.market_data.percent_change_usd_last_24_hours - The asset 24h change percentage
- * @prop {String} data.market_data.last_trade_at - The asset last trade timestamp
+ * @prop {MessariAssetMetricsProps} data.marketcap - The asset market capital
+ * @prop {MessariAssetMetricsProps} data.market_data - The asset marketdata
  */
 interface MessariAssetMetrics {
   data: {
@@ -144,6 +152,17 @@ interface MessariAssetMetrics {
   } & MessariAssetMetricsProps;
 }
 
+/**
+ * Interface type to get all assets
+ * 
+ * @interface
+ * 
+ * @prop {Array<Object>} data - The asset data
+ * @prop {String} data.id - The asset id
+ * @prop {String} data.symbol - The asset symbol
+ * @prop {String} data.name - The asset name
+ * @prop {MessariAssetMetricsProps} metrics - The asset metrics
+ */
 interface MessariAllAssets {
   data: Array<{
     id: string;
@@ -154,7 +173,7 @@ interface MessariAllAssets {
 }
 
 /**
- * Interface for messari asset metrics model 
+ * Interface type for asset model building 
  * 
  * @interface
  * 
