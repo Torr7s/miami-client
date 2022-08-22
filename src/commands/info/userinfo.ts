@@ -1,4 +1,4 @@
-import { ApplicationCommandOptionType, ClientPresenceStatus, GuildMember, InteractionReplyOptions, PresenceStatus, User } from 'discord.js';
+import { ApplicationCommandOptionType, GuildMember, InteractionReplyOptions, User } from 'discord.js';
 
 import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
 
