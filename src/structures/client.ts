@@ -3,7 +3,7 @@ import '@shared/database';
 import fs from 'node:fs';
 import config from '../config';
 
-import Discord, { Collection } from 'discord.js';
+import Discord from 'discord.js';
 
 import guilds from '@shared/database/models/guild';
 import users from '@shared/database/models/user';
@@ -34,7 +34,7 @@ export class MiamiClient extends Discord.Client {
 
   config: typeof config;
   commands: Command[];
-  cooldowns: Collection<string, Collection<string, number>>;
+  cooldowns: Map<string, Map<string, number>>;
   usersDb: typeof users;
   guildsDb: typeof guilds;
   button: typeof Button;
@@ -74,7 +74,7 @@ export class MiamiClient extends Discord.Client {
     this.button = Button;
     this.embed = Embed;
     
-    this.cooldowns = new Collection();
+    this.cooldowns = new Map();
 
     this.loadEvents();
     this.loadCommands();
