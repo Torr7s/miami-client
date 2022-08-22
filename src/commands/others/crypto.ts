@@ -91,7 +91,7 @@ export default class CryptoCommand extends CommandBase {
 
     const asset: MessariAssetMetrics = await messariRequest<MessariAssetMetrics>(`v1/assets/${option}/metrics`);
 
-    if (!asset) {
+    if (!asset.data) {
       return ctx.reply({
         ephemeral: true,
         content: `
