@@ -1,3 +1,5 @@
+import { setTimeout as wait } from 'node:timers/promises';
+
 import {
   ActionRowBuilder,
   ApplicationCommandOptionType,
@@ -164,7 +166,9 @@ export default class CryptoCommand extends CommandBase {
     });
 
     collector.on('collect', async (target: CollectedInteraction): Promise<void> => {
-      if (!target.deferred) await target.deferReply({ ephemeral: true });
+      if (!target.deferred) 
+        await target.deferUpdate();
+      await wait(3e3);
 
       switch (target.customId) {
         case 'next':
@@ -178,7 +182,7 @@ export default class CryptoCommand extends CommandBase {
             .map(([, asset]) => asset)
             .sort((x, y): number => y.metrics.market_data.price_usd - x.metrics.market_data.price_usd)
 
-          const description: string[] = assetsObj.map((asset, index) => {
+          const description: string[] = assetsObj.map((asset, index: number): string => {
             const {
               name,
               metrics: {
@@ -202,7 +206,7 @@ export default class CryptoCommand extends CommandBase {
             description: `${description.join('\n')}`
           });
 
-          await ctx.interaction.editReply({
+          await target.editReply({
             embeds: [embed],
             components: [
               row
@@ -214,8 +218,8 @@ export default class CryptoCommand extends CommandBase {
         case 'previous':
           row.components[0].setDisabled(false);
           row.components[1].setDisabled(true);
-          
-          await ctx.interaction.editReply({
+
+          await target.editReply({
             embeds: [mainEmbed],
             components: [
               row
