@@ -5,6 +5,6 @@ export const toCurrency = (numb: number, currency: string = 'USD'): string => {
   }).format(numb);
 }
 
-export function format(numb: number): string {
+export function formatNumber(numb: number): string {
   return new Intl.NumberFormat('pt-BR').format(numb);
 }
