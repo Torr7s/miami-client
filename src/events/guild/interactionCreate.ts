@@ -113,12 +113,12 @@ export default class InteractionCreateEvent extends EventBase {
 
               if (dateNow < expiresAt) {
                 if (!interaction.deferred) {
-                  await interaction.deferReply({ 
+                  await interaction.deferReply({
                     ephemeral: true,
                     fetchReply: true
                   });
                 }
-                
+
                 const remainingTime: number = (expiresAt - dateNow) / 1e3;
 
                 await interaction.editReply({
@@ -143,6 +143,14 @@ export default class InteractionCreateEvent extends EventBase {
             const context: CommandContext = new CommandContext(this.client, interaction);
 
             command.run(context);
+          }
+        }
+
+        else if (interaction.isButton()) {
+          if (!interaction.deferred) {
+            await interaction
+              .deferUpdate()
+              .catch((_: any): any => null);
           }
         }
       }
