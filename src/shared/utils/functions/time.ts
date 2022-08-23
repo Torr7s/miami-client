@@ -29,3 +29,13 @@ export function formatMs(ms: number): string {
 
   return `${days}D ${hours}H ${minutes}m ${seconds}s`;
 }
+
+export function formatTimestamp(timestamp: string): string {
+  return (
+    new Date(timestamp).toLocaleDateString('pt-BR', {
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit'
+    })
+  );
+}
