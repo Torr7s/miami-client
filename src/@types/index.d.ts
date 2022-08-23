@@ -200,3 +200,42 @@ interface MessariAssetMetricsModelProps {
   marketCapDominancePercent: number;
   currentMarketCapUsd: number;
 }
+
+interface GithubUserProps {
+  login: string;
+  id: number;
+  avatar_url: string;
+  site_admin: boolean;
+  name: string;
+  company?: string | null;
+  location: string;
+  email: string | null;
+  bio: string;
+  public_repos: number;
+  followers: number;
+  following: number;
+  created_at: string;
+}
+
+interface GithubRepositoryProps {
+  id: number;
+  name: string;
+  private: boolean;
+  owner: Pick<GithubUserProps, 'login' | 'id' | 'avatar_url'>
+  html_url: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  homepage: string;
+  language: string;
+  forks_count: number;
+  archived: boolean;
+  disabled: boolean;
+  open_issues_count: number;
+  license: {
+    name: string;
+  };
+  topics: string[];
+  visibility: string;
+  watchers: number;
+}
