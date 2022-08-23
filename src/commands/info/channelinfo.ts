@@ -141,7 +141,7 @@ export default class ChannelinfoCommand extends CommandBase {
 
       embed.addFields([
         {
-          name: 'Taxa de bits',
+          name: ':zap:Taxa de bits',
           value: `${channel.bitrate}`,
           inline: true
         },
