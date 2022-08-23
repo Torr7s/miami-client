@@ -1,5 +1,3 @@
-import { setTimeout as wait } from 'node:timers/promises';
-
 import {
   ActionRowBuilder,
   ApplicationCommandOptionType,
@@ -55,7 +53,8 @@ export default class CryptoCommand extends CommandBase {
           type: ApplicationCommandOptionType.String,
           required: true
         }
-      ]
+      ],
+      cooldown: 5
     });
 
     this.client = client;
@@ -166,9 +165,8 @@ export default class CryptoCommand extends CommandBase {
     });
 
     collector.on('collect', async (target: CollectedInteraction): Promise<void> => {
-      if (!target.deferred) 
-        await target.deferUpdate();
-      await wait(3e3);
+      if (!target.deferred)
+        await target.deferUpdate().catch((): any => null);
 
       switch (target.customId) {
         case 'next':
@@ -230,6 +228,7 @@ export default class CryptoCommand extends CommandBase {
 
         default: break;
       }
-    })
+    });
   }
 }
+
