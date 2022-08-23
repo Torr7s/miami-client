@@ -7,9 +7,6 @@ import { resolvePermissions } from '@shared/utils/discord/resolvables/permission
 
 import { CommandContext, EventBase, MiamiClient } from '@structures/index';
 
-import { GuildSchema } from '@shared/database/models/guild';
-import { UserSchema } from '@shared/database/models/user';
-
 /**
  * Represents a InteractionCreate client event
  * 
