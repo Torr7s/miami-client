@@ -18,7 +18,7 @@ import { MessariAssetMetricsModel, messariRequest } from '@helpers/messari'
 
 import { Embed } from '@shared/builders/embed';
 
-import { toCurrency, format } from '@shared/utils/functions/number';
+import { toCurrency, formatNumber } from '@shared/utils/functions/number';
 
 /**
  * Represents a Crypto slash command
@@ -106,7 +106,7 @@ export default class CryptoCommand extends CommandBase {
     const description: string[] = [
       `» \`Dados\`: `,
       `ㅤ• Preço USD: \`${toCurrency(metrics.priceUsd)}\` (Alterou \`${metrics.percentChangeUsdLast24h.toFixed(2)}%\` em 24h)`,
-      `ㅤ• Volume nas últimas 24h: ${format(metrics.volumeLast24h)}`,
+      `ㅤ• Volume nas últimas 24h: ${formatNumber(metrics.volumeLast24h)}`,
       `ㅤ• Última transação em: ${metrics.lastTradeAt}`,
       `» \`Capitalização do mercado\`: `,
       `ㅤ• Rank: ${metrics.rank}`,
