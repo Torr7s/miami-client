@@ -23,7 +23,7 @@ export default class UserinfoCommand extends CommandBase {
    */
   constructor(client: MiamiClient) {
     super(client, {
-      name: 'userinfo',
+      name: 'user',
       description: 'Ver informações de um usuário',
       category: 'Info',
       options: [
@@ -34,7 +34,7 @@ export default class UserinfoCommand extends CommandBase {
           },
           description: 'Usuário desejado',
           descriptionLocalizations: {
-            'en-US': 'Desired user'
+            'en-US': 'Target user'
           },
           type: ApplicationCommandOptionType.User,
           required: true
@@ -46,7 +46,7 @@ export default class UserinfoCommand extends CommandBase {
   }
 
   getStatus(status: string): string {
-    const statuses = {
+    const statuses: { [status: string]: string } = {
       online: 'Online',
       dnd: 'Não Perturbe',
       idle: 'Ausente',
