@@ -7,17 +7,17 @@ import { Embed } from '@shared/builders/embed';
 import { resolveFlags } from '@shared/utils/discord/resolvables/flags';
 
 /**
- * Represents a UserInfo slash command
+ * Represents a Userinfo slash command
  * 
  * @class @extends CommandBase
  * 
  * @prop {MiamiClient} client - The MiamiClient instance
  */
-export default class UserInfo extends CommandBase {
+export default class UserinfoCommand extends CommandBase {
   client: MiamiClient;
 
   /**
-   * @constructs UserInfo
+   * @constructs UserinfoCommand
    * 
    * @param {MiamiClient} client - The MiamiClient instance 
    */
