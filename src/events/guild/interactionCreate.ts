@@ -106,27 +106,34 @@ export default class InteractionCreateEvent extends EventBase {
 
             const clientCooldowns: Map<string, number> = this.client.cooldowns.get(command.name);
 
-            if (clientCooldowns && clientCooldowns.has(command.name)) {
-              const leftTime: number = (clientCooldowns.get(command.name) as number) * commandCooldown; 
-            
-              if (dateNow < leftTime) {
-                const remainingTime: number = (leftTime - dateNow) / 1e3;
+            if (clientCooldowns && clientCooldowns.has(user.id)) {
+              const expiresAt: number = (clientCooldowns.get(user.id) as number) + commandCooldown;
 
-                if (!interaction.deferred) await interaction.deferReply({ ephemeral: true });
+              if (dateNow < expiresAt) {
+                if (!interaction.deferred) {
+                  await interaction.deferReply({ 
+                    ephemeral: true,
+                    fetchReply: true
+                  });
+                }
+                
+                const remainingTime: number = (expiresAt - dateNow) / 1e3;
 
-                return interaction.editReply({ 
+                return interaction.editReply({
                   content: `
-                    Este comando poderá ser executado novamente em \`${remainingTime.toFixed(1)}s\`, aguarde.
+                    O comando \`${command.name}\` poderá ser utilizado novamente em \`${remainingTime.toFixed(1)}s\`.
                   `
                 });
               }
             }
 
             if (clientCooldowns) {
-              clientCooldowns.set(command.name, dateNow);
+              clientCooldowns.set(user.id, dateNow);
 
-              setTimeout((): void => {
-                clientCooldowns.set(command.name, dateNow);
+              setTimeout((): boolean => {
+                return (
+                  clientCooldowns.delete(user.id)
+                )
               }, commandCooldown);
             }
 
