@@ -63,11 +63,11 @@ export default class InteractionCreateEvent extends EventBase {
             }
 
             if (command.requiresDatabase) {
-              let mongoGUILD: GuildSchema = await this.client.guildsDb.findOne({ guildId: guild.id, ownerId: guild.ownerId });
-              let mongoUSER: UserSchema = await this.client.usersDb.findOne({ userId: user.id, guildId: guild.id });
+              const guildObj = { guildId: guild.id, ownerId: guild.ownerId };
+              const userObj = { userId: user.id, guildId: guild.id };
 
-              if (!mongoGUILD) await this.client.guildsDb.create({ guildId: guild.id, ownerId: guild.ownerId });
-              if (!mongoUSER) await this.client.usersDb.create({ userId: user.id, guildId: guild.id });
+              await this.client.guildsDb.findOne(guildObj) ?? await this.client.guildsDb.create(guildObj);
+              await this.client.usersDb.findOne(userObj) ?? await this.client.usersDb.create(userObj);
             }
 
             const { appPerms, memberPerms } = command.permissions;
@@ -76,10 +76,11 @@ export default class InteractionCreateEvent extends EventBase {
               if (!interaction.appPermissions.has(appPerms)) {
                 const { permissions } = resolvePermissions(appPerms);
 
-                return interaction.reply({
+                await interaction.reply({
                   ephemeral: true,
                   content: `Preciso das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
                 });
+                return;
               }
             }
 
@@ -87,10 +88,11 @@ export default class InteractionCreateEvent extends EventBase {
               if (!interaction.memberPermissions.has(memberPerms)) {
                 const { permissions } = resolvePermissions(memberPerms);
 
-                return interaction.reply({
+                await interaction.reply({
                   ephemeral: true,
                   content: `Você precisa das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
                 });
+                return;
               }
             }
 
@@ -119,11 +121,12 @@ export default class InteractionCreateEvent extends EventBase {
                 
                 const remainingTime: number = (expiresAt - dateNow) / 1e3;
 
-                return interaction.editReply({
+                await interaction.editReply({
                   content: `
                     O comando \`${command.name}\` poderá ser utilizado novamente em \`${remainingTime.toFixed(1)}s\`.
                   `
                 });
+                return;
               }
             }
 
