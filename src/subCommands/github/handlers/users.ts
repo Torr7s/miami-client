@@ -63,16 +63,6 @@ export const githubUsersHandler = async (ctx: CommandContext, user: string): Pro
         name: ':yarn: Seguindo',
         value: `${res.following}`,
         inline: true
-      },
-      {
-        name: ':date: Conta criada em',
-        value: `${formatTimestamp(res.created_at)}`,
-        inline: true
-      },
-      {
-        name: ':date: Conta atualizada em',
-        value: `${formatTimestamp(res.updated_at)}`,
-        inline: true
       }
     ],
     url: res.html_url
