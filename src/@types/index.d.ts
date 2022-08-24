@@ -202,31 +202,34 @@ interface MessariAssetMetricsModelProps {
 }
 
 interface GithubUserProps {
-  login: string;
   id: number;
+  login: string;
   avatar_url: string;
-  site_admin: boolean;
+  html_url: string;
+  site_admin: boolean
   name: string;
-  company?: string | null;
-  location: string;
+  company: string | null;
+  location: string | null;
   email: string | null;
   bio: string;
   public_repos: number;
   followers: number;
   following: number;
   created_at: string;
+  updated_at: string;
 }
 
 interface GithubRepositoryProps {
   id: number;
   name: string;
+  full_name: string;
   private: boolean;
-  owner: Pick<GithubUserProps, 'login' | 'id' | 'avatar_url'>
+  owner: Pick<GithubUserProps, 'avatar_url'>
   html_url: string;
   description: string;
   created_at: string;
   updated_at: string;
-  homepage: string;
+  stargazers_count: number;
   language: string;
   forks_count: number;
   archived: boolean;
@@ -235,7 +238,7 @@ interface GithubRepositoryProps {
   license: {
     name: string;
   };
-  topics: string[];
   visibility: string;
+  default_branch: string;
   watchers: number;
 }
