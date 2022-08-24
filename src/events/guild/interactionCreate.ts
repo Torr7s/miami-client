@@ -142,14 +142,6 @@ export default class InteractionCreateEvent extends EventBase {
             command.run(context);
           }
         }
-
-        else if (interaction.isButton()) {
-          if (!interaction.deferred) {
-            await interaction
-              .deferUpdate()
-              .catch((_: any): any => null);
-          }
-        }
       }
     } catch (error) {
       this.logger.error('Um erro foi encontrado: ', error);

@@ -165,6 +165,12 @@ export default class CryptoCommand extends CommandBase {
     });
 
     collector.on('collect', async (target: CollectedInteraction): Promise<void> => {
+      if (!target.deferred) {
+        await target
+        .deferUpdate()
+        .catch((_: any): any => null);
+      }
+
       switch (target.customId) {
         case 'next':
           row.components[0].setDisabled(true);
