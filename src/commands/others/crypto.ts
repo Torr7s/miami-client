@@ -167,8 +167,8 @@ export default class CryptoCommand extends CommandBase {
     collector.on('collect', async (target: CollectedInteraction): Promise<void> => {
       if (!target.deferred) {
         await target
-        .deferUpdate()
-        .catch((_: any): any => null);
+          .deferUpdate()
+          .catch((_: any): any => null);
       }
 
       switch (target.customId) {
