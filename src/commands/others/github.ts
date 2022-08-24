@@ -122,7 +122,7 @@ export default class GithubCommand extends CommandBase {
       case 'users':
         const user: string = ctx.interaction.options.getString('usuário');
         
-        await githubUsersHandler(ctx, user)
+        await githubUsersHandler(ctx, user);
 
         break;
 
