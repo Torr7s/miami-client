@@ -104,7 +104,7 @@ interface EmbedOptions {
 }
 
 /**
- * Interface type for an asset properties
+ * Interface type for complementing a Messari asset properties
  * 
  * @interface
  * 
@@ -133,7 +133,7 @@ interface MessariAssetMetricsProps {
 }
 
 /**
- * Interface type for an asset
+ * Interface type for a Messari asset properties
  * 
  * @interface
  * 
@@ -153,7 +153,7 @@ interface MessariAssetMetrics {
 }
 
 /**
- * Interface type to get all assets
+ * Interface type to get all Messari assets 
  * 
  * @interface
  * 
@@ -173,7 +173,7 @@ interface MessariAllAssets {
 }
 
 /**
- * Interface type for asset model building 
+ * Interface type for a Messari asset model building 
  * 
  * @interface
  * 
@@ -201,6 +201,26 @@ interface MessariAssetMetricsModelProps {
   currentMarketCapUsd: number;
 }
 
+/**
+ * Interface type for a Github user properties
+ * 
+ * @interface
+ * 
+ * @prop {Number} id - The user id
+ * @prop {String} login - The user login
+ * @prop {String} avatar_url - The user avatar url
+ * @prop {String} html_url - The user github page
+ * @prop {Boolean} site_admin - Wether the user is a github admin;
+ * @prop {String} name - The user name
+ * @prop {String} company - The user current company
+ * @prop {String} location - The user current location
+ * @prop {String} email - The user email
+ * @prop {Number} public_repos - The user public repositories count
+ * @prop {Number} followers - The user followers count
+ * @prop {Number} following - The number of users the user follows
+ * @prop {String} created_at - The user account creation date
+ * @prop {String} updated_at - The user account update date
+ */
 interface GithubUserProps {
   id: number;
   login: string;
@@ -208,9 +228,9 @@ interface GithubUserProps {
   html_url: string;
   site_admin: boolean
   name: string;
-  company: string | null;
-  location: string | null;
-  email: string | null;
+  company: string;
+  location: string;
+  email: string;
   bio: string;
   public_repos: number;
   followers: number;
@@ -219,6 +239,33 @@ interface GithubUserProps {
   updated_at: string;
 }
 
+/**
+ * Interface type for a Github repository properties
+ * 
+ * @interface 
+ * 
+ * @prop {Number} id - The repository id
+ * @prop {String} name - The repository name
+ * @prop {String} full_name - The repository full name
+ * @prop {Boolean} private - Wether the repository is private
+ * @prop {Object} owner - The repository owner
+ * @prop {String} owner.avatar_url - The repository owner avatar url
+ * @prop {String} html_url - The repository github page
+ * @prop {String} description - The repository description
+ * @prop {String} created_at - The repository creation date
+ * @prop {String} updated_at - The repository update date
+ * @prop {Number} stargazers_count - The repository stars count
+ * @prop {String} language - The repository current language
+ * @prop {Number} forks_count - The repository forks count
+ * @prop {Boolean} archived - Wether the repository is archived
+ * @prop {Boolean} disabled - Wether the repository is disabled
+ * @prop {Number} open_issues_count - The repository open issues count
+ * @prop {Object} license - The repository license
+ * @prop {String} license.name - The repository license name
+ * @prop {String} visibility - The repository visibility 
+ * @prop {String} default_branch - The repository default branch
+ * @prop {Number} watchers - The repository watchers count
+ */
 interface GithubRepositoryProps {
   id: number;
   name: string;
