@@ -64,9 +64,10 @@ export default class DailyCommand extends CommandBase {
 
     const { coins } = await this.ecoController.dailyRetrieve(mongoUSER);
 
-    return ctx.reply({
-      ephemeral: true,
-      content: `Você recebeu \`${toCurrency(coins)}\` como bônus.`
+    ctx.reply({
+      content: `
+        Você recebeu \`${toCurrency(coins)}\` como bônus.
+      `
     });
   }
 }
