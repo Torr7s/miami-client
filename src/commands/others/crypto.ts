@@ -96,8 +96,8 @@ export default class CryptoCommand extends CommandBase {
       return ctx.reply({
         ephemeral: true,
         content: `
-            Ativo inválido, não foram encontrados resultados. \nVocê pode encontrar todos os ativos **[aqui](https://messari.io/screener/all-assets-D86E0735)**.
-          `
+          Ativo inválido, não foram encontrados resultados. \nVocê pode encontrar todos os ativos **[aqui](https://messari.io/screener/all-assets-D86E0735)**.
+        `
       });
     }
 
