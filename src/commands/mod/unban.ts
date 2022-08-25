@@ -8,7 +8,7 @@ import {
 import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
 
 /**
- * Represents a Ban slash command
+ * Represents a Unban slash command
  * 
  * @class @extends CommandBase
  * 
