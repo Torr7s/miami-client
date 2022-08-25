@@ -9,7 +9,7 @@ import { ResponseData } from 'undici/types/dispatcher';
  *  
  * @returns {Promise<T | null>} T - The output with the given typing
  */
-export const messariRequest = async <T>(endpoint: string, queryParams?: Record<string, any>): Promise<T | null> => {
+export const messariRequestHandler = async <T>(endpoint: string, queryParams?: Record<string, any>): Promise<T | null> => {
   const res: Awaited<T> = await request(`https://data.messari.io/api/${endpoint}`, {
     method: 'GET',
     headers: {
