@@ -1,4 +1,9 @@
-import { ApplicationCommandOptionType, GuildEmoji, InteractionReplyOptions, PermissionFlagsBits } from 'discord.js';
+import {
+  ApplicationCommandOptionType,
+  GuildEmoji,
+  InteractionReplyOptions,
+  PermissionFlagsBits
+} from 'discord.js';
 
 import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
 
@@ -77,9 +82,9 @@ export default class AddEmojiCommand extends CommandBase {
    * 
    * @param {CommandContext} ctx - The command context  
    * 
-   * @returns {InteractionReplyOptions} options - The given options for ctx
+   * @returns {Promise<InteractionReplyOptions | void>} options - The given options for ctx
    */
-  async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
+  async run(ctx: CommandContext): Promise<InteractionReplyOptions | void> {
     const attachment: string = ctx.interaction.options.getString('anexo', true);
     const name: string = ctx.interaction.options.getString('nome', true);
 
@@ -90,24 +95,35 @@ export default class AddEmojiCommand extends CommandBase {
       });
     }
 
-    let content: string;
-
     try {
       const emoji: GuildEmoji = await ctx.guild.emojis.create({
         attachment,
         name
       });
 
-      content = `O emoji ${emoji} foi criado com sucesso.`
+      ctx.reply({
+        content: `
+          O emoji ${emoji} foi criado com sucesso. 
+        `
+      });
     } catch (error) {
       this.logger.error(`An error has been found: `, error.message);
 
-      content = error.message!;
-    }
+      if (error.message!.includes('Asset exceeds maximum size')) {
+        return ctx.reply({
+          ephemeral: true,
+          content: `
+            O anexo fornecido é maior do que 256kb.
+          `
+        });
+      }
 
-    return ctx.reply({
-      ephemeral: true,
-      content
-    });
+      ctx.reply({
+        ephemeral: true,
+        content: `
+          Erro encontrado ao tentar criar emoji: \`${error.message!}\`
+        `
+      });
+    }
   }
 }
