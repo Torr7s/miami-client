@@ -14,7 +14,7 @@ import {
 import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
 
 import { MessariAllAssets, MessariAssetMetrics } from '@types';
-import { MessariAssetMetricsModel, messariRequest } from '@helpers/messari';
+import { MessariAssetMetricsModel, messariRequestHandler } from '@helpers/messari';
 
 import { Embed } from '@shared/builders/embed';
 
@@ -90,7 +90,7 @@ export default class CryptoCommand extends CommandBase {
   async run(ctx: CommandContext): Promise<InteractionReplyOptions | void> {
     const option: string = ctx.interaction.options.getString('ativo', true);
 
-    const asset: MessariAssetMetrics = await messariRequest<MessariAssetMetrics>(`v1/assets/${option}/metrics`);
+    const asset: MessariAssetMetrics = await messariRequestHandler<MessariAssetMetrics>(`v1/assets/${option}/metrics`);
 
     if (!asset.data) {
       return ctx.reply({
@@ -176,7 +176,7 @@ export default class CryptoCommand extends CommandBase {
           row.components[0].setDisabled(true);
           row.components[1].setDisabled(false);
 
-          const res: MessariAllAssets = await messariRequest<MessariAllAssets>('v2/assets');
+          const res: MessariAllAssets = await messariRequestHandler<MessariAllAssets>('v2/assets');
 
           const assetsArr = res.data.slice(0, 9);
           const assetsObj = Object.entries(assetsArr)
