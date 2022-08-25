@@ -41,15 +41,15 @@ export class MessariAssetMetricsModel implements MessariAssetMetricsModelProps {
 
     this.symbol = props.data.symbol;
     this.name = props.data.name;
-    
-    this.priceUsd = marketData.price_usd;
-    this.volumeLast24h = marketData.volume_last_24_hours;
-    this.percentChangeUsdLast24h = marketData.percent_change_usd_last_24_hours;
-    this.lastTradeAt = marketData.last_trade_at;
-    
-    this.rank = marketCap.rank;
-    this.marketCapDominancePercent = marketCap.marketcap_dominance_percent;
-    this.currentMarketCapUsd = marketCap.current_marketcap_usd;
+
+    this.priceUsd = marketData.price_usd ?? 0;
+    this.volumeLast24h = marketData.volume_last_24_hours ?? 0;
+    this.percentChangeUsdLast24h = marketData.percent_change_usd_last_24_hours ?? 0;
+    this.lastTradeAt = marketData.last_trade_at ?? '00/00/0000';
+
+    this.rank = marketCap.rank ?? 0;
+    this.marketCapDominancePercent = marketCap.marketcap_dominance_percent ?? 0;
+    this.currentMarketCapUsd = marketCap.current_marketcap_usd ?? 0;
   }
 
   /**
