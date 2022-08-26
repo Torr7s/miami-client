@@ -17,8 +17,6 @@ import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
 import { MessariAllAssets, MessariAssetMetrics } from '@types';
 import { MessariAssetMetricsModel, messariRequestHandler } from '@helpers/messari';
 
-import { Embed } from '@shared/builders/embed';
-
 import { toCurrency, formatNumber, formatTimestamp } from '@shared/utils/functions';
 
 /**
