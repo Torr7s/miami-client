@@ -10,6 +10,8 @@ import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
 
 import { Embed } from '@shared/builders/embed';
 
+import { formatTimestamp } from '@shared/utils/functions';
+
 /**
  * Represents a Channelinfo slash command
  * 
@@ -77,14 +79,15 @@ export default class ChannelinfoCommand extends CommandBase {
       15: 'Fórum'
     }
 
-    const channelCreatedAt: number = ~~(+channel.createdAt / 1e3);
-
     const embed: Embed = new this.client.embed(ctx.user, {
       author: {
         name: `
           Informações de canal: # ${channel.name.toUpperCase()}
         `
       },
+      description: `
+        • Canal criado em ${formatTimestamp(channel.createdAt, 'D')} (${formatTimestamp(channel.createdAt, 'R')})
+      `,
       thumbnail: {
         url: ctx.guild.iconURL()
       },
@@ -92,11 +95,6 @@ export default class ChannelinfoCommand extends CommandBase {
         {
           name: ':id: ID',
           value: `${channel.id}`,
-          inline: true
-        },
-        {
-          name: ':date: Data de criação',
-          value: `<t:${channelCreatedAt}:d> <t:${channelCreatedAt}:R>`,
           inline: true
         },
         {
