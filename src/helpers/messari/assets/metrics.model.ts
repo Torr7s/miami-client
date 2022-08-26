@@ -45,7 +45,7 @@ export class MessariAssetMetricsModel implements MessariAssetMetricsModelProps {
     this.priceUsd = marketData.price_usd ?? 0;
     this.volumeLast24h = marketData.volume_last_24_hours ?? 0;
     this.percentChangeUsdLast24h = marketData.percent_change_usd_last_24_hours ?? 0;
-    this.lastTradeAt = marketData.last_trade_at ?? '00/00/0000';
+    this.lastTradeAt = marketData.last_trade_at ?? '0';
 
     this.rank = marketCap.rank ?? 0;
     this.marketCapDominancePercent = marketCap.marketcap_dominance_percent ?? 0;
