@@ -9,8 +9,7 @@ import {
   EmbedBuilder,
   Interaction,
   InteractionCollector,
-  InteractionReplyOptions,
-  time
+  InteractionReplyOptions
 } from 'discord.js';
 
 import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
