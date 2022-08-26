@@ -30,7 +30,7 @@ import { CommandBase } from '@structures/command';
 interface CommandOptions {
   name: string;
   description: string;
-  category?: 'Dev' | 'Economy' | 'Info' | 'Mod' | 'Others';
+  category?: 'Dev' | 'Info' | 'Mod' | 'Others';
   restricted?: boolean;
   options?: ApplicationCommandOptionData[];
   permissions?: {

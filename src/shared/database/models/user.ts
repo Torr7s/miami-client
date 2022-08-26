@@ -26,30 +26,6 @@ const userSchema = new Schema<UserSchema>({
     type: String,
     required: true
   },
-  cooldowns: {
-    daily: {
-      type: Number,
-      default: 0
-    }
-  },
-  status: {
-    rp: {
-      type: Number,
-      default: 0
-    },
-    level: {
-      type: Number,
-      default: 1
-    },
-    vip: {
-      type: Boolean,
-      default: false
-    },
-    coins: {
-      type: Number,
-      default: 5000
-    }
-  },
   createdAt: {
     type: Date,
     default: Date.now()
