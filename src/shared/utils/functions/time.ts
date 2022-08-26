@@ -1,3 +1,5 @@
+import { time, TimestampStylesString } from 'discord.js';
+
 type Millis = {
   days?: number;
   hours?: number;
@@ -30,12 +32,8 @@ export function formatMs(ms: number): string {
   return `${days}D ${hours}H ${minutes}m ${seconds}s`;
 }
 
-export function formatTimestamp(timestamp: string): string {
+export function formatTimestamp(date?: string | number | Date, formatter?: TimestampStylesString): string {
   return (
-    new Date(timestamp).toLocaleDateString('pt-BR', {
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit'
-    })
+    date.toString() === '0' ? '00/00/0000' : time(new Date(date), formatter ?? 'f')
   );
-}
+} 
