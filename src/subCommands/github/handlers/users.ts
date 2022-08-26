@@ -1,4 +1,4 @@
-import { InteractionReplyOptions } from 'discord.js';
+import { codeBlock, InteractionReplyOptions } from 'discord.js';
 
 import { CommandContext } from '@structures/commandContext';
 
@@ -22,9 +22,9 @@ export const githubUsersHandler = async (ctx: CommandContext, user: string): Pro
   }
 
   const description: string[] = [
-    `\`\`\`${res.bio ?? 'Nenhuma biografia definida'}\`\`\``,
-    `:calendar_spiral: Criado em: \`${formatTimestamp(res.created_at)}\``,
-    `:calendar_spiral: Última atualização: \`${formatTimestamp(res.updated_at)}\``
+    `${codeBlock(res.bio ?? 'Nenhuma biografia definida')}`,
+    `:calendar_spiral: Criado em: ${formatTimestamp(res.created_at)}`,
+    `:calendar_spiral: Última atualização: ${formatTimestamp(res.updated_at)}`
   ];
 
   const embed: Embed = new Embed(ctx.user, {
