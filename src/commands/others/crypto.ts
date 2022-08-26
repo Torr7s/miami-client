@@ -19,7 +19,7 @@ import { MessariAssetMetricsModel, messariRequestHandler } from '@helpers/messar
 
 import { Embed } from '@shared/builders/embed';
 
-import { toCurrency, formatNumber } from '@shared/utils/functions';
+import { toCurrency, formatNumber, formatTimestamp } from '@shared/utils/functions';
 
 /**
  * Represents a Crypto slash command
@@ -104,14 +104,14 @@ export default class CryptoCommand extends CommandBase {
 
     const metrics: MessariAssetMetricsModel = MessariAssetMetricsModel.build(asset);
 
-    const lastTrade: string = time(new Date(metrics.lastTradeAt));
-    const lastTradeAt: string = time(new Date(metrics.lastTradeAt), 'R');
+    const lastTrade: string = formatTimestamp(metrics.lastTradeAt);
+    const lastTradeAt: string = formatTimestamp(metrics.lastTradeAt, 'R'); 
 
     const description: string[] = [
       `» \`Dados\`: `,
       `ㅤ• Preço USD: \`${toCurrency(metrics.priceUsd)}\` (Alterou \`${metrics.percentChangeUsdLast24h.toFixed(2)}%\` em 24h)`,
       `ㅤ• Volume nas últimas 24h: ${formatNumber(metrics.volumeLast24h)}`,
-      `ㅤ• Última transação em: ${lastTrade} ${lastTradeAt}`,
+      `ㅤ• Última transação em: ${lastTrade} (${lastTradeAt})`,
       `» \`Capitalização do mercado\`: `,
       `ㅤ• Rank: ${metrics.rank}`,
       `ㅤ• Dominância: \`${metrics.marketCapDominancePercent.toFixed(2)}%\``,
