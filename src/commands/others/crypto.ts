@@ -6,6 +6,7 @@ import {
   ButtonStyle,
   CollectedInteraction,
   ComponentType,
+  EmbedBuilder,
   Interaction,
   InteractionCollector,
   InteractionReplyOptions,
@@ -118,14 +119,10 @@ export default class CryptoCommand extends CommandBase {
       `ㅤ• Capital atual USD: \`${toCurrency(metrics.currentMarketCapUsd)}\``
     ];
 
-    const mainEmbed: Embed = new this.client.embed(ctx.user, {
-      author: {
-        name: `
-          [${metrics.symbol}] ${metrics.name} (${metrics.id})
-        `
-      },
-      description: description.join('\n')
-    });
+    const mainEmbed: EmbedBuilder = new this.client.embed(ctx.user)
+      .setAuthor(`[${metrics.symbol}] ${metrics.name} (${metrics.id})`)
+      .setDescription(`${description.join('\n')}`)
+      .build();
 
     const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
       .addComponents(
@@ -203,13 +200,11 @@ export default class CryptoCommand extends CommandBase {
             );
           });
 
-          const embed: Embed = new this.client.embed(ctx.user, {
-            title: 'Posição | Ativo | Preço USD',
-            author: {
-              name: 'Top ativos no momento'
-            },
-            description: `${description.join('\n')}`
-          });
+          const embed: EmbedBuilder = new this.client.embed(ctx.user)
+            .setTitle('Posição | Ativo | Preço USD')
+            .setAuthor('Top ativos no momento')
+            .setDescription(`${description.join('\n')}`)
+            .build()
 
           await target.editReply({
             embeds: [embed],

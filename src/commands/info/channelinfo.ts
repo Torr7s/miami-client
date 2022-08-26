@@ -2,6 +2,7 @@ import {
   APIInteractionDataResolvedChannel,
   ApplicationCommandOptionType,
   Channel,
+  EmbedBuilder,
   GuildBasedChannel,
   InteractionReplyOptions
 } from 'discord.js';
@@ -79,45 +80,16 @@ export default class ChannelinfoCommand extends CommandBase {
       15: 'Fórum'
     }
 
-    const embed: Embed = new this.client.embed(ctx.user, {
-      author: {
-        name: `
-          Informações de canal: # ${channel.name.toUpperCase()}
-        `
-      },
-      description: `
-        • Canal criado em ${formatTimestamp(channel.createdAt, 'D')} (${formatTimestamp(channel.createdAt, 'R')})
-      `,
-      thumbnail: {
-        url: ctx.guild.iconURL()
-      },
-      fields: [
-        {
-          name: ':id: ID',
-          value: `${channel.id}`,
-          inline: true
-        },
-        {
-          name: ':knot: Tipo',
-          value: `${channelTypes[channel.type]}`,
-          inline: true
-        }
-      ]
-    });
+    const embed = new this.client.embed(ctx.user)
+      .setAuthor(`Informações de canal: # ${channel.name.toUpperCase()}`)
+      .setDescription(`• Canal criado em ${formatTimestamp(channel.createdAt, 'D')} (${formatTimestamp(channel.createdAt, 'R')})`)
+      .setThumbnail(`${ctx.guild.iconURL()}`)
+      .addField(':id: ID', `${channel.id}`)
+      .addField(':knot: Tipo', `${channelTypes[channel.type]}`)
 
     if (channel.type === 0) {
-      embed.addFields([
-        {
-          name: ':no_entry_sign: NSFW',
-          value: `${channel.nsfw ? 'Sim' : 'Não'}`,
-          inline: true
-        },
-        {
-          name: ':first_place: Posição',
-          value: `${channel.position}º lugar`,
-          inline: true
-        }
-      ]);
+      embed.addField(':no_entry_sign: NSFW', `${channel.nsfw ? 'Sim' : 'Não'}`)
+      embed.addField(':first_place: Posição', `${channel.position}º lugar`)
     }
 
     if (channel.type === 2 || channel.type === 13) {
@@ -137,28 +109,14 @@ export default class ChannelinfoCommand extends CommandBase {
         'us-west': 'América Ocidental'
       }
 
-      embed.addFields([
-        {
-          name: ':zap:Taxa de bits',
-          value: `${channel.bitrate}`,
-          inline: true
-        },
-        {
-          name: ':busts_in_silhouette: Membros agora',
-          value: `${channel.members.size}/${channel.userLimit}`,
-          inline: true
-        },
-        {
-          name: ':map: Região',
-          value: `${voiceRegions[channel.rtcRegion] ?? 'Auto'}`,
-          inline: true
-        }
-      ]);
+      embed.addField(':zap: Taxa de bits', `${channel.bitrate}`)
+      embed.addField(':busts_in_silhouette: Membros agora', `${channel.members.size}/${channel.userLimit}`)
+      embed.addField(':map: Região', `${voiceRegions[channel.rtcRegion] ?? 'Auto'}`)
     }
-
+    
     return ctx.reply({
       embeds: [
-        embed
+        embed.build()
       ]
     });
   }

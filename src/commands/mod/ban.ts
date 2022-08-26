@@ -1,6 +1,7 @@
 import {
   ApplicationCommandOptionType,
   DMChannel,
+  EmbedBuilder,
   GuildMember,
   InteractionReplyOptions,
   PermissionFlagsBits,
@@ -9,7 +10,6 @@ import {
 } from 'discord.js';
 
 import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
-import { Embed } from '@shared/builders/embed';
 
 /**
  * Represents a Ban slash command
@@ -129,26 +129,13 @@ export default class BanCommand extends CommandBase {
     const deleteMessageDays: number = ctx.interaction.options.getNumber('days');
     const reason: string = ctx.interaction.options.getString('reason') ?? 'Motivo não definido';
 
-    const embed: Embed = new this.client.embed(targetUser, {
-      author: {
-        name: 'Banido do servidor'
-      },
-      description: `Você foi banido do servidor \`${ctx.guild.name}\``,
-      thumbnail: {
-        url: ctx.guild.iconURL()
-      },
-      fields: [
-        {
-          name: 'Autor',
-          value: `${ctx.user.tag}`,
-          inline: true
-        },
-        {
-          name: 'Motivo',
-          value: `\`${reason}\``
-        }
-      ]
-    });
+    const embed: EmbedBuilder = new this.client.embed(targetUser)
+      .setAuthor('Banido do servidor')
+      .setDescription(`Você foi banido do servidor \`${ctx.guild.name}\``)
+      .setThumbnail(`${ctx.guild.iconURL()}`)
+      .addField('Autor', `${ctx.user.tag}`)
+      .addField('Motivo', `\`${reason}\``)
+      .build();
 
     try {
       const dm: DMChannel = await targetUser.createDM();

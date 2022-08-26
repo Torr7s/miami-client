@@ -5,6 +5,7 @@ import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
 import { Embed } from '@shared/builders/embed';
 
 import { resolveFlags } from '@shared/utils/discord/resolvables/flags';
+import { formatTimestamp } from '@shared/utils/functions';
 
 /**
  * Represents a Userinfo slash command
@@ -23,7 +24,7 @@ export default class UserinfoCommand extends CommandBase {
    */
   constructor(client: MiamiClient) {
     super(client, {
-      name: 'user',
+      name: 'usuário',
       description: 'Ver informações de um usuário',
       category: 'Info',
       options: [
@@ -67,49 +68,28 @@ export default class UserinfoCommand extends CommandBase {
   async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
     const user: User = ctx.resolvedUsers[0];
 
-    const userCreatedAt: number = ~~(+user.createdAt / 1e3);
-
-    const embed: Embed = new this.client.embed(ctx.user, {
-      title: `Informações de ${user.tag}`,
-      thumbnail: {
-        url: user.avatarURL()
-      },
-      fields: [
-        {
-          name: ':id: ID',
-          value: `${user.id}`,
-          inline: true
-        },
-        {
-          name: ':date: Conta criada em',
-          value: `<t:${userCreatedAt}:d> <t:${userCreatedAt}:R>`,
-          inline: true
-        }
-      ]
-    });
+    const embed: Embed = new this.client.embed(ctx.user)
+      .setAuthor(`Informações de ${user.tag}`)
+      .setDescription(`• Conta criada em ${formatTimestamp(user.createdAt, 'D')} (${formatTimestamp(user.createdAt, 'R')})`)
+      .setThumbnail(`${user.displayAvatarURL()}`)
+      .addField(':id: ID', `${user.id}`)
 
     const member: GuildMember = ctx.guild.members.cache.get(user.id);
 
     if (member) {
-      embed.addFields([
-        {
-          name: ':dart: Status',
-          value: `${this.getStatus(member.presence?.status) ?? 'Offline'}`
-        }
-      ]);
+      const memberStatus: string = this.getStatus(member.presence?.status) ?? 'Offline'
+
+      embed.addField(':dart: Status', `${memberStatus}`);
     }
 
     const { flags } = resolveFlags(user.flags);
 
-    if (flags) {
-      embed.addFields([
-        {
-          name: `:triangular_flag_on_post: Flags`,
-          value: `${flags}`
-        }
-      ]);
-    }
+    if (flags) embed.addField(':triangular_flag_on_post: Flags', `${flags}`);
 
-    return ctx.reply({ embeds: [embed] });
+    return ctx.reply({
+      embeds: [
+        embed.build()
+      ]
+    });
   }
 }
