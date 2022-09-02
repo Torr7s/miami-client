@@ -1,4 +1,4 @@
-import { Interaction, InteractionResponse, Message } from 'discord.js';
+import { Interaction, InteractionResponse } from 'discord.js';
 
 import { Command } from '@types';
 
@@ -39,9 +39,9 @@ export default class InteractionCreateEvent extends EventBase {
    * 
    * @param {Interaction} interaction - The created interaction
    * 
-   * @returns {Promise<InteractionResponse<boolean> | void>} interaction | message | void 
+   * @returns {Promise<InteractionResponse | void>} interaction | void 
    */
-  async run(interaction: Interaction): Promise<InteractionResponse | Message | void> {
+  async run(interaction: Interaction):  Promise<InteractionResponse | void> {
     try {
       const { user, guild } = interaction;
 
