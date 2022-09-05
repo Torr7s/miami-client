@@ -23,14 +23,14 @@ userSchema.static('findOrCreate', async function findOrCreate(guildId: string, u
   UserSchema & {
     _id: Types.ObjectId
   }> {
-    let user:   UserSchema & { _id: Types.ObjectId } = await this.findOne({ guildId, userId });
+  let user: UserSchema & { _id: Types.ObjectId } = await this.findOne({ guildId, userId });
 
-    if (!user) {
-      user = await this.create({
-        guildId,
-        userId
-      });
-    }
+  if (!user) {
+    user = await this.create({
+      guildId,
+      userId
+    });
+  }
 
   return user;
 });
