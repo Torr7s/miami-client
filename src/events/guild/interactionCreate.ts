@@ -60,11 +60,8 @@ export default class InteractionCreateEvent extends EventBase {
             }
 
             if (command.requiresDatabase) {
-              const guildObj = { guildId: guild.id, ownerId: guild.ownerId };
-              const userObj = { userId: user.id, guildId: guild.id };
-
-              await this.client.guildsDb.findOne(guildObj) ?? await this.client.guildsDb.create(guildObj);
-              await this.client.usersDb.findOne(userObj) ?? await this.client.usersDb.create(userObj);
+              await this.client.guildsDb.findOrCreate(guild.id);
+              await this.client.usersDb.findOrCreate(guild.id, user.id);
             }
 
             const { appPerms, memberPerms } = command.permissions;
