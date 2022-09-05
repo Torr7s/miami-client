@@ -5,8 +5,8 @@ import config from '../config';
 
 import Discord from 'discord.js';
 
-import guilds from '@shared/database/models/guild';
-import users from '@shared/database/models/user';
+import guilds from '@shared/database/models/guilds';
+import users from '@shared/database/models/users';
 
 import { join } from 'node:path';
 import { Command } from '@types';
