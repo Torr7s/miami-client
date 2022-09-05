@@ -12,7 +12,7 @@ const guildSchema = new Schema<GuildSchema, GuildModel>({
   settings: {
     locale: {
       type: String,
-      default: 'pt-BR'    
+      default: 'pt-BR'
     }
   },
   createdAt: {
@@ -24,7 +24,7 @@ const guildSchema = new Schema<GuildSchema, GuildModel>({
 guildSchema.static('findOrCreate', async function findOrCreate(guildId: string): Promise<GuildSchema & {
   _id: Types.ObjectId
 }> {
-  let guild = await this.findOne({ guildId });
+  let guild: GuildSchema & { _id: Types.ObjectId } = await this.findOne({ guildId });
 
   if (!guild) {
     guild = await this.create({
