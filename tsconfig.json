@@ -1,10 +1,13 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "module": "commonjs",
     "baseUrl": "./src",
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "moduleResolution": "node",
     "paths": {
       "@config/*": [
         "config/*"
@@ -25,18 +28,15 @@
         "structures/*"
       ]
     },
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "strict": false,
     "typeRoots": [
       "src/@types",
       "node_modules/@types"
     ],
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "strict": false,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true
-  }
+  },
 }
