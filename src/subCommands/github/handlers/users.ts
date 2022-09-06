@@ -1,6 +1,6 @@
 import { codeBlock, InteractionReplyOptions } from 'discord.js';
 
-import { CommandContext } from '@structures/commandContext';
+import CommandContext from '@structures/commandContext';
 
 import { Embed } from '@shared/builders/embed';
 import { formatTimestamp } from '@shared/utils/functions/time';

@@ -2,14 +2,13 @@ import {
   APIInteractionDataResolvedChannel,
   ApplicationCommandOptionType,
   Channel,
-  EmbedBuilder,
   GuildBasedChannel,
   InteractionReplyOptions
 } from 'discord.js';
 
-import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
-
-import { Embed } from '@shared/builders/embed';
+import CommandBase from '@structures/command';
+import CommandContext from '@structures/commandContext';
+import MiamiClient from '@structures/client';
 
 import { formatTimestamp } from '@shared/utils/functions';
 

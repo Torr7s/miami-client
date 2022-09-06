@@ -1,11 +1,13 @@
 import { Interaction, InteractionResponse } from 'discord.js';
 
+import CommandContext from '@structures/commandContext';
+import EventBase from '@structures/event';
+import MiamiClient from '@structures/client';
+
 import { Command } from '@types';
 
 import { Logger } from '@shared/utils/logger';
 import { resolvePermissions } from '@shared/utils/discord/resolvables/permissions';
-
-import { CommandContext, EventBase, MiamiClient } from '@structures/index';
 
 /**
  * Represents a InteractionCreate client event

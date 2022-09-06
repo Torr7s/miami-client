@@ -12,7 +12,9 @@ import {
   InteractionReplyOptions
 } from 'discord.js';
 
-import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
+import CommandBase from '@structures/command';
+import CommandContext from '@structures/commandContext';
+import MiamiClient from '@structures/client';
 
 import { MessariAllAssets, MessariAssetMetrics } from '@types';
 import { MessariAssetMetricsModel, messariRequestHandler } from '@helpers/messari';

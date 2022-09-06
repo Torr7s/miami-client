@@ -7,7 +7,9 @@ import {
   PermissionFlagsBits
 } from 'discord.js';
 
-import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
+import CommandBase from '@structures/command';
+import CommandContext from '@structures/commandContext';
+import MiamiClient from '@structures/client';
 
 /**
  * Represents a Clear slash command

@@ -1,6 +1,8 @@
 import { ApplicationCommandOptionType, PermissionFlagsBits } from 'discord.js';
 
-import { CommandBase, CommandContext, MiamiClient } from '@structures/index';
+import CommandBase from '@structures/command';
+import CommandContext from '@structures/commandContext';
+import MiamiClient from '@structures/client';
 
 import { githubRepositoriesHandler, githubUsersHandler } from '@subcmds/github';
 
