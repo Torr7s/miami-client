@@ -12,7 +12,7 @@ import {
   User,
 } from 'discord.js';
 
-import { MiamiClient } from './client';
+import MiamiClient from './client';
 
 /**
  * Represents a Command Context
@@ -25,7 +25,7 @@ import { MiamiClient } from './client';
  * @prop {Array<Role | APIRole>} [resolvedRoles] - The resolved roles array of a command interaction
  * @prop {Array<Channel | APIInteractionDataResolvedChannel>} [resolvedChannels] - The resolved channels array of a command interaction 
 */
-export class CommandContext {
+export default class CommandContext {
   private readonly client: MiamiClient;
   
   readonly interaction: ChatInputCommandInteraction;

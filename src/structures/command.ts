@@ -1,6 +1,6 @@
 import { ApplicationCommandOptionData, PermissionResolvable } from 'discord.js';
 
-import { MiamiClient } from './client';
+import MiamiClient from './client';
 
 import { CommandOptions } from '@types';
 
@@ -22,7 +22,7 @@ import { CommandOptions } from '@types';
  * @prop {Boolean} [requiresDatabase] - Whether the command requires the database 
  * @prop {Number} [cooldown] - The command cooldown
  */ 
-export class CommandBase implements CommandOptions {
+export default class CommandBase implements CommandOptions {
   client: MiamiClient;
 
   name: string;

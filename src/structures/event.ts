@@ -1,4 +1,4 @@
-import { MiamiClient } from './client';
+import MiamiClient from './client';
 
 /**
  * Represents the basic structure for events
@@ -9,7 +9,7 @@ import { MiamiClient } from './client';
  * @prop {MiamiClient} client - The MiamiClient instance
  * @prop {String} name - The event name
  */
-export class EventBase {
+export default class EventBase {
   client: MiamiClient;
   name: string;
 

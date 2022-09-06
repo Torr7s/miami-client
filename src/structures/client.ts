@@ -29,7 +29,7 @@ import { Button } from '@shared/builders/button';
  * @prop {Button} button - The button builder
  * @prop {Embed} embed - The embed builder
  */
-export class MiamiClient extends Discord.Client {
+export default class MiamiClient extends Discord.Client {
   private readonly logger: Logger;
 
   config: typeof config;
