@@ -4,7 +4,7 @@ import CommandBase from '@structures/command';
 import CommandContext from '@structures/commandContext';
 import MiamiClient from '@structures/client';
 
-import { githubRepositoriesHandler, githubUsersHandler } from '@subcmds/github';
+import { githubRepositoriesHandler, githubUsersHandler } from '../@subCommands/others/github';
 
 /**
  * Represents a Github slash command
