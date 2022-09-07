@@ -73,7 +73,7 @@ export default class MiamiClient extends Discord.Client {
     this.commands = [];
     this.button = Button;
     this.embed = Embed;
-    
+
     this.cooldowns = new Map();
 
     this.loadEvents();
@@ -135,13 +135,15 @@ export default class MiamiClient extends Discord.Client {
     const categories: string[] = fs.readdirSync(path);
 
     for (const category of categories) {
-      const commands: string[] = fs.readdirSync(`${path}/${category}`);
+      if (category !== '@subCommands') {
+        const commands: string[] = fs.readdirSync(`${path}/${category}`);
 
-      for (const command of commands) {
-        const Command = require(join(process.cwd(), `${path}/${category}/${command}`)).default;
-        const cmd = new (Command)(this);
+        for (const command of commands) {
+          const Command = require(join(process.cwd(), `${path}/${category}/${command}`)).default;
+          const cmd = new (Command)(this);
 
-        this.commands.push(cmd);
+          this.commands.push(cmd);
+        }
       }
     }
   }
