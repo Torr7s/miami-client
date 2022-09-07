@@ -12,17 +12,11 @@
       "@config/*": [
         "config/*"
       ],
-      "@controllers/*": [
-        "controllers/*"
-      ],
       "@helpers/*": [
         "helpers/*"
       ],
       "@shared/*": [
         "shared/*"
-      ],
-      "@subcmds/*": [
-        "subCommands/*"
       ],
       "@structures/*": [
         "structures/*"
