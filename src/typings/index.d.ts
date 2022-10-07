@@ -8,8 +8,7 @@ import {
   PermissionResolvable
 } from 'discord.js';
 
-import CommandBase from '@structures/command';
-import CommandContext from '@structures/commandContext';
+import CommandContext from '@/src/structures/commandContext';
 
 /**
  * Interface type for Command options
