@@ -5,11 +5,11 @@ import {
   PermissionFlagsBits
 } from 'discord.js';
 
-import CommandBase from '@structures/command';
-import CommandContext from '@structures/commandContext';
-import MiamiClient from '@structures/client';
+import CommandBase from '@/src/structures/command';
+import CommandContext from '@/src/structures/commandContext';
+import MiamiClient from '@/src/structures/client';
 
-import { Logger } from '@shared/utils/logger';
+import { Logger } from '@/src/shared/utils/logger';
 
 /**
  * Represents an AddEmoji slash command

@@ -1,5 +1,5 @@
 import { Schema, Types } from 'mongoose';
-import database from '../..';
+import database from '@/src/database';
 
 import { UserModel, UserSchema } from './interfaces/users.interface';
 

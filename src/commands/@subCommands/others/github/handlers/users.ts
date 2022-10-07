@@ -1,13 +1,13 @@
 import { codeBlock, InteractionReplyOptions } from 'discord.js';
 
-import CommandContext from '@structures/commandContext';
+import CommandContext from '@/src/structures/commandContext';
 
-import { Embed } from '@shared/builders/embed';
-import { formatTimestamp } from '@shared/utils/functions/time';
+import { Embed } from '@/src/shared/builders/embed';
+import { formatTimestamp } from '@/src/shared/utils/functions/time';
 
 import { githubRequestHandler } from '..';
 
-import { GithubUserProps } from '@types';
+import { GithubUserProps } from '@/src/typings';
 
 export const githubUsersHandler = async (ctx: CommandContext, user: string): Promise<InteractionReplyOptions> => {
   const res: GithubUserProps = await githubRequestHandler<GithubUserProps>(`users/${user}`);

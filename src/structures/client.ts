@@ -1,20 +1,20 @@
-import '@shared/database';
+import '@/src/database';
 
 import fs from 'node:fs';
-import config from '../config';
+import config from '@/src/config';
 
 import Discord from 'discord.js';
 
-import guilds from '@shared/database/models/guilds';
-import users from '@shared/database/models/users';
+import guilds from '@/src/shared/database/models/guilds';
+import users from '@/src/shared/database/models/users';
 
 import { join } from 'node:path';
-import { Command } from '@types';
+import { Command } from '@/src/typings';
 
-import { Logger } from '@shared/utils/logger';
+import { Logger } from '@/src/shared/utils/logger';
 
-import { Embed } from '@shared/builders/embed';
-import { Button } from '@shared/builders/button';
+import { Embed } from '@/src/shared/builders/embed';
+import { Button } from '@/src/shared/builders/button';
 
 /**
  * Represents the main Miami client

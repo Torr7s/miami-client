@@ -1,7 +1,7 @@
-import EventBase from '@structures/event';
-import MiamiClient from '@structures/client';
+import EventBase from '@/src/structures/event';
+import MiamiClient from '@/src/structures/client';
 
-import { Logger } from '@shared/utils/logger';
+import { Logger } from '@/src/shared/utils/logger';
 
 /**
  * Represents a Ready client event

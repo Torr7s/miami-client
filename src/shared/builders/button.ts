@@ -1,6 +1,6 @@
 import { APIMessageComponentEmoji, ButtonBuilder, ButtonStyle } from 'discord.js';
 
-import { ButtonOptions } from '@types';
+import { ButtonOptions } from '@/src/typings';
 
 /**
  * Represents the main Button builder

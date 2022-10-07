@@ -1,7 +1,7 @@
 import { ChannelType, Message } from 'discord.js';
 
-import EventBase from '../../structures/event';
-import MiamiClient from '../../structures/client';
+import EventBase from '@/src/structures/event';
+import MiamiClient from '@/src/structures/client';
 
 /**
  * Represents a MessageCreate client event

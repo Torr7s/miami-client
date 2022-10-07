@@ -12,14 +12,14 @@ import {
   InteractionReplyOptions
 } from 'discord.js';
 
-import CommandBase from '@structures/command';
-import CommandContext from '@structures/commandContext';
-import MiamiClient from '@structures/client';
+import CommandBase from '@/src/structures/command';
+import CommandContext from '@/src/structures/commandContext';
+import MiamiClient from '@/src/structures/client';
 
-import { MessariAllAssets, MessariAssetMetrics } from '@types';
-import { MessariAssetMetricsModel, messariRequestHandler } from '@helpers/messari';
+import { MessariAllAssets, MessariAssetMetrics } from '@/src/typings';
+import { MessariAssetMetricsModel, messariRequestHandler } from '@/src/helpers/messari';
 
-import { toCurrency, formatNumber, formatTimestamp } from '@shared/utils/functions';
+import { toCurrency, formatNumber, formatTimestamp } from '@/src/shared/utils/functions';
 
 /**
  * Represents a Crypto slash command
@@ -105,7 +105,7 @@ export default class CryptoCommand extends CommandBase {
     const metrics: MessariAssetMetricsModel = MessariAssetMetricsModel.build(asset);
 
     const lastTrade: string = formatTimestamp(metrics.lastTradeAt);
-    const lastTradeAt: string = formatTimestamp(metrics.lastTradeAt, 'R'); 
+    const lastTradeAt: string = formatTimestamp(metrics.lastTradeAt, 'R');
 
     const description: string[] = [
       `» \`Dados\`: `,

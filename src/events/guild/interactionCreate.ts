@@ -1,13 +1,13 @@
 import { Interaction, InteractionResponse } from 'discord.js';
 
-import CommandContext from '@structures/commandContext';
-import EventBase from '@structures/event';
-import MiamiClient from '@structures/client';
+import CommandContext from '@/src/structures/commandContext';
+import EventBase from '@/src/structures/event';
+import MiamiClient from '@/src/structures/client';
 
-import { Command } from '@types';
+import { Command } from '@/src/typings';
 
-import { Logger } from '@shared/utils/logger';
-import { resolvePermissions } from '@shared/utils/discord/resolvables/permissions';
+import { Logger } from '@/src/shared/utils/logger';
+import { resolvePermissions } from '@/src/shared/utils/discord/resolvables/permissions';
 
 /**
  * Represents a InteractionCreate client event
@@ -43,7 +43,7 @@ export default class InteractionCreateEvent extends EventBase {
    * 
    * @returns {Promise<InteractionResponse | void>} interaction | void 
    */
-  async run(interaction: Interaction):  Promise<InteractionResponse | void> {
+  async run(interaction: Interaction): Promise<InteractionResponse | void> {
     try {
       const { user, guild } = interaction;
 

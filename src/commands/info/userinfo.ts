@@ -1,13 +1,13 @@
 import { ApplicationCommandOptionType, GuildMember, InteractionReplyOptions, User } from 'discord.js';
 
-import CommandBase from '@structures/command';
-import CommandContext from '@structures/commandContext';
-import MiamiClient from '@structures/client';
+import CommandBase from '@/src/structures/command';
+import CommandContext from '@/src/structures/commandContext';
+import MiamiClient from '@/src/structures/client';
 
-import { Embed } from '@shared/builders/embed';
+import { Embed } from '@/src/shared/builders/embed';
 
-import { resolveFlags } from '@shared/utils/discord/resolvables/flags';
-import { formatTimestamp } from '@shared/utils/functions';
+import { resolveFlags } from '@/src/shared/utils/discord/resolvables/flags';
+import { formatTimestamp } from '@/src/shared/utils/functions';
 
 /**
  * Represents a Userinfo slash command

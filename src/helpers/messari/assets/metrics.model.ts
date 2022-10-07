@@ -1,4 +1,4 @@
-import { MessariAssetMetrics, MessariAssetMetricsModelProps } from '@types';
+import { MessariAssetMetrics, MessariAssetMetricsModelProps } from '@/src/typings';
 
 /**
  * Represents the model for an asset

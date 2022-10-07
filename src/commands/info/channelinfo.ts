@@ -6,11 +6,11 @@ import {
   InteractionReplyOptions
 } from 'discord.js';
 
-import CommandBase from '@structures/command';
-import CommandContext from '@structures/commandContext';
-import MiamiClient from '@structures/client';
+import CommandBase from '@/src/structures/command';
+import CommandContext from '@/src/structures/commandContext';
+import MiamiClient from '@/src/structures/client';
 
-import { formatTimestamp } from '@shared/utils/functions';
+import { formatTimestamp } from '@/src/shared/utils/functions';
 
 /**
  * Represents a Channelinfo slash command

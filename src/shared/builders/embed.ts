@@ -7,7 +7,7 @@ import {
   User
 } from 'discord.js';
 
-import config from '../../config';
+import config from '@/src/config';
 
 /**
  * Represents the client Embed 

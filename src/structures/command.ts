@@ -2,7 +2,7 @@ import { ApplicationCommandOptionData, PermissionResolvable } from 'discord.js';
 
 import MiamiClient from './client';
 
-import { CommandOptions } from '@types';
+import { CommandOptions } from '@/src/typings';
 
 /**
  * Represents the basic structure for commands
