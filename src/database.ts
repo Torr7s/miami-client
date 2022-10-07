@@ -1,11 +1,9 @@
 import { Connection, createConnection } from 'mongoose';
-import { Logger } from '@shared/utils/logger';
+import { Logger } from '@/src/shared/utils/logger';
 
-import config from '../../config';
+import config from './config';
 
 const logger: Logger = Logger.it('Mongoose');
-
-logger.clear();
 
 const database: Connection = createConnection(config.mongoURI);
 
