@@ -1,36 +1,39 @@
 {
   "compilerOptions": {
     "target": "es6",
-    "module": "commonjs",
-    "baseUrl": "./src",
-    "rootDir": "./src",
-    "outDir": "./dist",
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "paths": {
-      "@config/*": [
-        "config/*"
-      ],
-      "@helpers/*": [
-        "helpers/*"
-      ],
-      "@shared/*": [
-        "shared/*"
-      ],
-      "@structures/*": [
-        "structures/*"
-      ]
-    },
+    "module": "commonjs",
+    "lib": [
+      "es6"
+    ],
+    "sourceMap": true,
+    "allowJs": true,
+    "outDir": "dist",
     "resolveJsonModule": true,
-    "esModuleInterop": true,
     "strict": false,
+    "skipLibCheck": true,
     "typeRoots": [
-      "src/@types",
+      "./src/typings/**/*",
       "node_modules/@types"
     ],
+    "removeComments": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "skipLibCheck": true
+    "esModuleInterop": true,
+    "baseUrl": ".",
+    "allowSyntheticDefaultImports": true,
+    "paths": {
+      "@/src/*": [
+        "./src/*"
+      ],
+    },
+    "rootDirs": [
+      "./src"
+    ],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
+  "exclude": [
+    "./node_modules/*",
+    "dist"
+  ]
 }
