@@ -5,12 +5,15 @@ import CommandContext from '@/src/structures/commandContext';
 import { Embed } from '@/src/shared/builders/embed';
 import { formatTimestamp } from '@/src/shared/utils/functions/time';
 
-import { githubRequestHandler } from '..';
-
+import { GithubRequester } from '../requester';
 import { GithubUserProps } from '@/src/typings';
 
+const githubRequester: GithubRequester = new GithubRequester();
+
 export const githubUsersHandler = async (ctx: CommandContext, user: string): Promise<InteractionReplyOptions> => {
-  const res: GithubUserProps = await githubRequestHandler<GithubUserProps>(`users/${user}`);
+  const res: GithubUserProps = await githubRequester.get<
+    GithubUserProps
+  >(`users/${user}`);
 
   if (!res.id) {
     return ctx.reply({

@@ -5,12 +5,15 @@ import CommandContext from '@/src/structures/commandContext';
 import { Embed } from '@/src/shared/builders/embed';
 import { formatTimestamp } from '@/src/shared/utils/functions/time';
 
-import { githubRequestHandler } from '..';
-
+import { GithubRequester } from '../requester';
 import { GithubRepositoryProps } from '@/src/typings';
 
-export const githubRepositoriesHandler = async (ctx: CommandContext, repoUser: string, repoName: string): Promise<InteractionReplyOptions> => {
-  const res: GithubRepositoryProps = await githubRequestHandler<GithubRepositoryProps>(`repos/${repoUser}/${repoName}`);
+const githubRequester: GithubRequester = new GithubRequester();
+
+export const githubRepositoriesHandler = async (ctx: CommandContext, repositoryOwner: string, repositoryName: string): Promise<InteractionReplyOptions> => {
+  const res: GithubRepositoryProps = await githubRequester.get<
+    GithubRepositoryProps
+  >(`repos/${repositoryOwner}/${repositoryName}`);
 
   if (!res.id) {
     return ctx.reply({
