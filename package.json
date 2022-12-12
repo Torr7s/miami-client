@@ -13,22 +13,24 @@
   "version": "1.0.0",
   "license": "Apache-2.0",
   "engines": {
-    "node": ">=16.16.0",
+    "node": ">=18.12.0",
     "yarn": "1.22.19"
   },
   "scripts": {
     "build": "tsc",
-    "start": "yarn build && node dist/index.js",
-    "start:dev": "tsnd -r tsconfig-paths/register --inspect --transpile-only --ignore-watch 'node_modules' --respawn 'src/index.ts'"
+    "start": "node dist/src/index.js",
+    "start:dev": "tsnd --inspect --transpile-only --ignore-watch 'node_modules' --respawn 'src/index.ts'"
   },
   "dependencies": {
-    "discord.js": "14.3.0",
+    "config": "^3.3.8",
+    "discord.js": "^14.7.1",
     "dotenv": "^16.0.1",
     "module-alias": "^2.2.2",
     "mongoose": "^6.5.2",
     "undici": "^5.9.1"
   },
   "devDependencies": {
+    "@types/config": "^3.3.0",
     "@types/module-alias": "^2.0.1",
     "@types/node": "^18.7.17",
     "ts-node-dev": "^2.0.0",
