@@ -9,21 +9,9 @@ import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
-/**
- * Represents a Unban slash command
- * 
- * @class @extends CommandBase
- * 
- * @prop {MiamiClient} client - The MiamiClient instance
- */
 export default class UnbanCommand extends CommandBase {
   client: MiamiClient;
 
-  /**
-   * @constructs UnbanCommand
-   * 
-   * @param {MiamiClient} client - The MiamiClient instance 
-   */
   constructor(client: MiamiClient) {
     super(client, {
       name: 'desbanir',
@@ -49,15 +37,6 @@ export default class UnbanCommand extends CommandBase {
     this.client = client;
   }
 
-  /**
-   * Handle the incoming interaction as a command
-   * 
-   * @public @method @async
-   * 
-   * @param {CommandContext} ctx - The command context  
-   * 
-   * @returns {Promise<void>} void
-   */
   async run(ctx: CommandContext): Promise<void> {
     const targetUserId: string = ctx.interaction.options.getString('id');
     

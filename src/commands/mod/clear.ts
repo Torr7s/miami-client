@@ -11,21 +11,9 @@ import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
-/**
- * Represents a Clear slash command
- * 
- * @class @extends CommandBase
- * 
- * @prop {MiamiClient} client - The MiamiClient instance
- */
 export default class ClearCommand extends CommandBase {
   client: MiamiClient;
 
-  /**
-   * @constructs ClearCommand
-   * 
-   * @param {MiamiClient} client - The MiamiClient instance 
-   */
   constructor(client: MiamiClient) {
     super(client, {
       name: 'limpar',
@@ -56,15 +44,6 @@ export default class ClearCommand extends CommandBase {
     this.client = client;
   }
 
-  /**
-   * Used to handle the incoming interaction
-   * 
-   * @public @method @async
-   * 
-   * @param {CommandContext} ctx - The command context  
-   * 
-   * @returns {InteractionReplyOptions} options - The given options for ctx
-   */
   async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
     const amount: number = ctx.interaction.options.getNumber('quantidade', true);
 

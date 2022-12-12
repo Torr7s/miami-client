@@ -9,13 +9,6 @@ import { Embed } from '@/src/shared/builders/embed';
 import { resolveFlags } from '@/src/shared/utils/discord/resolvables/flags';
 import { formatTimestamp } from '@/src/shared/utils/functions';
 
-/**
- * Represents a Userinfo slash command
- * 
- * @class @extends CommandBase
- * 
- * @prop {MiamiClient} client - The MiamiClient instance
- */
 export default class UserinfoCommand extends CommandBase {
   client: MiamiClient;
 

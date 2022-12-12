@@ -9,24 +9,11 @@ import { Command } from '@/src/typings';
 import { Logger } from '@/src/shared/utils/logger';
 import { resolvePermissions } from '@/src/shared/utils/discord/resolvables/permissions';
 
-/**
- * Represents a InteractionCreate client event
- * 
- * @class @extends EventBase
- * @classdesc Emitted whenever a interaction is created
- * 
- * @prop {MiamiClient} client - The MiamiClient instance
- */
 export default class InteractionCreateEvent extends EventBase {
   private readonly logger: Logger;
 
   client: MiamiClient;
 
-  /**
-   * @constructs InteractionCreateEvent
-   * 
-   * @param {MiamiClient} client - The MiamiClient instance 
-   */
   constructor(client: MiamiClient) {
     super(client, 'interactionCreate');
 
@@ -34,15 +21,6 @@ export default class InteractionCreateEvent extends EventBase {
     this.logger = Logger.it(this.constructor.name);
   }
 
-  /**
-   * Used to handle created interactions
-   * 
-   * @public @method @async
-   * 
-   * @param {Interaction} interaction - The created interaction
-   * 
-   * @returns {Promise<InteractionResponse | void>} interaction | void 
-   */
   async run(interaction: Interaction): Promise<InteractionResponse | void> {
     try {
       const { user, guild } = interaction;

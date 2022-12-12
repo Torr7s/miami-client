@@ -12,13 +12,6 @@ import MiamiClient from '@/src/structures/client';
 
 import { formatTimestamp } from '@/src/shared/utils/functions';
 
-/**
- * Represents a Channelinfo slash command
- * 
- * @class @extends CommandBase
- * 
- * @prop {MiamiClient} client - The MiamiClient instance
- */
 export default class ChannelinfoCommand extends CommandBase {
   client: MiamiClient;
 

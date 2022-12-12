@@ -3,37 +3,15 @@ import { ChannelType, Message } from 'discord.js';
 import EventBase from '@/src/structures/event';
 import MiamiClient from '@/src/structures/client';
 
-/**
- * Represents a MessageCreate client event
- * 
- * @class @extends EventBase
- * @classdesc Emitted whenever a message is created
- * 
- * @prop {MiamiClient} client - The MiamiClient instance
- */
 export default class MessageCreateEvent extends EventBase {
   client: MiamiClient;
 
-  /**
-   * @constructs MessageCreateEvent
-   * 
-   * @param {MiamiClient} client - The MiamiClient instance 
-   */
   constructor(client: MiamiClient) {
     super(client, 'messageCreate');
 
     this.client = client;
   }
 
-  /**
-   * Used to handle created messages
-   * 
-   * @public @method @async
-   * 
-   * @param {Message} message - The created message
-   * 
-   * @returns {Promise<Message<boolean> | void>} message | void 
-   */
   async run(message: Message): Promise<Message<boolean> | void> {
     const { author, channel, guild, member } = message;
 

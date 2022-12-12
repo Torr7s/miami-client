@@ -21,19 +21,6 @@ const clientConfig: ClientConfigProps = config.get<
   ClientConfigProps
 >('app.client');
 
-/**
- * Represents the main Miami client
- * 
- * @class @extends Discord.Client
- * 
- * @prop {config} config - The client configuration file
- * @prop {Array<Command>} commands - The commands array 
- * @prop {Collection} cooldowns - The collection of command cooldowns
- * @prop {Model<UserSchema>} usersDb - The mongoose user model   
- * @prop {Model<GuildSchema>} guildsDb - The mongoose guild model
- * @prop {Button} button - The button builder
- * @prop {Embed} embed - The embed builder
- */
 export default class MiamiClient extends Discord.Client {
   private readonly logger: Logger;
 
@@ -45,11 +32,6 @@ export default class MiamiClient extends Discord.Client {
   button: typeof Button;
   embed: typeof Embed;
 
-  /**
-   * Create a new MiamiClient instance
-   * 
-   * @constructs MiamiClient
-   */
   constructor() {
     const clientOptions: Discord.ClientOptions = {
       allowedMentions: {
@@ -88,26 +70,10 @@ export default class MiamiClient extends Discord.Client {
     this.usersDb = users;
   }
 
-  /**
-   * Load client slash commands
-   * 
-   * @public @method @async
-   * 
-   * @returns {Promise<void>} void
-   */
   public async loadSlashCommands(): Promise<void> {
     await this.guilds.cache.get(this.config.guildId).commands.set(this.commands);
   }
 
-  /**
-   * Load and start client events
-   * 
-   * @private @method
-   * 
-   * @param {String} path - The events folder path
-   * 
-   * @returns {void} void
-   */
   private loadEvents(path: string = 'src/events'): void {
     const categories: string[] = fs.readdirSync(path);
 
@@ -127,15 +93,6 @@ export default class MiamiClient extends Discord.Client {
     }
   }
 
-  /**
-   * Load and start client commands
-   * 
-   * @private @method
-   * 
-   * @param {String} path - The commands folder path
-   * 
-   * @returns {void} void
-   */
   private loadCommands(path: string = 'src/commands'): void {
     const categories: string[] = fs.readdirSync(path);
 
@@ -153,13 +110,6 @@ export default class MiamiClient extends Discord.Client {
     }
   }
 
-  /**
-   * Log the client in
-   * 
-   * @public @method @async
-   * 
-   * @returns {Promise<String>} token - The token of the account used
-   */
   public login(): Promise<string> {
     return super.login(this.config.token);
   }

@@ -11,15 +11,6 @@ import MiamiClient from '@/src/structures/client';
 
 import { Logger } from '@/src/shared/utils/logger';
 
-/**
- * Represents an AddEmoji slash command
- * 
- * @class @extends CommandBase
- * 
- * @prop {Object} guildEmojisPerBoostLevel - The number of emojis allowed per guild boost level
- * @prop {Logger} logger - The command logger
- * @prop {MiamiClient} client - The MiamiClient instance
- */
 export default class AddEmojiCommand extends CommandBase {
   private readonly guildEmojisPerBoostLevel = {
     0: 50,
@@ -31,11 +22,6 @@ export default class AddEmojiCommand extends CommandBase {
 
   client: MiamiClient;
 
-  /**
-   * @constructs AddEmojiCommand
-   * 
-   * @param {MiamiClient} client - The MiamiClient instance 
-   */
   constructor(client: MiamiClient) {
     super(client, {
       name: 'addemoji',

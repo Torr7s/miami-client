@@ -13,21 +13,9 @@ import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
-/**
- * Represents a Ban slash command
- * 
- * @class @extends CommandBase
- * 
- * @prop {MiamiClient} client - The MiamiClient instance
- */
 export default class BanCommand extends CommandBase {
   client: MiamiClient;
 
-  /**
-   * @constructs BanCommand
-   * 
-   * @param {MiamiClient} client - The MiamiClient instance 
-   */
   constructor(client: MiamiClient) {
     super(client, {
       name: 'banir',
@@ -80,15 +68,6 @@ export default class BanCommand extends CommandBase {
     this.client = client;
   }
 
-  /**
-   * Handle the incoming interaction as a command
-   * 
-   * @public @method @async
-   * 
-   * @param {CommandContext} ctx - The command context  
-   * 
-   * @returns {Promise<InteractionReplyOptions>} options - The given options for ctx
-   */
   async run(ctx: CommandContext): Promise<InteractionReplyOptions | void> {
     const targetUser: User = ctx.resolvedUsers[0];
     const targetMember: GuildMember = ctx.guild.members.cache.get(targetUser.id);
