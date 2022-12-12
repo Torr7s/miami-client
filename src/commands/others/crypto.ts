@@ -17,25 +17,16 @@ import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
 import { MessariAllAssets, MessariAssetMetrics } from '@/src/typings';
-import { MessariAssetMetricsModel, messariRequestHandler } from '@/src/helpers/messari';
+import { MessariRequester } from '@/src/resources/messari/requester';
+import { MessariAssetMetricsModel } from '@/src/resources/messari/assets/metrics.model';
 
 import { toCurrency, formatNumber, formatTimestamp } from '@/src/shared/utils/functions';
 
-/**
- * Represents a Crypto slash command
- * 
- * @class @extends CommandBase
- * 
- * @prop {MiamiClient} client - The MiamiClient instance
- */
+const messariRequestHandler = new MessariRequester();
+
 export default class CryptoCommand extends CommandBase {
   client: MiamiClient;
 
-  /**
-   * @constructs CryptoCommand
-   * 
-   * @param {MiamiClient} client - The MiamiClient instance 
-   */
   constructor(client: MiamiClient) {
     super(client, {
       name: 'cripto',
@@ -61,13 +52,6 @@ export default class CryptoCommand extends CommandBase {
     this.client = client;
   }
 
-  /**
-   * Format an asset percentage accordingly
-   * 
-   * @param {Number} percent - The asset change percentage
-   * 
-   * @returns {String} result - The formatted result 
-   */
   formatPercent(percent: number): string {
     let result: string = String(percent);
     const fixed: string = percent.toFixed(2);
@@ -79,19 +63,10 @@ export default class CryptoCommand extends CommandBase {
     return result;
   }
 
-  /**
-   * Handle the incoming interaction as a command
-   * 
-   * @public @method @async
-   * 
-   * @param {CommandContext} ctx - The command context  
-   * 
-   * @returns {InteractionReplyOptions | void} options - The given options for ctx
-   */
   async run(ctx: CommandContext): Promise<InteractionReplyOptions | void> {
     const option: string = ctx.interaction.options.getString('ativo', true);
 
-    const asset: MessariAssetMetrics = await messariRequestHandler<MessariAssetMetrics>(`v1/assets/${option}/metrics`);
+    const asset: MessariAssetMetrics = await messariRequestHandler.get<MessariAssetMetrics>(`v1/assets/${option}/metrics`);
 
     if (!asset.data) {
       return ctx.reply({
@@ -176,7 +151,7 @@ export default class CryptoCommand extends CommandBase {
           row.components[0].setDisabled(true);
           row.components[1].setDisabled(false);
 
-          const res: MessariAllAssets = await messariRequestHandler<MessariAllAssets>('v2/assets');
+          const res: MessariAllAssets = await messariRequestHandler.get<MessariAllAssets>('v2/assets');
 
           const assetsArr = res.data.slice(0, 9);
           const assetsObj = Object.entries(assetsArr)

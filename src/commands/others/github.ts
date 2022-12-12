@@ -4,23 +4,12 @@ import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
-import { githubRepositoriesHandler, githubUsersHandler } from '../@subCommands/others/github';
+import { githubRepositoriesHandler } from '@/src/resources/github/handlers/repositories';
+import { githubUsersHandler } from '@/src/resources/github/handlers/users';
 
-/**
- * Represents a Github slash command
- * 
- * @class @extends CommandBase
- * 
- * @prop {MiamiClient} client - The MiamiClient instance
- */
 export default class GithubCommand extends CommandBase {
   client: MiamiClient;
 
-  /**
-   * @constructs GithubCommand
-   * 
-   * @param {MiamiClient} client - The MiamiClient instance 
-   */
   constructor(client: MiamiClient) {
     super(client, {
       name: 'github',
@@ -98,15 +87,6 @@ export default class GithubCommand extends CommandBase {
     this.client = client;
   }
 
-  /**
-   * Handle the incoming interaction as a command
-   * 
-   * @public @method @async
-   * 
-   * @param {CommandContext} ctx - The command context  
-   * 
-   * @returns {Promise<void>} void
-   */
   async run(ctx: CommandContext): Promise<void> {
     const subCommand: string = ctx.interaction.options.getSubcommand(true);
 
