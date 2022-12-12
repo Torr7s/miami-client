@@ -1,8 +1,7 @@
-import '@/src/database';
+import '@/src/shared/database';
 
 import fs from 'node:fs';
-import config from '@/src/config';
-
+import config from 'config';
 import Discord from 'discord.js';
 
 import guilds from '@/src/shared/database/models/guilds';
@@ -15,6 +14,12 @@ import { Logger } from '@/src/shared/utils/logger';
 
 import { Embed } from '@/src/shared/builders/embed';
 import { Button } from '@/src/shared/builders/button';
+
+import { ClientConfigProps } from '@/config/default';
+
+const clientConfig: ClientConfigProps = config.get<
+  ClientConfigProps
+>('app.client');
 
 /**
  * Represents the main Miami client
@@ -32,7 +37,7 @@ import { Button } from '@/src/shared/builders/button';
 export default class MiamiClient extends Discord.Client {
   private readonly logger: Logger;
 
-  config: typeof config;
+  config: typeof clientConfig;
   commands: Command[];
   cooldowns: Map<string, Map<string, number>>;
   usersDb: typeof users;
@@ -67,9 +72,9 @@ export default class MiamiClient extends Discord.Client {
 
     super(clientOptions);
 
+    this.config = clientConfig;
     this.logger = Logger.it(this.constructor.name);
 
-    this.config = config;
     this.commands = [];
     this.button = Button;
     this.embed = Embed;

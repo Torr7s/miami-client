@@ -1,3 +1,4 @@
+import config from 'config';
 import {
   APIEmbed,
   APIEmbedField,
@@ -7,7 +8,11 @@ import {
   User
 } from 'discord.js';
 
-import config from '@/src/config';
+import { ClientConfigProps } from '@/config/default';
+
+const clientConfig: ClientConfigProps = config.get<
+  ClientConfigProps
+>('app.client');
 
 /**
  * Represents the client Embed 
@@ -69,7 +74,7 @@ export class Embed {
   setAuthor(name: string, iconURL?: string, url?: string): this {
     this.author = {
       name,
-      iconURL: iconURL ?? config.avatarURL,
+      iconURL: iconURL ?? clientConfig.avatarURL,
       url
     }
 
@@ -137,7 +142,7 @@ export class Embed {
     const options: EmbedData | APIEmbed = {
       author: {
         name: this.author.name ?? 'Miami#7102',
-        iconURL: config.avatarURL
+        iconURL: clientConfig.avatarURL
       },
       color: 2895667,
       description: this.description,
