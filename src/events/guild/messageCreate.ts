@@ -13,7 +13,7 @@ export default class MessageCreateEvent extends EventBase {
   }
 
   async run(message: Message): Promise<Message<boolean> | void> {
-    const { author, channel, guild, member } = message;
+    const { author, channel } = message;
 
     if (author.bot || channel.type === ChannelType.DM) return;
 
