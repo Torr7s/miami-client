@@ -22,7 +22,7 @@ export class EmbedComponent {
   private title?: string;
   private url?: string;
 
-  constructor(private user: User) { };
+  constructor(private user: User) {};
 
   public addField(name: string, value: string, inline: boolean = true): this {
     if (!this.fields) this.fields = [];
