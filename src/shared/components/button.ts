@@ -2,7 +2,7 @@ import { APIMessageComponentEmoji, ButtonBuilder, ButtonStyle } from 'discord.js
 
 import { ButtonOptions } from '@/src/typings';
 
-export class Button implements ButtonOptions {
+export class ButtonComponent implements ButtonOptions {
   custom_id: string;
   disabled?: boolean;
   emoji?: APIMessageComponentEmoji;
