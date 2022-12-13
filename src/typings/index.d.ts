@@ -2,6 +2,7 @@ import {
   APIEmbedField,
   APIMessageComponentEmoji,
   ApplicationCommandOptionData,
+  ClientEvents,
   EmbedAssetData,
   EmbedAuthorOptions,
   EmbedFooterData,
@@ -9,6 +10,7 @@ import {
 } from 'discord.js';
 
 import CommandContext from '@/src/structures/commandContext';
+import MiamiClient from '../structures/client';
 
 interface CommandOptions {
   name: string;
@@ -26,6 +28,11 @@ interface CommandOptions {
 
 interface Command extends CommandOptions {
   run(ctx: CommandContext): void;
+}
+
+interface Event {
+  client: MiamiClient;
+  name: keyof ClientEvents
 }
 
 interface ButtonOptions {
