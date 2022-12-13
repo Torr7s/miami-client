@@ -45,7 +45,7 @@ export class EmbedComponent {
 
     return this;
   }
-  
+
   public setDescription(description: string): this {
     this.description = description;
 
@@ -71,7 +71,7 @@ export class EmbedComponent {
   }
 
   public build(): EmbedBuilder {
-    const options: EmbedData | APIEmbed = {
+    return new EmbedBuilder({
       author: {
         name: this.author.name ?? 'Miami#7102',
         iconURL: clientConfig.avatarURL
@@ -89,8 +89,6 @@ export class EmbedComponent {
       timestamp: Date.now(),
       title: this.title,
       url: this.url
-    }
-
-    return new EmbedBuilder(options);
+    });
   }
 }
