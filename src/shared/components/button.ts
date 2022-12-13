@@ -17,13 +17,11 @@ export class ButtonComponent implements ButtonOptions {
   }
 
   public build(): ButtonBuilder {
-    const button: ButtonBuilder = new ButtonBuilder()
+    return new ButtonBuilder()
       .setCustomId(this.custom_id)
       .setDisabled(this.disabled)
       .setEmoji(this.emoji)
       .setLabel(this.label)
       .setStyle(this.style);
-
-    return button;
   }
 }
