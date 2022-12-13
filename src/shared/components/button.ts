@@ -10,9 +10,10 @@ export class ButtonComponent implements ButtonOptions {
   style: ButtonStyle;
 
   constructor(options: ButtonOptions) {
-    options.disabled ??= false;
-
-    Object.assign(this, options);
+    Object.assign(this, {
+      ...options,
+      disabled: options.disabled ?? false
+    });
   }
 
   public build(): ButtonBuilder {
