@@ -18,9 +18,7 @@ export const githubUsersHandler = async (ctx: CommandContext, user: string): Pro
   if (!res.id) {
     return ctx.reply({
       ephemeral: true,
-      content: `
-        Perfil não encontrado.
-      `
+      content: 'Perfil não encontrado.'
     });
   }
 
@@ -46,9 +44,5 @@ export const githubUsersHandler = async (ctx: CommandContext, user: string): Pro
   res.email && embed.addField(':e_mail: Email', `${res.email}`);
   res.company && embed.addField(':tokyo_tower: Empresa', `${res.company}`)
 
-  return ctx.reply({
-    embeds: [
-      embed.build()
-    ]
-  });
+  return ctx.reply({ embeds: [embed.build()] });
 }
