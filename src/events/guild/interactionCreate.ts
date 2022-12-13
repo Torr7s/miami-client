@@ -34,7 +34,7 @@ export default class InteractionCreateEvent extends EventBase {
               if (interaction.user.id !== this.client.config.ownerId) {
                 return interaction.reply({
                   ephemeral: true,
-                  content: `Comando restrito.`
+                  content: 'Comando restrito.'
                 });
               }
             }
@@ -50,11 +50,10 @@ export default class InteractionCreateEvent extends EventBase {
               if (!interaction.appPermissions.has(appPerms)) {
                 const { permissions } = resolvePermissions(appPerms);
 
-                await interaction.reply({
+                return interaction.reply({
                   ephemeral: true,
                   content: `Preciso das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
                 });
-                return;
               }
             }
 
@@ -62,11 +61,10 @@ export default class InteractionCreateEvent extends EventBase {
               if (!interaction.memberPermissions.has(memberPerms)) {
                 const { permissions } = resolvePermissions(memberPerms);
 
-                await interaction.reply({
+                return interaction.reply({
                   ephemeral: true,
                   content: `Você precisa das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
                 });
-                return;
               }
             }
 
@@ -96,25 +94,25 @@ export default class InteractionCreateEvent extends EventBase {
                 const remainingTime: number = (expiresAt - dateNow) / 1e3;
 
                 await interaction.editReply({
-                  content: `
-                    O comando \`${command.name}\` poderá ser utilizado novamente em \`${remainingTime.toFixed(1)}s\`.
-                  `
+                  content: `O comando \`${command.name}\` poderá ser utilizado novamente em \`${remainingTime.toFixed(1)}s\`.`
                 });
                 return;
               }
             }
 
             if (clientCooldowns) {
-              clientCooldowns.set(user.id, dateNow);
+              clientCooldowns.set(
+                user.id, 
+                dateNow
+              );
 
-              setTimeout((): boolean => {
-                return (
-                  clientCooldowns.delete(user.id)
-                )
-              }, commandCooldown);
+              setTimeout((): boolean => clientCooldowns.delete(user.id), commandCooldown);
             }
 
-            const context: CommandContext = new CommandContext(this.client, interaction);
+            const context: CommandContext = new CommandContext(
+              this.client, 
+              interaction
+            );
 
             command.run(context);
           }
