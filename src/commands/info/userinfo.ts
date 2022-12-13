@@ -4,7 +4,7 @@ import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
-import { Embed } from '@/src/shared/builders/embed';
+import { EmbedComponent } from '@/src/shared/components/embed';
 
 import { resolveFlags } from '@/src/shared/utils/discord/resolvables/flags';
 import { formatTimestamp } from '@/src/shared/utils/functions';
@@ -63,7 +63,7 @@ export default class UserinfoCommand extends CommandBase {
   async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
     const user: User = ctx.resolvedUsers[0];
 
-    const embed: Embed = new this.client.embed(ctx.user)
+    const embed: EmbedComponent = new this.client.embed(ctx.user)
       .setAuthor(`Informações de ${user.tag}`)
       .setDescription(`• Conta criada em ${formatTimestamp(user.createdAt, 'D')} (${formatTimestamp(user.createdAt, 'R')})`)
       .setThumbnail(`${user.displayAvatarURL()}`)

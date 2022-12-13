@@ -2,7 +2,7 @@ import { codeBlock, InteractionReplyOptions } from 'discord.js';
 
 import CommandContext from '@/src/structures/commandContext';
 
-import { Embed } from '@/src/shared/builders/embed';
+import { EmbedComponent } from '@/src/shared/components/embed';
 import { formatTimestamp } from '@/src/shared/utils/functions/time';
 
 import { GithubRequester } from '../requester';
@@ -30,7 +30,7 @@ export const githubUsersHandler = async (ctx: CommandContext, user: string): Pro
     `:calendar_spiral: Última atualização: ${formatTimestamp(res.updated_at)}`
   ];
 
-  const embed: Embed = new Embed(ctx.user)
+  const embed: EmbedComponent = new EmbedComponent(ctx.user)
     .setAuthor('Github Usuários')
     .setDescription(`${description.join('\n')}`)
     .setTitle(`Perfil de: ${res.login || res.name}`)

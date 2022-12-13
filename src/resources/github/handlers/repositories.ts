@@ -2,7 +2,7 @@ import { codeBlock, InteractionReplyOptions } from 'discord.js';
 
 import CommandContext from '@/src/structures/commandContext';
 
-import { Embed } from '@/src/shared/builders/embed';
+import { EmbedComponent } from '@/src/shared/components/embed';
 import { formatTimestamp } from '@/src/shared/utils/functions/time';
 
 import { GithubRequester } from '../requester';
@@ -30,7 +30,7 @@ export const githubRepositoriesHandler = async (ctx: CommandContext, repositoryO
     `:calendar_spiral: Última atualização: ${formatTimestamp(res.updated_at)}`
   ];
 
-  const embed: Embed = new Embed(ctx.user)
+  const embed: EmbedComponent = new EmbedComponent(ctx.user)
     .setAuthor('Github Repositórios')
     .setDescription(`${description.join('\n')}`)
     .setTitle(`Repositório: ${res.full_name}`)

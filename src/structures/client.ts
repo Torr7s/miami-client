@@ -12,8 +12,8 @@ import { Command } from '@/src/typings';
 
 import { Logger } from '@/src/shared/utils/logger';
 
-import { Embed } from '@/src/shared/builders/embed';
-import { Button } from '@/src/shared/builders/button';
+import { EmbedComponent } from '@/src/shared/components/embed';
+import { ButtonComponent } from '@/src/shared/components/button';
 
 import { ClientConfigProps } from '@/config/default';
 
@@ -29,8 +29,8 @@ export default class MiamiClient extends Discord.Client {
   cooldowns: Map<string, Map<string, number>>;
   usersDb: typeof users;
   guildsDb: typeof guilds;
-  button: typeof Button;
-  embed: typeof Embed;
+  button: typeof ButtonComponent;
+  embed: typeof EmbedComponent;
 
   constructor() {
     const clientOptions: Discord.ClientOptions = {
@@ -58,8 +58,8 @@ export default class MiamiClient extends Discord.Client {
     this.logger = Logger.it(this.constructor.name);
 
     this.commands = [];
-    this.button = Button;
-    this.embed = Embed;
+    this.button = ButtonComponent;
+    this.embed = EmbedComponent;
 
     this.cooldowns = new Map();
 
