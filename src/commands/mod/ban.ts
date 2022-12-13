@@ -76,9 +76,7 @@ export default class BanCommand extends CommandBase {
       if ([this.client.user.id, ctx.guild.ownerId].includes(targetMember.id)) {
         return ctx.reply({
           ephemeral: true,
-          content: `
-            Não posso banir à mim mesmo ou o dono do servidor.
-          `
+          content: 'Não posso banir à mim mesmo ou o dono do servidor.'
         });
       }
     }
@@ -88,9 +86,7 @@ export default class BanCommand extends CommandBase {
     if (targetMember.roles?.highest.position >= clientHighestRole.position) {
       return ctx.reply({
         ephemeral: true,
-        content: `
-          Não posso banir membros que tenham cargos superiores ao meu.
-        `
+        content: 'Não posso banir membros que tenham cargos superiores ao meu.'
       });
     }
 
@@ -100,9 +96,7 @@ export default class BanCommand extends CommandBase {
       if (targetMember.roles?.highest.position >= member.roles?.highest.position) {
         return ctx.reply({
           ephemeral: true,
-          content: `
-            O cargo deste membro é superior ao seu, portanto, você não pode bani-lo.
-          `
+          content: 'O cargo deste membro é superior ao seu, portanto, você não pode bani-lo.'
         });
       }
     }
@@ -121,24 +115,21 @@ export default class BanCommand extends CommandBase {
     try {
       const dm: DMChannel = await targetUser.createDM();
       await dm.send({
-        embeds: [
-          embed
-        ]
+        embeds: [embed]
       });
-
     } catch (error) {
       if (targetUser.dmChannel) await targetUser.deleteDM();
     }
 
-    ctx.guild.bans.create(targetUser, { deleteMessageDays, reason }).then((): void => {
-      ctx.reply({
-        content: `
-          \`${targetUser.tag}\` foi banido do servidor por \`${reason}\`
-        `
-      });
-    })
-      .catch((_: any): any => {
-        ctx.reply({
+    ctx.guild.bans.create(targetUser, { deleteMessageDays, reason })
+      .then(async (): Promise<void> => {
+        await ctx.reply({
+          content: `\`${targetUser.tag}\` foi banido do servidor por \`${reason}\``
+        });
+      })
+      .catch(async (): Promise<void> => {
+        await ctx.reply({
+          ephemeral: true,
           content: `Não foi possível banir este membro do servidor.`
         });
       });
