@@ -7,6 +7,7 @@ import {
   ButtonInteraction,
   ButtonStyle,
   CacheType,
+  codeBlock,
   CollectedInteraction,
   ComponentType,
   Interaction,
@@ -66,14 +67,13 @@ export default class EvalCommand extends CommandBase {
       const evalued: any = await eval(option);
 
       result = format(util.inspect(evalued, { depth: 0 }));
-
     } catch (error) {
       this.logger.error('An error has been found: ', error);
 
       result = error.message!;
     }
 
-    const code: string = `\`\`\`js\n${result}\`\`\``;
+    const code: string = codeBlock(result);
 
     const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
       .addComponents(
@@ -92,9 +92,7 @@ export default class EvalCommand extends CommandBase {
     if (result.length < 2e3) {
       await ctx.reply({
         content: code,
-        components: [
-          row
-        ]
+        components: [row]
       });
     } else {
       this.logger.info('Result from an eval: ', result);
