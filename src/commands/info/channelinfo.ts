@@ -10,16 +10,13 @@ import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
+import { EmbedComponent } from '@/src/shared/components/embed';
+
 import { formatTimestamp } from '@/src/shared/utils/functions';
 
 export default class ChannelinfoCommand extends CommandBase {
   client: MiamiClient;
 
-  /**
-   * @constructs ChannelinfoCommand
-   * 
-   * @param {MiamiClient} client - The MiamiClient instance 
-   */
   constructor(client: MiamiClient) {
     super(client, {
       name: 'canal',
@@ -44,15 +41,6 @@ export default class ChannelinfoCommand extends CommandBase {
     this.client = client;
   }
 
-  /**
-   * Handle the incoming interaction as a command
-   * 
-   * @public @method @async
-   * 
-   * @param {CommandContext} ctx - The command context  
-   * 
-   * @returns {Promise<InteractionReplyOptions>} options - The given options for ctx
-   */
   async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
     const channelOption: Channel | APIInteractionDataResolvedChannel = ctx.resolvedChannels[0];
     const channel: GuildBasedChannel = ctx.guild.channels.cache.get(channelOption.id);
@@ -72,12 +60,12 @@ export default class ChannelinfoCommand extends CommandBase {
       15: 'Fórum'
     }
 
-    const embed = new this.client.embed(ctx.user)
+    const embed: EmbedComponent = new this.client.embed(ctx.user)
       .setAuthor(`Informações de canal: # ${channel.name.toUpperCase()}`)
       .setDescription(`• Canal criado em ${formatTimestamp(channel.createdAt, 'D')} (${formatTimestamp(channel.createdAt, 'R')})`)
       .setThumbnail(`${ctx.guild.iconURL()}`)
       .addField(':id: ID', `${channel.id}`)
-      .addField(':knot: Tipo', `${channelTypes[channel.type]}`)
+      .addField(':knot: Tipo', `${channelTypes[channel.type]}`);
 
     if (channel.type === 0) {
       embed.addField(':no_entry_sign: NSFW', `${channel.nsfw ? 'Sim' : 'Não'}`)
@@ -105,11 +93,7 @@ export default class ChannelinfoCommand extends CommandBase {
       embed.addField(':busts_in_silhouette: Membros agora', `${channel.members.size}/${channel.userLimit}`)
       embed.addField(':map: Região', `${voiceRegions[channel.rtcRegion] ?? 'Auto'}`)
     }
-    
-    return ctx.reply({
-      embeds: [
-        embed.build()
-      ]
-    });
+
+    return ctx.reply({ embeds: [embed.build()] });
   }
 }
