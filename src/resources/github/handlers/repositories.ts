@@ -18,9 +18,7 @@ export const githubRepositoriesHandler = async (ctx: CommandContext, repositoryO
   if (!res.id) {
     return ctx.reply({
       ephemeral: true,
-      content: `
-        Repositório não encontrado.
-      `
+      content: 'Repositório não encontrado.'
     });
   }
 
@@ -46,13 +44,14 @@ export const githubRepositoriesHandler = async (ctx: CommandContext, repositoryO
     .addField(':eyes: Visibilidade', `${res.visibility === 'public' ? 'Público' : 'Privado'}`)
     .addField(':busts_in_silhouette: Observadores', `${res.watchers}`)
     .addField(':nazar_amulet: Issues', `${res.open_issues_count}`)
-    .setURL(res.html_url)
+    .setURL(res.html_url);
 
-  if (res.license && res.license.name) embed.addField(':notebook: Licença', `${res.license.name}`);
+  if (res.license && res.license.name) {
+    embed.addField(
+      ':notebook: Licença',
+      res.license.name
+    );
+  }
 
-  return ctx.reply({
-    embeds: [
-      embed.build() 
-    ]
-  });
+  return ctx.reply({ embeds: [embed.build()] });
 }
