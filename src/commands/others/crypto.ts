@@ -71,9 +71,7 @@ export default class CryptoCommand extends CommandBase {
     if (!asset.data) {
       return ctx.reply({
         ephemeral: true,
-        content: `
-          Ativo inválido, não foram encontrados resultados. \nVocê pode encontrar todos os ativos **[aqui](https://messari.io/screener/all-assets-D86E0735)**.
-        `
+        content: 'Ativo inválido, não foram encontrados resultados. \nVocê pode encontrar todos os ativos **[aqui](https://messari.io/screener/all-assets-D86E0735)**.'
       });
     }
 
@@ -108,7 +106,7 @@ export default class CryptoCommand extends CommandBase {
             id: '1011087528612343838',
             animated: false
           },
-          label: 'Ativos',
+          label: 'Top Ativos',
           style: ButtonStyle.Secondary
         }).build(),
         /* Go to the previous page button */
@@ -127,9 +125,7 @@ export default class CryptoCommand extends CommandBase {
 
     await ctx.reply({
       embeds: [mainEmbed],
-      components: [
-        row
-      ]
+      components: [row]
     });
 
     const filter = (i: Interaction): boolean => i.user.id === ctx.user.id;
@@ -143,7 +139,7 @@ export default class CryptoCommand extends CommandBase {
       if (!target.deferred) {
         await target
           .deferUpdate()
-          .catch((_: any): any => null);
+          .catch((): any => {});
       }
 
       switch (target.customId) {
@@ -178,13 +174,11 @@ export default class CryptoCommand extends CommandBase {
             .setTitle('Posição | Ativo | Preço USD')
             .setAuthor('Top ativos no momento')
             .setDescription(`${description.join('\n')}`)
-            .build()
+            .build();
 
           await target.editReply({
             embeds: [embed],
-            components: [
-              row
-            ]
+            components: [row]
           });
 
           break;
@@ -195,13 +189,10 @@ export default class CryptoCommand extends CommandBase {
 
           await target.editReply({
             embeds: [mainEmbed],
-            components: [
-              row
-            ]
+            components: [row]
           });
 
           break;
-
         default: break;
       }
     });
