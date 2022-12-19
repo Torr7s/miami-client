@@ -1,10 +1,9 @@
 import config from 'config';
 import {
-  APIEmbed,
   APIEmbedField,
   EmbedAuthorOptions,
   EmbedBuilder,
-  EmbedData,
+  EmbedFooterOptions,
   User
 } from 'discord.js';
 
@@ -18,6 +17,7 @@ export class EmbedComponent {
   private author?: EmbedAuthorOptions;
   private description?: string;
   private fields?: APIEmbedField[];
+  private footer?: EmbedFooterOptions;
   private thumbnail?: string;
   private title?: string;
   private url?: string;
@@ -52,6 +52,15 @@ export class EmbedComponent {
     return this;
   }
 
+  public setFooter(text: string, iconURL?: string): this {
+    this.footer = {
+      text,
+      iconURL
+    }
+
+    return this;
+  }
+
   public setThumbnail(thumbnail: string): this {
     this.thumbnail = thumbnail;
 
@@ -80,8 +89,8 @@ export class EmbedComponent {
       description: this.description,
       fields: this.fields ?? [],
       footer: {
-        text: `${this.user.tag} (${this.user.id})`,
-        iconURL: `${this.user.displayAvatarURL()}`
+        text: this.footer?.text ?? `${this.user.tag} (${this.user.id})`,
+        iconURL: this.footer?.iconURL ?? `${this.user.displayAvatarURL()}`
       },
       thumbnail: {
         url: this.thumbnail
