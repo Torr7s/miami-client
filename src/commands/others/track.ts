@@ -136,8 +136,9 @@ export default class TrackCommand extends CommandBase {
     let currentPage: number = 0;
 
     const collector: InteractionCollector<ButtonInteraction> = ctx.channel.createMessageComponentCollector({
-      filter: (i: Interaction): boolean => i.user.id === ctx.user.id,
-      componentType: ComponentType.Button
+      componentType: ComponentType.Button,
+      time: 45000,
+      filter: (i: Interaction): boolean => i.user.id === ctx.user.id
     });
 
     collector.on('collect', async (target: CollectedInteraction): Promise<void> => {
@@ -213,12 +214,7 @@ export default class TrackCommand extends CommandBase {
     });
 
     collector.on('end', async (): Promise<void> => {
-      row.components.forEach((component) => component.setDisabled(true));
-
-      await ctx.interaction.editReply({
-        embeds: [embedPages[currentPage].build()],
-        components: [row]
-      });
+      await ctx.interaction.deleteReply();
     });
   }
 }
