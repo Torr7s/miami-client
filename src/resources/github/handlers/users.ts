@@ -6,7 +6,6 @@ import { EmbedComponent } from '@/src/shared/components/embed';
 import { formatTimestamp } from '@/src/shared/utils/functions/time';
 
 import { GithubRequester } from '../requester';
-import { GithubUserProps } from '@/src/typings';
 
 const githubRequester: GithubRequester = new GithubRequester();
 
@@ -45,4 +44,22 @@ export const githubUsersHandler = async (ctx: CommandContext, user: string): Pro
   res.company && embed.addField(':tokyo_tower: Empresa', `${res.company}`)
 
   return ctx.reply({ embeds: [embed.build()] });
+}
+
+interface GithubUserProps {
+  id: number;
+  login: string;
+  avatar_url: string;
+  html_url: string;
+  site_admin: boolean
+  name: string;
+  company: string;
+  location: string;
+  email: string;
+  bio: string;
+  public_repos: number;
+  followers: number;
+  following: number;
+  created_at: string;
+  updated_at: string;
 }
