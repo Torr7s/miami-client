@@ -12,7 +12,7 @@ import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
 export default class ClearCommand extends CommandBase {
-  client: MiamiClient;
+  public client: MiamiClient;
 
   constructor(client: MiamiClient) {
     super(client, {
@@ -44,15 +44,18 @@ export default class ClearCommand extends CommandBase {
     this.client = client;
   }
 
-  async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
-    const amount: number = ctx.interaction.options.getNumber('quantidade', true);
+  public async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
+    const amountOfMessagesToBeDeleted: number = ctx.interaction.options.getNumber(
+      'quantidade', 
+      true
+    );
 
-    const messages: Collection<string, Message<boolean> | PartialMessage> = await ctx.channel.bulkDelete(amount, true);
-    const totalCleaned: number = Array.from(messages).length;
+    const deletedMessages = await ctx.channel.bulkDelete(amountOfMessagesToBeDeleted, true);
+    const totalMessagesDeleted: number = Array.from(deletedMessages).length;
 
     return ctx.reply({
       ephemeral: true,
-      content: `\`${totalCleaned}\` mensagens foram deletadas deste canal.`
+      content: `\`${totalMessagesDeleted}\` mensagens foram deletadas deste canal.`
     });
   }
 }
