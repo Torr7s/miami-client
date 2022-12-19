@@ -20,7 +20,7 @@ import MiamiClient from '@/src/structures/client';
 import { EmbedComponent } from '@/src/shared/components/embed';
 import { formatTimestamp } from '@/src/shared/utils/functions';
 
-const wait: any = require('node:timers/promises').setTimeout;
+const justWaitFor: any = require('node:timers/promises').setTimeout;
 
 export default class TrackCommand extends CommandBase {
   client: MiamiClient;
@@ -144,7 +144,7 @@ export default class TrackCommand extends CommandBase {
     collector.on('collect', async (target: CollectedInteraction): Promise<void> => {
       !target.deferred && target.deferUpdate().catch((): void => {});
 
-      await wait(2000);
+      await justWaitFor(2000);
 
       switch (target.customId) {
         /**
