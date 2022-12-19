@@ -4,10 +4,10 @@ import { ButtonOptions } from '@/src/typings';
 
 export class ButtonComponent implements ButtonOptions {
   custom_id: string;
-  disabled?: boolean;
-  emoji?: APIMessageComponentEmoji;
   label: string;
   style: ButtonStyle;
+  disabled?: boolean;
+  emoji?: APIMessageComponentEmoji;
 
   constructor(options: ButtonOptions) {
     Object.assign(this, {
@@ -17,11 +17,14 @@ export class ButtonComponent implements ButtonOptions {
   }
 
   public build(): ButtonBuilder {
-    return new ButtonBuilder()
+    const button: ButtonBuilder = new ButtonBuilder()
       .setCustomId(this.custom_id)
       .setDisabled(this.disabled)
-      .setEmoji(this.emoji)
       .setLabel(this.label)
       .setStyle(this.style);
+
+    this.emoji && button.setEmoji(this.emoji);
+
+    return button;
   }
 }
