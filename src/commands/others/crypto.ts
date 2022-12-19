@@ -25,7 +25,7 @@ import { toCurrency, formatNumber, formatTimestamp } from '@/src/shared/utils/fu
 const messariRequestHandler = new MessariRequester();
 
 export default class CryptoCommand extends CommandBase {
-  client: MiamiClient;
+  public client: MiamiClient;
 
   constructor(client: MiamiClient) {
     super(client, {
@@ -52,7 +52,7 @@ export default class CryptoCommand extends CommandBase {
     this.client = client;
   }
 
-  formatPercent(percent: number): string {
+  private formatPercent(percent: number): string {
     let result: string = String(percent);
     const fixed: string = percent.toFixed(2);
 
@@ -63,10 +63,12 @@ export default class CryptoCommand extends CommandBase {
     return result;
   }
 
-  async run(ctx: CommandContext): Promise<InteractionReplyOptions | void> {
+  public async run(ctx: CommandContext): Promise<InteractionReplyOptions | void> {
     const option: string = ctx.interaction.options.getString('ativo', true);
 
-    const asset: MessariAssetMetrics = await messariRequestHandler.get<MessariAssetMetrics>(`v1/assets/${option}/metrics`);
+    const asset: MessariAssetMetrics = await messariRequestHandler.get<
+      MessariAssetMetrics
+    >(`v1/assets/${option}/metrics`);
 
     if (!asset.data) {
       return ctx.reply({
@@ -98,7 +100,6 @@ export default class CryptoCommand extends CommandBase {
 
     const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
       .addComponents(
-        /* Go to the next page button */
         new this.client.button({
           custom_id: 'next',
           emoji: {
@@ -109,7 +110,6 @@ export default class CryptoCommand extends CommandBase {
           label: 'Top Ativos',
           style: ButtonStyle.Secondary
         }).build(),
-        /* Go to the previous page button */
         new this.client.button({
           custom_id: 'previous',
           emoji: {
@@ -128,19 +128,14 @@ export default class CryptoCommand extends CommandBase {
       components: [row]
     });
 
-    const filter = (i: Interaction): boolean => i.user.id === ctx.user.id;
-
     const collector: InteractionCollector<ButtonInteraction> = ctx.channel.createMessageComponentCollector({
       componentType: ComponentType.Button,
-      filter
+      time: 45000,
+      filter: (i: Interaction): boolean => i.user.id === ctx.user.id
     });
 
     collector.on('collect', async (target: CollectedInteraction): Promise<void> => {
-      if (!target.deferred) {
-        await target
-          .deferUpdate()
-          .catch((): any => {});
-      }
+      !target.deferred && target.deferUpdate().catch((): void => {});
 
       switch (target.customId) {
         case 'next':
@@ -195,6 +190,10 @@ export default class CryptoCommand extends CommandBase {
           break;
         default: break;
       }
+    });
+
+    collector.on('end', async (): Promise<void> => {
+      await ctx.interaction.deleteReply();
     });
   }
 }
