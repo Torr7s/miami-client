@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "config": "^3.3.8",
+    "correios-brasil": "^3.0.3",
     "discord.js": "^14.7.1",
     "dotenv": "^16.0.1",
     "module-alias": "^2.2.2",
