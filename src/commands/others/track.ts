@@ -122,7 +122,10 @@ export default class TrackCommand extends CommandBase {
         codeBlock(targetUnit)
       );
 
-      embed.addField('Data de Criação', formatTimestamp(new Date(orderEvents[i]?.dtHrCriado)));
+      orderEvents[i]?.dtHrCriado && embed.addField(
+        'Data de Criação',
+        formatTimestamp(new Date(orderEvents[i].dtHrCriado))
+      );
 
       embedPages.push(embed);
     }
