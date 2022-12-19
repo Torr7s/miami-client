@@ -109,22 +109,24 @@ export default class TrackCommand extends CommandBase {
         .setAuthor('Eventos da Encomenda')
         .setDescription(codeBlock(orderEvents[i]?.descricao));
 
-      const unitAddress: string = orderEvents[i]?.unidade?.endereco.cidade;
-      const targetUnit: string = orderEvents[i]?.unidadeDestino?.endereco.cidade;
+      const orderUnitAddress: string = orderEvents[i]?.unidade?.endereco.cidade;
+      const orderTargetUnit: string = orderEvents[i]?.unidadeDestino?.endereco.cidade;
 
-      unitAddress && embed.addField(
+      orderUnitAddress && embed.addField(
         'Unidade',
-        codeBlock(unitAddress)
+        codeBlock(orderUnitAddress)
       );
 
-      targetUnit && embed.addField(
+      orderTargetUnit && embed.addField(
         'Unidade de Destino',
-        codeBlock(targetUnit)
+        codeBlock(orderTargetUnit)
       );
 
-      orderEvents[i]?.dtHrCriado && embed.addField(
+      const orderEventCreatedAt: string = orderEvents[i]?.dtHrCriado;
+
+      orderEventCreatedAt && embed.addField(
         'Data de Criação',
-        formatTimestamp(new Date(orderEvents[i].dtHrCriado))
+        formatTimestamp(new Date(orderEventCreatedAt))
       );
 
       embedPages.push(embed);
