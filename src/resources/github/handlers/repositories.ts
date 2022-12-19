@@ -6,7 +6,6 @@ import { EmbedComponent } from '@/src/shared/components/embed';
 import { formatTimestamp } from '@/src/shared/utils/functions/time';
 
 import { GithubRequester } from '../requester';
-import { GithubRepositoryProps } from '@/src/typings';
 
 const githubRequester: GithubRequester = new GithubRequester();
 
@@ -54,4 +53,30 @@ export const githubRepositoriesHandler = async (ctx: CommandContext, repositoryO
   }
 
   return ctx.reply({ embeds: [embed.build()] });
+}
+
+interface GithubRepositoryProps {
+  id: number;
+  name: string;
+  full_name: string;
+  private: boolean;
+  owner: {
+    avatar_url: string;
+  }
+  html_url: string;
+  description: string;
+  created_at: string;
+  updated_at: string;
+  stargazers_count: number;
+  language: string;
+  forks_count: number;
+  archived: boolean;
+  disabled: boolean;
+  open_issues_count: number;
+  license: {
+    name: string;
+  };
+  visibility: string;
+  default_branch: string;
+  watchers: number;
 }
