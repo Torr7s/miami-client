@@ -27,7 +27,7 @@ export default class TrackCommand extends CommandBase {
 
   constructor(client: MiamiClient) {
     super(client, {
-      name: 'rastreio',
+      name: 'rastrear',
       description: 'Rastrear uma encomenda nos Correios',
       category: 'Others',
       options: [
