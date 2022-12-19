@@ -65,11 +65,11 @@ export default class TrackCommand extends CommandBase {
       .setAuthor('Rastreio de Encomenda')
       .setThumbnail('https://logospng.org/download/correios/logo-correios-2048.png')
       .setDescription(`
-      • Código do objeto: ${orderResponse[0].codObjeto}
-      • Modalidade: ${orderResponse[0].modalidade}
+        • Código do objeto: ${orderResponse[0].codObjeto}
+        • Modalidade: ${orderResponse[0].modalidade}
 
-      \`Eventos da encomenda disponíveis abaixo, siga com os botões\`
-    `);
+        \`Eventos da encomenda disponíveis abaixo, siga com os botões\`
+      `);
 
     const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
       .addComponents(
