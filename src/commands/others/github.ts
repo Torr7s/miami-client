@@ -8,7 +8,7 @@ import { githubRepositoriesHandler } from '@/src/resources/github/handlers/repos
 import { githubUsersHandler } from '@/src/resources/github/handlers/users';
 
 export default class GithubCommand extends CommandBase {
-  client: MiamiClient;
+  public client: MiamiClient;
 
   constructor(client: MiamiClient) {
     super(client, {
@@ -87,28 +87,18 @@ export default class GithubCommand extends CommandBase {
     this.client = client;
   }
 
-  async run(ctx: CommandContext): Promise<void> {
+  public async run(ctx: CommandContext): Promise<void> {
     const subCommand: string = ctx.interaction.options.getSubcommand(true);
 
-    switch (subCommand) {
-      case 'repositórios':
-      case 'repositories':
-        const repoUser: string = ctx.interaction.options.getString('usuário');
-        const repoName: string = ctx.interaction.options.getString('repositório');
+    if (subCommand == 'repositórios') {
+      const repoUser: string = ctx.interaction.options.getString('usuário');
+      const repoName: string = ctx.interaction.options.getString('repositório');
 
-        await githubRepositoriesHandler(ctx, repoUser, repoName);
+      await githubRepositoriesHandler(ctx, repoUser, repoName);
+    } else if (subCommand == 'usuários') {
+      const user: string = ctx.interaction.options.getString('usuário');
 
-        break;
-
-      case 'usuários':
-      case 'users':
-        const user: string = ctx.interaction.options.getString('usuário');
-        
-        await githubUsersHandler(ctx, user);
-
-        break;
-
-      default: break;
+      await githubUsersHandler(ctx, user);
     }
   }
 }
