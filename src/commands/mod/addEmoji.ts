@@ -14,15 +14,8 @@ import MiamiClient from '@/src/structures/client';
 import { Logger } from '@/src/shared/utils/logger';
 
 export default class AddEmojiCommand extends CommandBase {
-  private readonly guildEmojisPerBoostLevel = {
-    0: 50,
-    1: 100,
-    2: 150,
-    3: 250
-  }
+  public client: MiamiClient;
   private readonly logger: Logger;
-
-  client: MiamiClient;
 
   constructor(client: MiamiClient) {
     super(client, {
@@ -65,11 +58,18 @@ export default class AddEmojiCommand extends CommandBase {
     this.logger = Logger.it(this.constructor.name);
   }
 
-  async run(ctx: CommandContext): Promise<InteractionReplyOptions | void> {
+  public async run(ctx: CommandContext): Promise<InteractionReplyOptions|void> {
     const attachment: string = ctx.interaction.options.getString('anexo', true);
     const name: string = ctx.interaction.options.getString('nome', true);
 
-    if (ctx.guild.emojis.cache.size >= this.guildEmojisPerBoostLevel[ctx.guild.premiumTier]) {
+    const guildEmojisPerBoostLevel = {
+      0: 50,
+      1: 100,
+      2: 150,
+      3: 250
+    }
+
+    if (ctx.guild.emojis.cache.size >= guildEmojisPerBoostLevel[ctx.guild.premiumTier]) {
       return ctx.reply({
         ephemeral: true,
         content: `O servidor não possui mais slots disponíveis para emojis.`
@@ -87,7 +87,7 @@ export default class AddEmojiCommand extends CommandBase {
         content: `O emoji ${emoji} foi criado com sucesso.`
       });
     } catch (error) {
-      this.logger.error(`An error has been found: `, error.message);
+      this.logger.error(`An error has been found while trying to create an emoji: `, error);
 
       if ((error as DiscordAPIError).message == 'Asset exceeds maximum size: 33554432') {
         return ctx.reply({
