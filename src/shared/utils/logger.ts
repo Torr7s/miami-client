@@ -1,3 +1,5 @@
+type LoggerContent = any|any[];
+
 export class Logger {
   private readonly colors = {
     PURPLE: '\u001b[34m',
@@ -27,19 +29,19 @@ export class Logger {
     console.clear();
   }
 
-  public error(message: string, content?: any): void {
+  public error(message: string, content?: LoggerContent): void {
     message = content ? `${message}\n${content}` : message;
 
     console.error(`${this.currentTime} ${this.colors.RED}[ERROR] ${this.className}${this.colors.RESET} ${message}`);
   }
 
-  public info(message: string, content?: any): void {
+  public info(message: string, content?: LoggerContent): void {
     message = content ? `${message}\n${content}` : message;
 
     console.info(`${this.currentTime} ${this.colors.GREEN}[INFO] ${this.className}${this.colors.RESET} ${message}`);
   }
 
-  public warn(message: string, content?: any): void {
+  public warn(message: string, content?: LoggerContent): void {
     message = content ? `${message}\n${content}` : message;
 
     console.warn(`${this.currentTime} ${this.colors.YELLOW}[WARN]  ${this.className}${this.colors.RESET} ${message}`);
