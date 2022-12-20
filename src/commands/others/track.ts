@@ -17,7 +17,8 @@ import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
-import { EmbedComponent } from '@/src/shared/components/embed';
+import EmbedComponent from '@/src/shared/components/embed';
+
 import { formatTimestamp } from '@/src/shared/utils/functions';
 
 const justWaitFor: any = require('node:timers/promises').setTimeout;

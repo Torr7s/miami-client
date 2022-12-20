@@ -9,10 +9,10 @@ import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
+import EmbedComponent from '@/src/shared/components/embed';
+
 import channelTypesJson from '@/src/shared/utils/json/channels.json';
 import rtcRegionsJson from '@/src/shared/utils/json/rtc-regions.json';
-
-import { EmbedComponent } from '@/src/shared/components/embed';
 
 import { formatTimestamp } from '@/src/shared/utils/functions';
 

@@ -9,7 +9,7 @@ import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
-import { EmbedComponent } from '@/src/shared/components/embed';
+import EmbedComponent from '@/src/shared/components/embed';
 
 import { resolveFlags } from '@/src/shared/utils/discord/resolvables/flags';
 import { formatTimestamp } from '@/src/shared/utils/functions';

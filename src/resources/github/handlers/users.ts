@@ -1,8 +1,8 @@
 import { codeBlock, InteractionReplyOptions } from 'discord.js';
 
 import CommandContext from '@/src/structures/commandContext';
+import EmbedComponent from '@/src/shared/components/embed';
 
-import { EmbedComponent } from '@/src/shared/components/embed';
 import { formatTimestamp } from '@/src/shared/utils/functions/time';
 
 import { GithubRequester } from '../requester';

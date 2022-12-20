@@ -7,13 +7,13 @@ import Discord from 'discord.js';
 import guilds from '@/src/shared/database/models/guilds';
 import users from '@/src/shared/database/models/users';
 
+import EmbedComponent from '@/src/shared/components/embed';
+import ButtonComponent from '@/src/shared/components/button';
+
 import { join } from 'node:path';
 import { Command } from '@/src/typings';
 
 import { Logger } from '@/src/shared/utils/logger';
-
-import { EmbedComponent } from '@/src/shared/components/embed';
-import { ButtonComponent } from '@/src/shared/components/button';
 
 import { ClientConfigProps } from '@/config/default';
 
@@ -25,10 +25,10 @@ export default class MiamiClient extends Discord.Client {
   private readonly logger: Logger;
 
   public config: typeof clientConfig;
-  public commands: Command[];
-  public cooldowns: Map<string, Map<string, number>>;
   public usersDb: typeof users;
   public guildsDb: typeof guilds;
+  public commands: Command[];
+  public cooldowns: Map<string, Map<string, number>>;
   public button: typeof ButtonComponent;
   public embed: typeof EmbedComponent;
 
