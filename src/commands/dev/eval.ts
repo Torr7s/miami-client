@@ -109,7 +109,6 @@ export default class EvalCommand extends CommandBase {
       }
 
       await ctx.reply({ content: code, components: [row] });
-      
     } else {
       this.logger.info('Result from an eval: ', resultFromEval);
 
