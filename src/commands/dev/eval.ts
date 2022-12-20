@@ -22,9 +22,8 @@ import MiamiClient from '@/src/structures/client';
 import { Logger } from '@/src/shared/utils/logger';
 
 export default class EvalCommand extends CommandBase {
+  public client: MiamiClient;
   private readonly logger: Logger;
-
-  client: MiamiClient;
 
   constructor(client: MiamiClient) {
     super(client, {
@@ -38,6 +37,12 @@ export default class EvalCommand extends CommandBase {
           description: 'Código a ser executado',
           type: ApplicationCommandOptionType.String,
           required: true
+        },
+        {
+          name: 'efêmero',
+          description: 'Enviar resposta em modo efêmero',
+          type: ApplicationCommandOptionType.Boolean,
+          required: false
         }
       ]
     });
@@ -45,35 +50,40 @@ export default class EvalCommand extends CommandBase {
     this.client = client;
     this.logger = Logger.it(this.constructor.name);
   }
-  async run(ctx: CommandContext): Promise<void> {
-    const user: User = ctx.user;
 
-    const format = (text: string): string => {
-      if (typeof text === 'string') {
-        text
-          .slice(0, 3000)
-          .replace(/`/g, `\`${String.fromCharCode(8203)}`)
-          .replace(/@/g, `@${String.fromCharCode(8203)}`)
-          .replace(new RegExp(process.env.TOKEN, 'gi'), '****');
-      }
+  private format(text: string): string {
+    if (typeof text === 'string') {
+      text
+        .slice(0, 3000)
+        .replace(/`/g, `\`${String.fromCharCode(8203)}`)
+        .replace(/@/g, `@${String.fromCharCode(8203)}`)
+        .replace(new RegExp(process.env.TOKEN, 'gi'), '****');
+    }
 
-      return text;
-    };
+    return text;
+  }
 
-    let result: string;
+  public async run(ctx: CommandContext): Promise<void> {
+    const codeToBeEvalued: string = ctx.interaction.options.getString('código', true);
+    const isEphemeral: boolean = ctx.interaction.options.getBoolean('efêmero');
+
+    let resultFromEval: string;
 
     try {
-      const option: string = ctx.interaction.options.getString('código', true);
-      const evalued: any = await eval(option);
+      const evalued: any = await eval(codeToBeEvalued);
 
-      result = format(util.inspect(evalued, { depth: 0 }));
+      resultFromEval = this.format(
+        util.inspect(evalued, {
+          depth: 0
+        })
+      );
     } catch (error) {
       this.logger.error('An error has been found: ', error);
 
-      result = error.message!;
+      resultFromEval = error.message!;
     }
 
-    const code: string = codeBlock(result);
+    const code: string = codeBlock(resultFromEval);
 
     const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
       .addComponents(
@@ -89,13 +99,19 @@ export default class EvalCommand extends CommandBase {
         }).build()
       );
 
-    if (result.length < 2e3) {
-      await ctx.reply({
-        content: code,
-        components: [row]
-      });
+    if (resultFromEval.length <= 3000) {
+      if (isEphemeral) {
+        await ctx.reply({
+          content: code,
+          components: [row],
+          ephemeral: true
+        });
+      }
+
+      await ctx.reply({ content: code, components: [row] });
+      
     } else {
-      this.logger.info('Result from an eval: ', result);
+      this.logger.info('Result from an eval: ', resultFromEval);
 
       await ctx.reply({
         ephemeral: true,
@@ -103,11 +119,10 @@ export default class EvalCommand extends CommandBase {
       });
     }
 
-    const filter = (i: Interaction): boolean => i.user.id === this.client.config.ownerId;
-
     const collector: InteractionCollector<ButtonInteraction> = ctx.channel.createMessageComponentCollector({
       componentType: ComponentType.Button,
-      filter
+      time: 45000,
+      filter: (i: Interaction): boolean => i.user.id === this.client.config.ownerId
     });
 
     collector.on('collect', async (target: CollectedInteraction<CacheType>): Promise<void> => {
@@ -116,13 +131,14 @@ export default class EvalCommand extends CommandBase {
       switch (target.customId) {
         case 'trash':
           await ctx.interaction.deleteReply();
-          await target.editReply({
-            content: `<@${user.id}>, eval fechado com sucesso.`
-          });
 
           break;
         default: break;
       }
+    });
+
+    collector.on('end', async (): Promise<void> => {
+      await ctx.interaction.deleteReply();
     });
   }
 }
