@@ -87,10 +87,10 @@ export default class InteractionCreateEvent extends EventBase {
             const dateNow: number = Date.now();
             const commandCooldown: number = command.cooldown * 1e3;
 
-            const clientCooldowns: Map<string, number> = this.client.cooldowns.get(command.name);
+            const clientRemainingCooldowns: Map<string, number> = this.client.cooldowns.get(command.name);
 
-            if (clientCooldowns && clientCooldowns.has(user.id)) {
-              const expiresAt: number = (clientCooldowns.get(user.id) as number) + commandCooldown;
+            if (clientRemainingCooldowns && clientRemainingCooldowns.has(user.id)) {
+              const expiresAt: number = (clientRemainingCooldowns.get(user.id) as number) + commandCooldown;
 
               if (dateNow < expiresAt) {
                 if (!interaction.deferred) {
@@ -103,25 +103,23 @@ export default class InteractionCreateEvent extends EventBase {
                 const remainingTime: number = (expiresAt - dateNow) / 1e3;
 
                 await interaction.editReply({
-                  content: `O comando \`${command.name}\` poderá ser utilizado novamente em \`${remainingTime.toFixed(1)}s\`.`
+                  content: `Aguarde \`${remainingTime.toFixed(1)}s\` para executar o comando \`${command.name}\` novamente.`
                 });
+                
                 return;
               }
             }
 
-            if (clientCooldowns) {
-              clientCooldowns.set(
-                user.id, 
+            if (clientRemainingCooldowns) {
+              clientRemainingCooldowns.set(
+                user.id,
                 dateNow
               );
 
-              setTimeout((): boolean => clientCooldowns.delete(user.id), commandCooldown);
+              setTimeout((): boolean => clientRemainingCooldowns.delete(user.id), commandCooldown);
             }
 
-            const context: CommandContext = new CommandContext(
-              this.client, 
-              interaction
-            );
+            const context: CommandContext = new CommandContext(this.client, interaction);
 
             command.run(context);
           }
