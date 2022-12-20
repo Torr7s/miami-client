@@ -10,9 +10,8 @@ import { Logger } from '@/src/shared/utils/logger';
 import { resolvePermissions } from '@/src/shared/utils/discord/resolvables/permissions';
 
 export default class InteractionCreateEvent extends EventBase {
+  public client: MiamiClient;
   private readonly logger: Logger;
-
-  client: MiamiClient;
 
   constructor(client: MiamiClient) {
     super(client, 'interactionCreate');
@@ -21,7 +20,7 @@ export default class InteractionCreateEvent extends EventBase {
     this.logger = Logger.it(this.constructor.name);
   }
 
-  async run(interaction: Interaction): Promise<InteractionResponse | void> {
+  public async run(interaction: Interaction): Promise<InteractionResponse | void> {
     try {
       const { user, guild } = interaction;
 
@@ -39,15 +38,23 @@ export default class InteractionCreateEvent extends EventBase {
               }
             }
 
-            if (command.requiresDatabase) {
+            if (command.requiresDatabase?.guild) {
               await this.client.guildsDb.findOrCreate(guild.id);
-              await this.client.usersDb.findOrCreate(guild.id, user.id);
+
+              // ...
+            } else if (command.requiresDatabase?.user) {
+              await this.client.usersDb.findOrCreate(
+                guild.id,
+                user.id
+              );
             }
 
             const { appPerms, memberPerms } = command.permissions;
 
             if (appPerms && appPerms.length) {
-              if (!interaction.appPermissions.has(appPerms)) {
+              const clientHasPermissions: boolean = interaction.appPermissions.has(appPerms);
+
+              if (!clientHasPermissions) {
                 const { permissions } = resolvePermissions(appPerms);
 
                 return interaction.reply({
@@ -58,7 +65,9 @@ export default class InteractionCreateEvent extends EventBase {
             }
 
             if (memberPerms && memberPerms.length) {
-              if (!interaction.memberPermissions.has(memberPerms)) {
+              const memberHasPermissions: boolean = interaction.memberPermissions.has(memberPerms);
+
+              if (!memberHasPermissions) {
                 const { permissions } = resolvePermissions(memberPerms);
 
                 return interaction.reply({
