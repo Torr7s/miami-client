@@ -1,9 +1,6 @@
 import {
   ApplicationCommandOptionType,
-  Collection,
   InteractionReplyOptions,
-  Message,
-  PartialMessage,
   PermissionFlagsBits
 } from 'discord.js';
 

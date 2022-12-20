@@ -11,8 +11,7 @@ import {
   CollectedInteraction,
   ComponentType,
   Interaction,
-  InteractionCollector,
-  User
+  InteractionCollector
 } from 'discord.js';
 
 import CommandBase from '@/src/structures/command';

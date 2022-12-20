@@ -6,7 +6,6 @@ import {
   GuildMember,
   InteractionReplyOptions,
   PermissionFlagsBits,
-  Role,
   User
 } from 'discord.js';
 
