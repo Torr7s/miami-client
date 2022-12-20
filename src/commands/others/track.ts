@@ -61,7 +61,7 @@ export default class TrackCommand extends CommandBase {
       });
     }
 
-    const mainEmbed: EmbedComponent = new this.client.embed(ctx.user)
+    const mainEmbed: EmbedComponent = new this.client.embed(ctx.executor)
       .setAuthor('Rastreio de Encomenda')
       .setThumbnail('https://logospng.org/download/correios/logo-correios-2048.png')
       .setDescription(`
@@ -105,7 +105,7 @@ export default class TrackCommand extends CommandBase {
     const orderEvents: OrderEventsResponse[] = orderResponse[0].eventos;
 
     for (let i: number = 0; i <= orderEvents.length; i++) {
-      const embed: EmbedComponent = new this.client.embed(ctx.user)
+      const embed: EmbedComponent = new this.client.embed(ctx.executor)
         .setAuthor('Eventos da Encomenda')
         .setDescription(codeBlock(orderEvents[i]?.descricao));
 
@@ -143,7 +143,7 @@ export default class TrackCommand extends CommandBase {
     const collector: InteractionCollector<ButtonInteraction> = ctx.channel.createMessageComponentCollector({
       componentType: ComponentType.Button,
       time: 45000,
-      filter: (i: Interaction): boolean => i.user.id === ctx.user.id
+      filter: (i: Interaction): boolean => i.user.id === ctx.executor.id
     });
 
     collector.on('collect', async (target: CollectedInteraction): Promise<void> => {

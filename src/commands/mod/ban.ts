@@ -73,7 +73,7 @@ export default class BanCommand extends CommandBase {
     const targetUser: User = ctx.resolvedUsers[0];
     const targetMember: GuildMember = ctx.guild.members.cache.get(targetUser.id);
 
-    const member: GuildMember = ctx.guild.members.cache.get(ctx.user.id);
+    const member: GuildMember = ctx.guild.members.cache.get(ctx.executor.id);
 
     if (targetMember) {
       const memberHighestRole: number = member?.roles?.highest.position;
@@ -94,7 +94,7 @@ export default class BanCommand extends CommandBase {
         });
       }
 
-      if (ctx.user.id !== ctx.guild.ownerId) {
+      if (ctx.executor.id !== ctx.guild.ownerId) {
         if (targetMemberHighestRole >= memberHighestRole) {
           return ctx.reply({
             ephemeral: true,
@@ -122,7 +122,7 @@ export default class BanCommand extends CommandBase {
       .setAuthor('Banido do servidor')
       .setDescription(`Você foi banido do servidor \`${ctx.guild.name}\``)
       .setThumbnail(`${ctx.guild.iconURL()}`)
-      .addField('Autor', `${ctx.user.tag}`)
+      .addField('Autor', `${ctx.executor.tag}`)
       .addField('Motivo', `\`${reason}\``)
       .build();
 

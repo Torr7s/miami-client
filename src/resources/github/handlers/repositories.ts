@@ -27,7 +27,7 @@ export const githubRepositoriesHandler = async (ctx: CommandContext, repositoryO
     `:calendar_spiral: Última atualização: ${formatTimestamp(res.updated_at)}`
   ];
 
-  const embed: EmbedComponent = new EmbedComponent(ctx.user)
+  const embed: EmbedComponent = new EmbedComponent(ctx.executor)
     .setAuthor('Github Repositórios')
     .setDescription(`${description.join('\n')}`)
     .setTitle(`Repositório: ${res.full_name}`)

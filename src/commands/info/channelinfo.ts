@@ -48,7 +48,7 @@ export default class ChannelinfoCommand extends CommandBase {
       ctx.resolvedChannels[0].id
     );
 
-    const embed: EmbedComponent = new this.client.embed(ctx.user)
+    const embed: EmbedComponent = new this.client.embed(ctx.executor)
       .setAuthor(`Informações de canal: # ${channel.name.toUpperCase()}`)
       .addField(':id: Identificador', codeBlock(channel.id))
       .addField(':knot: Tipo', channelTypesJson[channel.type])

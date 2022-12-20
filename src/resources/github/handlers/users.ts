@@ -27,7 +27,7 @@ export const githubUsersHandler = async (ctx: CommandContext, user: string): Pro
     `:calendar_spiral: Última atualização: ${formatTimestamp(res.updated_at)}`
   ];
 
-  const embed: EmbedComponent = new EmbedComponent(ctx.user)
+  const embed: EmbedComponent = new EmbedComponent(ctx.executor)
     .setAuthor('Github Usuários')
     .setDescription(`${description.join('\n')}`)
     .setTitle(`Perfil de: ${res.login || res.name}`)

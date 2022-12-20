@@ -49,7 +49,7 @@ export default class UserinfoCommand extends CommandBase {
   async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
     const user: User = ctx.resolvedUsers[0];
 
-    const embed: EmbedComponent = new this.client.embed(ctx.user)
+    const embed: EmbedComponent = new this.client.embed(ctx.executor)
       .setAuthor(`Informações de ${user.tag}`)
       .setDescription(`• Conta criada em ${formatTimestamp(user.createdAt, 'D')} (${formatTimestamp(user.createdAt, 'R')})`)
       .setThumbnail(`${user.displayAvatarURL()}`)

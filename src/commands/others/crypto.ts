@@ -93,7 +93,7 @@ export default class CryptoCommand extends CommandBase {
       `ㅤ• Capital atual USD: \`${toCurrency(metrics.currentMarketCapUsd)}\``
     ];
 
-    const mainEmbed: EmbedBuilder = new this.client.embed(ctx.user)
+    const mainEmbed: EmbedBuilder = new this.client.embed(ctx.executor)
       .setAuthor(`[${metrics.symbol}] ${metrics.name} (${metrics.id})`)
       .setDescription(`${description.join('\n')}`)
       .build();
@@ -131,7 +131,7 @@ export default class CryptoCommand extends CommandBase {
     const collector: InteractionCollector<ButtonInteraction> = ctx.channel.createMessageComponentCollector({
       componentType: ComponentType.Button,
       time: 45000,
-      filter: (i: Interaction): boolean => i.user.id === ctx.user.id
+      filter: (i: Interaction): boolean => i.user.id === ctx.executor.id
     });
 
     collector.on('collect', async (target: CollectedInteraction): Promise<void> => {
@@ -165,7 +165,7 @@ export default class CryptoCommand extends CommandBase {
             );
           });
 
-          const embed: EmbedBuilder = new this.client.embed(ctx.user)
+          const embed: EmbedBuilder = new this.client.embed(ctx.executor)
             .setTitle('Posição | Ativo | Preço USD')
             .setAuthor('Top ativos no momento')
             .setDescription(`${description.join('\n')}`)
