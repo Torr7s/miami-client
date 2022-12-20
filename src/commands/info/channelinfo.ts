@@ -1,7 +1,6 @@
 import {
-  APIInteractionDataResolvedChannel,
   ApplicationCommandOptionType,
-  Channel,
+  codeBlock,
   GuildBasedChannel,
   InteractionReplyOptions
 } from 'discord.js';
@@ -10,12 +9,15 @@ import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
+import channelTypesJson from '@/src/shared/utils/json/channels.json';
+import rtcRegionsJson from '@/src/shared/utils/json/rtc-regions.json';
+
 import { EmbedComponent } from '@/src/shared/components/embed';
 
 import { formatTimestamp } from '@/src/shared/utils/functions';
 
 export default class ChannelinfoCommand extends CommandBase {
-  client: MiamiClient;
+  public client: MiamiClient;
 
   constructor(client: MiamiClient) {
     super(client, {
@@ -41,31 +43,16 @@ export default class ChannelinfoCommand extends CommandBase {
     this.client = client;
   }
 
-  async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
-    const channelOption: Channel | APIInteractionDataResolvedChannel = ctx.resolvedChannels[0];
-    const channel: GuildBasedChannel = ctx.guild.channels.cache.get(channelOption.id);
-
-    const channelTypes: { [type: number]: string } = {
-      0: 'Canal de Texto',
-      1: 'Mensagem Direta',
-      2: 'Canal de Voz',
-      3: 'Grupo Privado',
-      4: 'Categoria de Canais',
-      5: 'Canal de Anúncios',
-      10: 'Tópico de Anúncios',
-      11: 'Tópico Público',
-      12: 'Tópico Privado',
-      13: 'Palco de Eventos com Audiência',
-      14: 'GUILD_DIRECTORY',
-      15: 'Fórum'
-    }
+  public async run(ctx: CommandContext): Promise<InteractionReplyOptions> {
+    const channel: GuildBasedChannel = ctx.guild.channels.cache.get(
+      ctx.resolvedChannels[0].id
+    );
 
     const embed: EmbedComponent = new this.client.embed(ctx.user)
       .setAuthor(`Informações de canal: # ${channel.name.toUpperCase()}`)
-      .setDescription(`• Canal criado em ${formatTimestamp(channel.createdAt, 'D')} (${formatTimestamp(channel.createdAt, 'R')})`)
-      .setThumbnail(`${ctx.guild.iconURL()}`)
-      .addField(':id: ID', `${channel.id}`)
-      .addField(':knot: Tipo', `${channelTypes[channel.type]}`);
+      .addField(':id: Identificador', codeBlock(channel.id))
+      .addField(':knot: Tipo', channelTypesJson[channel.type])
+      .addField(':date: Data de criação', formatTimestamp(channel.createdAt));
 
     if (channel.type === 0) {
       embed.addField(':no_entry_sign: NSFW', `${channel.nsfw ? 'Sim' : 'Não'}`)
@@ -73,25 +60,12 @@ export default class ChannelinfoCommand extends CommandBase {
     }
 
     if (channel.type === 2 || channel.type === 13) {
-      const voiceRegions: { [region: string]: string } = {
-        'brazil': 'Brasil',
-        'hongkong': 'Hong Kong',
-        'india': 'Índia',
-        'japan': 'Japão',
-        'rotterdam': 'Rotterdam',
-        'russia': 'Russia',
-        'singapore': 'Singapura',
-        'southafrica': 'África do Sul',
-        'sydney': 'Sidney',
-        'us-central': 'América Central',
-        'us-east': 'América Oriental',
-        'us-south': 'América do Sul',
-        'us-west': 'América Ocidental'
-      }
+      const connectedMembers: string = `${channel.members.size}/${channel.userLimit}`;
+      const channelRtcRegion: string = rtcRegionsJson[channel.rtcRegion] ?? 'Auto';
 
-      embed.addField(':zap: Taxa de bits', `${channel.bitrate}`)
-      embed.addField(':busts_in_silhouette: Membros agora', `${channel.members.size}/${channel.userLimit}`)
-      embed.addField(':map: Região', `${voiceRegions[channel.rtcRegion] ?? 'Auto'}`)
+      embed.addField(':zap: Taxa de bits', channel.bitrate.toString())
+      embed.addField(':busts_in_silhouette: Membros agora', connectedMembers)
+      embed.addField(':map: Região', channelRtcRegion);
     }
 
     return ctx.reply({ embeds: [embed.build()] });
