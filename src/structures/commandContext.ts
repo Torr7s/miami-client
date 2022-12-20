@@ -2,8 +2,10 @@ import {
   APIInteractionDataResolvedChannel,
   APIInteractionGuildMember,
   APIRole,
+  CacheType,
   Channel,
   ChatInputCommandInteraction,
+  CommandInteractionResolvedData,
   Guild,
   GuildMember,
   GuildTextBasedChannel,
@@ -14,31 +16,44 @@ import {
 
 import MiamiClient from './client';
 
+type ResolvedUser = User;
+type ResolvedRole = Role|APIRole;
+type ResolvedChannel = Channel|APIInteractionDataResolvedChannel;
+
 export default class CommandContext {
   private readonly client: MiamiClient;
-  
-  readonly interaction: ChatInputCommandInteraction;
 
-  readonly resolvedUsers?: User[];
-  readonly resolvedRoles?: (Role | APIRole)[];
-  readonly resolvedChannels?: (Channel | APIInteractionDataResolvedChannel)[];
+  public readonly interaction: ChatInputCommandInteraction;
+
+  public readonly resolvedUsers?: ResolvedUser[];
+  public readonly resolvedRoles?: ResolvedRole[];
+  public readonly resolvedChannels?: ResolvedChannel[];
 
   constructor(client: MiamiClient, interaction: ChatInputCommandInteraction) {
     this.client = client;
     this.interaction = interaction;
 
-    /* ... */
+    const resolvedOptions: Readonly<CommandInteractionResolvedData<CacheType>> = interaction.options.resolved;
 
-    if (interaction.options.resolved?.users) {
-      this.resolvedUsers = interaction.options.resolved?.users?.map((user) => user);
+    if (resolvedOptions?.users) {
+      this.resolvedUsers = resolvedOptions?.users?.map(
+        (user: ResolvedUser): ResolvedUser =>
+          user
+      );
     }
 
-    if (interaction.options.resolved?.roles) {
-      this.resolvedRoles = interaction.options.resolved?.roles?.map((role) => role);
+    if (resolvedOptions?.roles) {
+      this.resolvedRoles = resolvedOptions?.roles?.map(
+        (role: ResolvedRole): ResolvedRole =>
+          role
+      );
     }
 
-    if (interaction.options.resolved?.channels) {
-      this.resolvedChannels = interaction.options.resolved?.channels?.map((channel) => channel);
+    if (resolvedOptions?.channels) {
+      this.resolvedChannels = resolvedOptions?.channels?.map(
+        (channel: ResolvedChannel): ResolvedChannel =>
+          channel
+      );
     }
   }
 
@@ -46,16 +61,16 @@ export default class CommandContext {
     return this.interaction.channel;
   }
 
+  get executor(): User {
+    return this.interaction.user;
+  }
+
   get guild(): Guild {
     return this.interaction.guild;
   }
 
-  get member(): GuildMember | APIInteractionGuildMember {
+  get member(): GuildMember|APIInteractionGuildMember {
     return this.interaction.member;
-  }
-
-  get user(): User {
-    return this.interaction.user; 
   }
 
   public async reply(options: InteractionReplyOptions): Promise<InteractionReplyOptions> {
