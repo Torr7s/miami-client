@@ -13,7 +13,7 @@ const clientConfig: ClientConfigProps = config.get<
   ClientConfigProps
 >('app.client');
 
-export class EmbedComponent {
+export default class EmbedComponent {
   private author?: EmbedAuthorOptions;
   private description?: string;
   private fields?: APIEmbedField[];
