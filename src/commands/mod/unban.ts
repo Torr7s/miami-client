@@ -1,8 +1,9 @@
 import {
   ApplicationCommandOptionType,
-  DMChannel,
+  codeBlock,
+  DiscordAPIError,
+  InteractionReplyOptions,
   PermissionFlagsBits,
-  User
 } from 'discord.js';
 
 import CommandBase from '@/src/structures/command';
@@ -10,7 +11,7 @@ import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
 export default class UnbanCommand extends CommandBase {
-  client: MiamiClient;
+  public client: MiamiClient;
 
   constructor(client: MiamiClient) {
     super(client, {
@@ -37,31 +38,29 @@ export default class UnbanCommand extends CommandBase {
     this.client = client;
   }
 
-  async run(ctx: CommandContext): Promise<void> {
+  public async run(ctx: CommandContext): Promise<InteractionReplyOptions|void> {
     const targetUserId: string = ctx.interaction.options.getString('id');
 
-    const targetUser: User = this.client.users.cache.get(targetUserId);
-
     try {
-      const dm: DMChannel = targetUser && await targetUser?.createDM();
-      await dm?.send({
-        content: `Você foi desbanido do servidor \`${ctx.guild.name}\` por \`${ctx.user.tag}\`.`
+      await ctx.guild.bans.remove(targetUserId);
+      await ctx.reply({
+        content: `O usuário <@${targetUserId}> foi desbanido do servidor.`
       });
-    } catch (error) {
-      if (targetUser && targetUser.dmChannel) await targetUser.deleteDM();
-    }
 
-    ctx.guild.bans.remove(targetUserId)
-      .then(async (): Promise<void> => {
-        await ctx.reply({
-          content: `O usuário <@${targetUserId}> foi desbanido do servidor.`
-        });
-      })
-      .catch(async (): Promise<void> => {
-        await ctx.reply({
+      /* :..: */
+
+    } catch (error) {
+      if ((error as DiscordAPIError).message == 'Unknown User') {
+        return ctx.reply({
           ephemeral: true,
-          content: `Banimento desconhecido, o id \`${targetUserId}\` não foi encontrado.`
-        });
+          content: `Banimento desconhecido, o id \`${targetUserId}\` não foi encontrado na lista de banimentos do servidor.`
+        });      
+      }
+
+      return ctx.reply({
+        ephemeral: true,
+        content: `Erro ao tentar desbanir este usuário: ${codeBlock(error.message!)}`
       });
+    }
   }
 }
