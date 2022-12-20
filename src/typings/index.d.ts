@@ -22,7 +22,10 @@ interface CommandOptions {
     appPerms?: PermissionResolvable[];
     memberPerms?: PermissionResolvable[];
   };
-  requiresDatabase?: boolean;
+  requiresDatabase?: {
+    guild?: boolean;
+    user?: boolean;
+  };
   cooldown?: number;
 }
 
