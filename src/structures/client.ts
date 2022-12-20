@@ -24,13 +24,13 @@ const clientConfig: ClientConfigProps = config.get<
 export default class MiamiClient extends Discord.Client {
   private readonly logger: Logger;
 
-  config: typeof clientConfig;
-  commands: Command[];
-  cooldowns: Map<string, Map<string, number>>;
-  usersDb: typeof users;
-  guildsDb: typeof guilds;
-  button: typeof ButtonComponent;
-  embed: typeof EmbedComponent;
+  public config: typeof clientConfig;
+  public commands: Command[];
+  public cooldowns: Map<string, Map<string, number>>;
+  public usersDb: typeof users;
+  public guildsDb: typeof guilds;
+  public button: typeof ButtonComponent;
+  public embed: typeof EmbedComponent;
 
   constructor() {
     const clientOptions: Discord.ClientOptions = {
@@ -81,7 +81,9 @@ export default class MiamiClient extends Discord.Client {
       const events: string[] = fs.readdirSync(`${path}/${category}`);
 
       for (const evt of events) {
-        const Event = require(join(process.cwd(), `${path}/${category}/${evt}`)).default;
+        const normalizedPath: string = join(process.cwd(), `${path}/${category}/${evt}`);
+
+        const Event: any = require(normalizedPath).default;
         const event = new (Event)(this);
 
         if (event.name === 'ready') {
@@ -97,16 +99,16 @@ export default class MiamiClient extends Discord.Client {
     const categories: string[] = fs.readdirSync(path);
 
     for (const category of categories) {
-      // if (category !== '@subCommands') {
       const commands: string[] = fs.readdirSync(`${path}/${category}`);
 
       for (const command of commands) {
-        const Command = require(join(process.cwd(), `${path}/${category}/${command}`)).default;
+        const normalizedPath: string = join(process.cwd(), `${path}/${category}/${command}`);
+
+        const Command: any = require(normalizedPath).default;
         const cmd = new (Command)(this);
 
         this.commands.push(cmd);
       }
-      // }
     }
   }
 
