@@ -1,4 +1,9 @@
-import { ApplicationCommandOptionType, GuildMember, InteractionReplyOptions, User } from 'discord.js';
+import { 
+  ApplicationCommandOptionType, 
+  GuildMember, 
+  InteractionReplyOptions, 
+  User 
+} from 'discord.js';
 
 import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
