@@ -39,7 +39,7 @@ export default class UnbanCommand extends CommandBase {
   }
 
   public async run(ctx: CommandContext): Promise<InteractionReplyOptions|void> {
-    const targetUserId: string = ctx.interaction.options.getString('id');
+    const targetUserId: string = ctx.interaction.options.getString('id', true);
 
     try {
       await ctx.guild.bans.remove(targetUserId);
