@@ -16,7 +16,10 @@ export default class CommandBase implements CommandOptions {
     appPerms?: PermissionResolvable[];
     memberPerms?: PermissionResolvable[];
   };
-  requiresDatabase?: boolean
+  requiresDatabase?: {
+    guild?: boolean;
+    user?: boolean;
+  }
   cooldown?: number;
 
   constructor(client: MiamiClient, options: CommandOptions) {
@@ -27,11 +30,17 @@ export default class CommandBase implements CommandOptions {
     this.category = options.category;
     this.restricted = options.restricted ?? false;
     this.options = options.options;
+    
     this.permissions = {
       appPerms: options.permissions?.appPerms ?? [],
       memberPerms: options.permissions?.memberPerms ?? []
     };
-    this.requiresDatabase = options.requiresDatabase ?? false;
+
+    this.requiresDatabase = {
+      guild: options.requiresDatabase?.guild ?? false,
+      user: options.requiresDatabase?.user ?? false
+    };
+
     this.cooldown = options.cooldown || 3;
   }
 }
