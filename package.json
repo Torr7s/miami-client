@@ -9,7 +9,7 @@
     "type": "git",
     "url": "git+https://github.com/Torr7s/miami-client.git"
   },
-  "main": "index.js",
+  "main": "./dist/src/index.js",
   "version": "1.0.0",
   "license": "Apache-2.0",
   "engines": {
@@ -18,7 +18,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "start": "node dist/src/index.js",
+    "start": "yarn build && node .",
     "start:dev": "tsnd --inspect --transpile-only --ignore-watch 'node_modules' --respawn 'src/index.ts'"
   },
   "dependencies": {
