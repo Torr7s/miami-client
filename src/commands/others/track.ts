@@ -21,8 +21,6 @@ import EmbedComponent from '@/src/shared/components/embed';
 
 import { formatTimestamp } from '@/src/shared/utils/functions';
 
-const justWaitFor: any = require('node:timers/promises').setTimeout;
-
 export default class TrackCommand extends CommandBase {
   client: MiamiClient;
 
@@ -148,9 +146,7 @@ export default class TrackCommand extends CommandBase {
     });
 
     collector.on('collect', async (target: CollectedInteraction): Promise<void> => {
-      !target.deferred && target.deferUpdate().catch((): void => {});
-
-      await justWaitFor(2000);
+      await this.client.utils.handleUndeferredInteraction(target);
 
       switch (target.customId) {
         /**
