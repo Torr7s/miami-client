@@ -2,7 +2,7 @@ import '@/src/shared/database';
 
 import fs from 'node:fs';
 import config from 'config';
-import Discord from 'discord.js';
+import Discord, { CacheType, CollectedInteraction } from 'discord.js';
 
 import guilds from '@/src/shared/database/models/guilds';
 import users from '@/src/shared/database/models/users';
@@ -11,7 +11,7 @@ import EmbedComponent from '@/src/shared/components/embed';
 import ButtonComponent from '@/src/shared/components/button';
 
 import { join } from 'node:path';
-import { Command } from '@/src/typings';
+import { Command, ClientUtils } from '@/src/typings';
 
 import { Logger } from '@/src/shared/utils/logger';
 
@@ -29,6 +29,7 @@ export default class MiamiClient extends Discord.Client {
   public guildsDb: typeof guilds;
   public commands: Command[];
   public cooldowns: Map<string, Map<string, number>>;
+  public utils: ClientUtils;
   public button: typeof ButtonComponent;
   public embed: typeof EmbedComponent;
 
@@ -68,6 +69,23 @@ export default class MiamiClient extends Discord.Client {
 
     this.guildsDb = guilds;
     this.usersDb = users;
+
+    // TODO: improve treatment of non-deferred interactions;
+    const handleUndeferredInteraction = async (interaction: CollectedInteraction<CacheType>): Promise<void> => {
+      if (!interaction.deferred) {
+        await interaction
+          .deferUpdate()
+          .catch((): any => null);
+      }
+
+      const justWaitFor: any = require('node:timers/promises').setTimeout;
+
+      return justWaitFor(2000);
+    }
+
+    this.utils = {
+      handleUndeferredInteraction
+    }
   }
 
   public async loadSlashCommands(): Promise<void> {
