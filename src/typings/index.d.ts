@@ -2,7 +2,9 @@ import {
   APIEmbedField,
   APIMessageComponentEmoji,
   ApplicationCommandOptionData,
+  CacheType,
   ClientEvents,
+  CollectedInteraction,
   EmbedAssetData,
   EmbedAuthorOptions,
   EmbedFooterData,
@@ -57,6 +59,10 @@ interface EmbedOptions {
   timestamp?: number;
   title?: string;
   url?: string;
+}
+
+interface ClientUtils {
+  handleUndeferredInteraction(interaction: CollectedInteraction<CacheType>);
 }
 
 interface MessariAssetMetricsProps {
