@@ -68,7 +68,7 @@ export default class CryptoCommand extends CommandBase {
     return result;
   }
 
-  public async run(ctx: CommandContext): Promise<InteractionReplyOptions | void> {
+  public async run(ctx: CommandContext): Promise<InteractionReplyOptions|void> {
     const messariClient = new MessariClient(messariConfig.apiKey);
 
     const assetIdentifier: string = ctx.interaction.options.getString('ativo', true);
@@ -153,21 +153,19 @@ export default class CryptoCommand extends CommandBase {
           row.components[1].setDisabled(false);
 
           const allAssets = await messariClient.listAllAssets();
-          
+
           const allAssetsCopyArray = allAssets.data.slice(0, 9);
           const sortedAssets = Object.entries(allAssetsCopyArray)
             .map(([, asset]) => asset)
             .sort((x, y): number => y.metrics.market_data.price_usd - x.metrics.market_data.price_usd);
 
-          const description: string[] = sortedAssets.map(
-            (asset, index: number): string => {
-              const { name, metrics: { market_data } } = asset;
+          const description: string[] = sortedAssets.map((asset, index: number): string => {
+            const { name, metrics: { market_data } } = asset;
 
-              return (
-                `\`${index + 1}\`ﾠ-ﾠ**${name}**ﾠ-ﾠ\`${toCurrency(market_data.price_usd)}\` (${this.formatPercent(market_data.percent_change_usd_last_24_hours)}% em 24h)`
-              );
-            }
-          );
+            return (
+              `\`${index + 1}\`ﾠ-ﾠ**${name}**ﾠ-ﾠ\`${toCurrency(market_data.price_usd)}\` (${this.formatPercent(market_data.percent_change_usd_last_24_hours)}% em 24h)`
+            );
+          });
 
           const embed: EmbedBuilder = new this.client.embed(ctx.executor)
             .setTitle('Posição | Ativo | Preço USD')
