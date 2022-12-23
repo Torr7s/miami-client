@@ -1,3 +1,5 @@
+import config from 'config';
+
 import {
   ActionRowBuilder,
   ApplicationCommandOptionType,
@@ -16,13 +18,16 @@ import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
-import { MessariAllAssets, MessariAssetMetrics } from '@/src/typings';
-import { MessariRequester } from '@/src/resources/messari/requester';
-import { MessariAssetMetricsModel } from '@/src/resources/messari/assets/metrics.model';
+import { MessariAssetMetrics, MessariClient, QueryResult } from '@torr7s/messari-client';
+
+import { MessariAssetModel } from '@/src/resources/messari/asset.model';
+import { MessariConfigProps } from '@/config/default';
 
 import { toCurrency, formatNumber, formatTimestamp } from '@/src/shared/utils/functions';
 
-const messariRequestHandler = new MessariRequester();
+const messariConfig: MessariConfigProps = config.get<
+  MessariConfigProps
+>('app.resources.messari');
 
 export default class CryptoCommand extends CommandBase {
   public client: MiamiClient;
@@ -64,37 +69,45 @@ export default class CryptoCommand extends CommandBase {
   }
 
   public async run(ctx: CommandContext): Promise<InteractionReplyOptions | void> {
-    const option: string = ctx.interaction.options.getString('ativo', true);
+    const messariClient = new MessariClient(messariConfig.apiKey);
 
-    const asset: MessariAssetMetrics = await messariRequestHandler.get<
-      MessariAssetMetrics
-    >(`v1/assets/${option}/metrics`);
+    const assetIdentifier: string = ctx.interaction.options.getString('ativo', true);
+    const asset = await messariClient.getAssetMetrics(assetIdentifier);
 
-    if (!asset.data) {
-      return ctx.reply({
-        ephemeral: true,
-        content: 'Ativo inválido, não foram encontrados resultados. \nVocê pode encontrar todos os ativos **[aqui](https://messari.io/screener/all-assets-D86E0735)**.'
-      });
+    if (asset.status.error_message) {
+      const error: string = asset.status.error_message;
+
+      if (error === 'Asset not found') {
+        const assets: string = 'https://messari.io/screener/all-assets-D86E0735';
+        const content: string = `Um erro foi encontrado durante a busca: "Ativo não encontrado"! \n\nDica: **[Lista](${assets})** de todos os ativos disponíveis.`
+
+        return ctx.reply({
+          ephemeral: true,
+          content
+        });
+      }
+
+      return ctx.reply({ ephemeral: true, content: error });
     }
 
-    const metrics: MessariAssetMetricsModel = MessariAssetMetricsModel.build(asset);
+    const assetModel: MessariAssetModel = MessariAssetModel.build(asset.data);
 
-    const lastTrade: string = formatTimestamp(metrics.lastTradeAt);
-    const lastTradeAt: string = formatTimestamp(metrics.lastTradeAt, 'R');
+    const lastTrade: string = formatTimestamp(assetModel.lastTradeAt);
+    const lastTradeAt: string = formatTimestamp(assetModel.lastTradeAt, 'R');
 
     const description: string[] = [
       `» \`Dados\`: `,
-      `ㅤ• Preço USD: \`${toCurrency(metrics.priceUsd)}\` (Alterou \`${metrics.percentChangeUsdLast24h.toFixed(2)}%\` em 24h)`,
-      `ㅤ• Volume nas últimas 24h: ${formatNumber(metrics.volumeLast24h)}`,
+      `ㅤ• Preço USD: \`${toCurrency(assetModel.priceUsd)}\` (Alterou \`${assetModel.percentChangeUsdLast24h.toFixed(2)}%\` em 24h)`,
+      `ㅤ• Volume nas últimas 24h: ${formatNumber(assetModel.volumeLast24h)}`,
       `ㅤ• Última transação em: ${lastTrade} (${lastTradeAt})`,
       `» \`Capitalização do mercado\`: `,
-      `ㅤ• Rank: ${metrics.rank}`,
-      `ㅤ• Dominância: \`${metrics.marketCapDominancePercent.toFixed(2)}%\``,
-      `ㅤ• Capital atual USD: \`${toCurrency(metrics.currentMarketCapUsd)}\``
+      `ㅤ• Rank: ${assetModel.rank}`,
+      `ㅤ• Dominância: \`${assetModel.marketCapDominancePercent.toFixed(2)}%\``,
+      `ㅤ• Capital atual USD: \`${toCurrency(assetModel.currentMarketCapUsd)}\``
     ];
 
     const mainEmbed: EmbedBuilder = new this.client.embed(ctx.executor)
-      .setAuthor(`[${metrics.symbol}] ${metrics.name} (${metrics.id})`)
+      .setAuthor(`[${assetModel.symbol}] ${assetModel.name} (${assetModel.id})`)
       .setDescription(`${description.join('\n')}`)
       .build();
 
@@ -117,16 +130,13 @@ export default class CryptoCommand extends CommandBase {
             id: '1011087460371017818',
             animated: false
           },
-          label: `${metrics.name}`,
+          label: `${assetModel.name}`,
           style: ButtonStyle.Secondary,
           disabled: true
         }).build()
       );
 
-    await ctx.reply({
-      embeds: [mainEmbed],
-      components: [row]
-    });
+    await ctx.reply({ embeds: [mainEmbed], components: [row] });
 
     const collector: InteractionCollector<ButtonInteraction> = ctx.channel.createMessageComponentCollector({
       componentType: ComponentType.Button,
@@ -136,56 +146,43 @@ export default class CryptoCommand extends CommandBase {
 
     collector.on('collect', async (target: CollectedInteraction): Promise<void> => {
       await this.client.utils.handleUndeferredInteraction(target);
-      
+
       switch (target.customId) {
         case 'next':
           row.components[0].setDisabled(true);
           row.components[1].setDisabled(false);
 
-          const res: MessariAllAssets = await messariRequestHandler.get<MessariAllAssets>('v2/assets');
-
-          const assetsArr = res.data.slice(0, 9);
-          const assetsObj = Object.entries(assetsArr)
+          const allAssets = await messariClient.listAllAssets();
+          
+          const allAssetsCopyArray = allAssets.data.slice(0, 9);
+          const sortedAssets = Object.entries(allAssetsCopyArray)
             .map(([, asset]) => asset)
-            .sort((x, y): number => y.metrics.market_data.price_usd - x.metrics.market_data.price_usd)
+            .sort((x, y): number => y.metrics.market_data.price_usd - x.metrics.market_data.price_usd);
 
-          const description: string[] = assetsObj.map((asset, index: number): string => {
-            const {
-              name,
-              metrics: {
-                market_data: {
-                  price_usd,
-                  percent_change_usd_last_24_hours
-                }
-              }
-            } = asset;
+          const description: string[] = sortedAssets.map(
+            (asset, index: number): string => {
+              const { name, metrics: { market_data } } = asset;
 
-            return (
-              `\`${index + 1}\`ﾠ-ﾠ**${name}**ﾠ-ﾠ\`${toCurrency(price_usd)}\` (${this.formatPercent(percent_change_usd_last_24_hours)}% em 24h)`
-            );
-          });
+              return (
+                `\`${index + 1}\`ﾠ-ﾠ**${name}**ﾠ-ﾠ\`${toCurrency(market_data.price_usd)}\` (${this.formatPercent(market_data.percent_change_usd_last_24_hours)}% em 24h)`
+              );
+            }
+          );
 
           const embed: EmbedBuilder = new this.client.embed(ctx.executor)
             .setTitle('Posição | Ativo | Preço USD')
             .setAuthor('Top ativos no momento')
-            .setDescription(`${description.join('\n')}`)
+            .setDescription(description.join('\n'))
             .build();
 
-          await target.editReply({
-            embeds: [embed],
-            components: [row]
-          });
+          await target.editReply({ embeds: [embed], components: [row] });
 
           break;
-
         case 'previous':
           row.components[0].setDisabled(false);
           row.components[1].setDisabled(true);
 
-          await target.editReply({
-            embeds: [mainEmbed],
-            components: [row]
-          });
+          await target.editReply({ embeds: [mainEmbed], components: [row] });
 
           break;
         default: break;
@@ -197,4 +194,3 @@ export default class CryptoCommand extends CommandBase {
     });
   }
 }
-
