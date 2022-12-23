@@ -1,6 +1,10 @@
-import { MessariAssetMetrics, MessariAssetMetricsModelProps } from '@/src/typings';
+import { 
+  MessariAssetMarketCapProps, 
+  MessariAssetMarketDataProps, 
+  MessariAssetMetrics 
+} from '@torr7s/messari-client';
 
-export class MessariAssetMetricsModel implements MessariAssetMetricsModelProps {
+export class MessariAssetModel {
   id: string;
   symbol: string;
   name: string;
@@ -12,14 +16,14 @@ export class MessariAssetMetricsModel implements MessariAssetMetricsModelProps {
   marketCapDominancePercent: number;
   currentMarketCapUsd: number;
 
-  private constructor(props: MessariAssetMetrics) {
-    const marketData = props.data.market_data;
-    const marketCap = props.data.marketcap;
+  private constructor(props: MessariAssetMetrics['data']) {
+    const marketData: MessariAssetMarketDataProps = props.market_data;
+    const marketCap: MessariAssetMarketCapProps = props.marketcap;
 
-    this.id = props.data.id;
+    this.id = props.id;
 
-    this.symbol = props.data.symbol;
-    this.name = props.data.name;
+    this.symbol = props.symbol;
+    this.name = props.name;
 
     this.priceUsd = marketData.price_usd ?? 0;
     this.volumeLast24h = marketData.volume_last_24_hours ?? 0;
@@ -31,7 +35,7 @@ export class MessariAssetMetricsModel implements MessariAssetMetricsModelProps {
     this.currentMarketCapUsd = marketCap.current_marketcap_usd ?? 0;
   }
 
-  static build(props: MessariAssetMetrics): MessariAssetMetricsModel {
-    return new MessariAssetMetricsModel(props);
+  static build(props: MessariAssetMetrics['data']): MessariAssetModel {
+    return new MessariAssetModel(props);
   }
 }
