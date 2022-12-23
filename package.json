@@ -22,6 +22,7 @@
     "start:dev": "tsnd --inspect --transpile-only --ignore-watch 'node_modules' --respawn 'src/index.ts'"
   },
   "dependencies": {
+    "@torr7s/messari-client": "^1.0.0",
     "config": "^3.3.8",
     "correios-brasil": "^3.0.3",
     "discord.js": "^14.7.1",
