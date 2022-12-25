@@ -18,7 +18,7 @@ import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
-import { MessariAssetMetrics, MessariClient, QueryResult } from '@torr7s/messari-client';
+import { MessariClient } from '@torr7s/messari-client';
 
 import { MessariAssetModel } from '@/src/resources/messari/asset.model';
 import { MessariConfigProps } from '@/config/default';
