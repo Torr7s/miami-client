@@ -1,13 +1,11 @@
 import { codeBlock, InteractionReplyOptions } from 'discord.js';
 
+import githubRequester from '../requester';
+
 import CommandContext from '@/src/structures/commandContext';
 import EmbedComponent from '@/src/shared/components/embed';
 
 import { formatTimestamp } from '@/src/shared/utils/functions/time';
-
-import { GithubRequester } from '../requester';
-
-const githubRequester: GithubRequester = new GithubRequester();
 
 export const githubUsersHandler = async (ctx: CommandContext, user: string): Promise<InteractionReplyOptions> => {
   const res: GithubUserProps = await githubRequester.get<
