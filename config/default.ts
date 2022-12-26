@@ -35,7 +35,7 @@ export default {
     client: {
       avatarURL: process.env.CLIENT_AVATAR_URL,
       guildId: process.env.GUILD_ID,
-      ownerId: process.env.DEV_ID,
+      ownerId: process.env.OWNER_ID,
       token: process.env.CLIENT_TOKEN,
     },
     database: {
