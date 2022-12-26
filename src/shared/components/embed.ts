@@ -13,6 +13,8 @@ const clientConfig: ClientConfigProps = config.get<
   ClientConfigProps
 >('app.client');
 
+const clientAvatar: string = clientConfig.avatarUrl;
+
 export default class EmbedComponent {
   private author?: EmbedAuthorOptions;
   private description?: string;
@@ -39,7 +41,7 @@ export default class EmbedComponent {
   public setAuthor(name: string, iconURL?: string, url?: string): this {
     this.author = {
       name,
-      iconURL: iconURL ?? clientConfig.avatarURL,
+      iconURL: iconURL ?? clientAvatar,
       url
     }
 
@@ -83,7 +85,7 @@ export default class EmbedComponent {
     return new EmbedBuilder({
       author: {
         name: this.author.name ?? 'Miami#7102',
-        iconURL: clientConfig.avatarURL
+        iconURL: clientAvatar
       },
       color: 2895667,
       description: this.description,
