@@ -18,16 +18,11 @@ import CommandBase from '@/src/structures/command';
 import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
-import { MessariClient } from '@torr7s/messari-client';
+import messariClient from '@/src/resources/messari/client';
 
-import { MessariAssetModel } from '@/src/resources/messari/asset.model';
-import { MessariConfigProps } from '@/config/default';
+import { MessariAssetModel } from '@/src/resources/messari/models/asset.model';
 
 import { toCurrency, formatNumber, formatTimestamp } from '@/src/shared/utils/functions';
-
-const messariConfig: MessariConfigProps = config.get<
-  MessariConfigProps
->('app.resources.messari');
 
 export default class CryptoCommand extends CommandBase {
   constructor(client: MiamiClient) {
@@ -65,8 +60,6 @@ export default class CryptoCommand extends CommandBase {
   }
 
   public async run(ctx: CommandContext): Promise<InteractionReplyOptions|void> {
-    const messariClient = new MessariClient(messariConfig.apiKey);
-
     const assetIdentifier: string = ctx.interaction.options.getString('ativo', true);
     const asset = await messariClient.getAssetMetrics(assetIdentifier);
 
