@@ -1,17 +1,20 @@
+import mongoose from 'mongoose';
 import config from 'config';
-import * as mongoose from 'mongoose';
 
-import { MongooseConfigProps } from '@/config/default';
+import { DatabaseConfigProps } from '@/config/default';
+
 import { Logger } from '@/src/shared/utils/logger';
 
-const databaseConfig: MongooseConfigProps = config.get<
-  MongooseConfigProps
+const databaseConfig: DatabaseConfigProps = config.get<
+  DatabaseConfigProps
 >('app.database');
 
-const logger: Logger = Logger.it('Mongoose');
+const database: mongoose.Connection = mongoose.createConnection(
+  databaseConfig
+    .mongoose
+    .url
+);
 
-const database: mongoose.Connection = mongoose.createConnection(databaseConfig.mongoURL);
-
-database.once('open', (): void => logger.info('✔ Conexão estabelecida com sucesso'));
+database.once('open', (): void => Logger.it('Mongoose').info('✔ Conexão estabelecida com sucesso'));
 
 export default database;
