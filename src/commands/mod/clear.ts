@@ -9,8 +9,6 @@ import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
 export default class ClearCommand extends CommandBase {
-  public client: MiamiClient;
-
   constructor(client: MiamiClient) {
     super(client, {
       name: 'limpar',
@@ -37,8 +35,6 @@ export default class ClearCommand extends CommandBase {
         memberPerms: [PermissionFlagsBits.ManageMessages]
       }
     });
-
-    this.client = client;
   }
 
   public async run(ctx: CommandContext): Promise<InteractionReplyOptions> {

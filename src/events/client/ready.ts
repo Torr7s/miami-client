@@ -6,12 +6,9 @@ import { Logger } from '@/src/shared/utils/logger';
 export default class ReadyEvent extends EventBase {
   private readonly logger: Logger;
 
-  client: MiamiClient;
-
   constructor(client: MiamiClient) {
     super(client, 'ready');
 
-    this.client = client;
     this.logger = Logger.it(this.constructor.name);
   }
 

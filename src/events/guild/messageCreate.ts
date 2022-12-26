@@ -4,12 +4,8 @@ import EventBase from '@/src/structures/event';
 import MiamiClient from '@/src/structures/client';
 
 export default class MessageCreateEvent extends EventBase {
-  client: MiamiClient;
-
   constructor(client: MiamiClient) {
     super(client, 'messageCreate');
-
-    this.client = client;
   }
 
   async run(message: Message): Promise<Message<boolean> | void> {

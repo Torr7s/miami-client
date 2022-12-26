@@ -15,8 +15,6 @@ import { resolveFlags } from '@/src/shared/utils/discord/resolvables/flags';
 import { formatTimestamp } from '@/src/shared/utils/functions';
 
 export default class UserinfoCommand extends CommandBase {
-  client: MiamiClient;
-
   constructor(client: MiamiClient) {
     super(client, {
       name: 'usuário',
@@ -37,8 +35,6 @@ export default class UserinfoCommand extends CommandBase {
         }
       ]
     });
-
-    this.client = client;
   }
 
   getStatus(status: string): string {

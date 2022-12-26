@@ -30,8 +30,6 @@ const messariConfig: MessariConfigProps = config.get<
 >('app.resources.messari');
 
 export default class CryptoCommand extends CommandBase {
-  public client: MiamiClient;
-
   constructor(client: MiamiClient) {
     super(client, {
       name: 'cripto',
@@ -53,8 +51,6 @@ export default class CryptoCommand extends CommandBase {
       ],
       cooldown: 5
     });
-
-    this.client = client;
   }
 
   private formatPercent(percent: number): string {

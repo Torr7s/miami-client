@@ -10,13 +10,11 @@ import { Logger } from '@/src/shared/utils/logger';
 import { resolvePermissions } from '@/src/shared/utils/discord/resolvables/permissions';
 
 export default class InteractionCreateEvent extends EventBase {
-  public client: MiamiClient;
   private readonly logger: Logger;
 
   constructor(client: MiamiClient) {
     super(client, 'interactionCreate');
 
-    this.client = client;
     this.logger = Logger.it(this.constructor.name);
   }
 

@@ -21,7 +21,6 @@ import MiamiClient from '@/src/structures/client';
 import { Logger } from '@/src/shared/utils/logger';
 
 export default class EvalCommand extends CommandBase {
-  public client: MiamiClient;
   private readonly logger: Logger;
 
   constructor(client: MiamiClient) {
@@ -46,7 +45,6 @@ export default class EvalCommand extends CommandBase {
       ]
     });
 
-    this.client = client;
     this.logger = Logger.it(this.constructor.name);
   }
 

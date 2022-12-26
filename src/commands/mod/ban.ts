@@ -14,8 +14,6 @@ import CommandContext from '@/src/structures/commandContext';
 import MiamiClient from '@/src/structures/client';
 
 export default class BanCommand extends CommandBase {
-  public client: MiamiClient;
-
   constructor(client: MiamiClient) {
     super(client, {
       name: 'banir',
@@ -64,8 +62,6 @@ export default class BanCommand extends CommandBase {
         memberPerms: [PermissionFlagsBits.BanMembers]
       }
     });
-
-    this.client = client;
   }
 
   public async run(ctx: CommandContext): Promise<InteractionReplyOptions | void> {

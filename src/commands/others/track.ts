@@ -22,8 +22,6 @@ import EmbedComponent from '@/src/shared/components/embed';
 import { formatTimestamp } from '@/src/shared/utils/functions';
 
 export default class TrackCommand extends CommandBase {
-  client: MiamiClient;
-
   constructor(client: MiamiClient) {
     super(client, {
       name: 'rastrear',
@@ -44,8 +42,6 @@ export default class TrackCommand extends CommandBase {
         }
       ]
     });
-
-    this.client = client;
   }
 
   public async run(ctx: CommandContext): Promise<InteractionReplyOptions|void> {

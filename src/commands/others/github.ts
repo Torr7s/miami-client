@@ -8,8 +8,6 @@ import { githubRepositoriesHandler } from '@/src/resources/github/handlers/repos
 import { githubUsersHandler } from '@/src/resources/github/handlers/users';
 
 export default class GithubCommand extends CommandBase {
-  public client: MiamiClient;
-
   constructor(client: MiamiClient) {
     super(client, {
       name: 'github',
@@ -83,8 +81,6 @@ export default class GithubCommand extends CommandBase {
         appPerms: [PermissionFlagsBits.EmbedLinks]
       }
     });
-
-    this.client = client;
   }
 
   public async run(ctx: CommandContext): Promise<void> {
