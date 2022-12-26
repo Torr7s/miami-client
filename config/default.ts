@@ -5,7 +5,6 @@ export interface AppConfigProps {
     resources: {
       messari: MessariConfigProps;
       github: GithubConfigProps;
-      openAI: OpenAIConfigProps;
     };
   }
 }
@@ -31,13 +30,6 @@ export interface GithubConfigProps {
 }
 
 export interface MessariConfigProps {
-  api: {
-    key: string;
-    url: string;
-  }
-}
-
-export interface OpenAIConfigProps {
   api: {
     key: string;
     url: string;
@@ -70,12 +62,6 @@ export default {
           userAgent: process.env.GITHUB_USER_AGENT
         }
       },
-      openAI: {
-        api: {
-          key: process.env.OPEN_AI_API_KEY,
-          url: process.env.OPEN_AI_API_URL
-        }
-      }
     }
   }
 } as AppConfigProps;
