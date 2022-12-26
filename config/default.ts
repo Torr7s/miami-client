@@ -1,54 +1,80 @@
-export interface GithubConfigProps {
-  apiURL: string;
-  userAgent: string;
-}
-
-export interface MessariConfigProps {
-  apiKey: string;
-  apiURL: string;
-}
-
-export interface MongooseConfigProps {
-  mongoURL: string;
+export interface AppConfigProps {
+  app: {
+    client: ClientConfigProps;
+    database: DatabaseConfigProps;
+    resources: {
+      messari: MessariConfigProps;
+      github: GithubConfigProps;
+      openAI: OpenAIConfigProps;
+    };
+  }
 }
 
 export interface ClientConfigProps {
-  avatarURL: string;
+  avatarUrl: string;
   guildId: string;
   ownerId: string;
   token: string;
 }
 
-export interface AppConfigProps {
-  app: {
-    client: ClientConfigProps;
-    database: MongooseConfigProps;
-    resources: {
-      messari: MessariConfigProps;
-      github: GithubConfigProps;
-    };
+export interface DatabaseConfigProps {
+  mongoose: {
+    url: string;
+  }
+}
+
+export interface GithubConfigProps {
+  api: {
+    userAgent: string;
+    url: string;
+  }
+}
+
+export interface MessariConfigProps {
+  api: {
+    key: string;
+    url: string;
+  }
+}
+
+export interface OpenAIConfigProps {
+  api: {
+    key: string;
+    url: string;
   }
 }
 
 export default {
   app: {
     client: {
-      avatarURL: process.env.CLIENT_AVATAR_URL,
+      avatarUrl: process.env.CLIENT_AVATAR_URL,
       guildId: process.env.GUILD_ID,
       ownerId: process.env.OWNER_ID,
       token: process.env.CLIENT_TOKEN,
     },
     database: {
-      mongoURL: process.env.MONGO_URL,
+      mongoose: {
+        url: process.env.MONGO_URL
+      }
     },
     resources: {
       messari: {
-        apiKey: process.env.MESSARI_API_KEY,
-        apiURL: process.env.MESSARI_API_URL
+        api: {
+          key: process.env.MESSARI_API_KEY,
+          url: process.env.MESSARI_API_URL
+        }
       },
       github: {
-        apiURL: process.env.GITHUB_API_URL,
-        userAgent: process.env.GITHUB_USER_AGENT
+        api: {
+          url: process.env.GITHUB_API_URL,
+          userAgent: process.env.GITHUB_USER_AGENT
+        }
+      },
+      openAI: {
+        api: {
+          key: process.env.OPEN_AI_API_KEY,
+          url: process.env.OPEN_AI_API_URL
+        }
       }
     }
   }
