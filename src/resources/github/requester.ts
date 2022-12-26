@@ -9,19 +9,21 @@ const githubConfig: GithubConfigProps = config.get<
   GithubConfigProps
 >('app.resources.github');
 
-export class GithubRequester extends Request {
+class GithubRequester extends Request {
   constructor() {
-    super(githubConfig.apiURL);
+    super(githubConfig.api.url);
   }
 
   public async get<T>(endpoint: string): Promise<T> {
     const res: Awaited<T> = await this.request(`${this.url}/${endpoint}`, {
       method: 'GET',
       headers: {
-        'user-agent': `${githubConfig.userAgent}`
+        'user-agent': githubConfig.api.url
       }
     }).then((r: Dispatcher.ResponseData): Promise<T> => r.body.json());
 
     return res;
   }
 }
+
+export default new GithubRequester();
