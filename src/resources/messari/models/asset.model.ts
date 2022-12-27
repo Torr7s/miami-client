@@ -1,41 +1,62 @@
-import { 
-  MessariAssetMarketCapProps, 
-  MessariAssetMarketDataProps, 
-  MessariAssetMetrics 
+import {
+  MessariAssetMarketCapProps,
+  MessariAssetMarketDataProps,
+  MessariAssetMetrics
 } from '@torr7s/messari-client';
 
 export class MessariAssetModel {
-  id: string;
-  symbol: string;
-  name: string;
-  priceUsd: number;
-  volumeLast24h: number;
-  percentChangeUsdLast24h: number;
-  lastTradeAt: string;
-  rank: number;
-  marketCapDominancePercent: number;
-  currentMarketCapUsd: number;
+  public readonly id: string;
+  public readonly symbol: string;
+  public readonly name: string;
 
-  private constructor(props: MessariAssetMetrics['data']) {
-    const marketData: MessariAssetMarketDataProps = props.market_data;
-    const marketCap: MessariAssetMarketCapProps = props.marketcap;
+  public readonly rank: number;
+  public readonly marketCapDominancePercent: number;
+  public readonly currentMarketCapUSD: number;
+  public readonly outstandingMarketCapUSD: number;
+  public readonly realizedMarketCapUSD: number;
 
-    this.id = props.id;
+  public readonly priceUSD: number;
+  public readonly volumeLast24h: number;
+  public readonly realVolumeLast24h: number;
+  public readonly percentChangeLast1hUSD: number;
+  public readonly percentChangeLast24hUSD: number;
+  public readonly lastTradeAt: string;
 
-    this.symbol = props.symbol;
-    this.name = props.name;
+  public readonly redditActiveUsers: number;
+  public readonly redditSubscribers: number;
 
-    this.priceUsd = marketData.price_usd ?? 0;
-    this.volumeLast24h = marketData.volume_last_24_hours ?? 0;
-    this.percentChangeUsdLast24h = marketData.percent_change_usd_last_24_hours ?? 0;
-    this.lastTradeAt = marketData.last_trade_at ?? '0';
+  private constructor({ data }: MessariAssetMetrics) {
+    const assetMarketCap: MessariAssetMarketCapProps = data.marketcap;
+    const assetMarketData: MessariAssetMarketDataProps = data.market_data;
 
-    this.rank = marketCap.rank ?? 0;
-    this.marketCapDominancePercent = marketCap.marketcap_dominance_percent ?? 0;
-    this.currentMarketCapUsd = marketCap.current_marketcap_usd ?? 0;
+    this.id = data.id;
+    this.symbol = data.symbol;
+    this.name = data.name;
+
+    this.rank = assetMarketCap.rank;
+    this.marketCapDominancePercent = assetMarketCap.marketcap_dominance_percent;
+    this.currentMarketCapUSD = assetMarketCap.current_marketcap_usd;
+    this.outstandingMarketCapUSD = assetMarketCap.outstanding_marketcap_usd;
+    this.realizedMarketCapUSD = assetMarketCap.realized_marketcap_usd;
+
+    this.priceUSD = assetMarketData.price_usd;
+    this.volumeLast24h = assetMarketData.volume_last_24_hours;
+    this.realVolumeLast24h = assetMarketData.real_volume_last_24_hours;
+    this.percentChangeLast1hUSD = assetMarketData.percent_change_usd_last_1_hour;
+    this.percentChangeLast24hUSD = assetMarketData.percent_change_usd_last_24_hours;
+    this.lastTradeAt = assetMarketData.last_trade_at;
+    
+    this.redditActiveUsers = data.reddit.active_user_count;
+    this.redditSubscribers = data.reddit.subscribers;
+
+    this.$validate(this);
   }
 
-  static build(props: MessariAssetMetrics['data']): MessariAssetModel {
-    return new MessariAssetModel(props);
+  static build({ data }: MessariAssetMetrics): MessariAssetModel {
+    return new MessariAssetModel({ data });
+  }
+
+  private $validate(obj: object): void {
+    return Object.keys(obj).forEach((key: string) => obj[key] ?? (obj[key] = 0));
   }
 }
