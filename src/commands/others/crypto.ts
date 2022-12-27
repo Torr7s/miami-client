@@ -104,7 +104,9 @@ export default class CryptoCommand extends CommandBase {
     const lastTradeAtTimestamp: string = formatTimestamp(lastTradeAt, 'R');
 
     const description: string[] = [
-      `Este ativo tem **${formatNumber(redditActiveUsers)}** usuários ativos no Reddit e **${formatNumber(redditSubscribers)}** assinantes \n`,
+      `» \`Social\` (Reddit): `,
+      `ㅤ• Usuários ativos: :busts_in_silhouette: **${formatNumber(redditActiveUsers)}**`,
+      `ㅤ• Assinantes: **${formatNumber(redditSubscribers)}**`,
       `» \`Dados\`: `,
       `ㅤ• Preço USD: \`${toCurrency(priceUSD)}\` (Alterou \`${percentChangeLast1hUSD.toFixed(2)}\` em 1h, \`${percentChangeLast24hUSD.toFixed(2)}%\` em 24h)`,
       `ㅤ• Volume nas últimas 24h: **${formatNumber(volumeLast24h)}**`,
