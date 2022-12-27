@@ -16,7 +16,7 @@ import rtcRegionsJson from '@/src/shared/utils/json/rtc-regions.json';
 
 import { formatTimestamp } from '@/src/shared/utils/functions';
 
-export default class ChannelinfoCommand extends CommandBase {
+export default class ChannelInfoCommand extends CommandBase {
   constructor(client: MiamiClient) {
     super(client, {
       name: 'canal',

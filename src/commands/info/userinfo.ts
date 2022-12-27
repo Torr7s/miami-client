@@ -14,7 +14,7 @@ import EmbedComponent from '@/src/shared/components/embed';
 import { resolveFlags } from '@/src/shared/utils/discord/resolvables/flags';
 import { formatTimestamp } from '@/src/shared/utils/functions';
 
-export default class UserinfoCommand extends CommandBase {
+export default class UserInfoCommand extends CommandBase {
   constructor(client: MiamiClient) {
     super(client, {
       name: 'usuário',
