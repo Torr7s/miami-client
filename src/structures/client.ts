@@ -42,7 +42,7 @@ export default class MiamiClient extends Discord.Client {
         ],
         repliedUser: true
       },
-      intents: 33551,
+      intents: 38671,
       presence: {
         activities: [
           {
