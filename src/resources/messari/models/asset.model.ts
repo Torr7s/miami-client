@@ -49,14 +49,14 @@ export class MessariAssetModel {
     this.redditActiveUsers = data.reddit.active_user_count;
     this.redditSubscribers = data.reddit.subscribers;
 
-    this.$validate(this);
+    MessariAssetModel.$validate(this);
   }
 
-  static build({ data }: MessariAssetMetrics): MessariAssetModel {
+  public static build({ data }: MessariAssetMetrics): MessariAssetModel {
     return new MessariAssetModel({ data });
   }
 
-  private $validate(obj: object): void {
+  private static $validate(obj: object): void {
     return Object.keys(obj).forEach((key: string) => obj[key] ?? (obj[key] = 0));
   }
 }
