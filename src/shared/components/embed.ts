@@ -84,7 +84,7 @@ export default class EmbedComponent {
   public build(): EmbedBuilder {
     return new EmbedBuilder({
       author: {
-        name: this.author.name ?? 'Miami#7102',
+        name: this.author?.name ?? 'Miami#7102',
         iconURL: clientAvatar
       },
       color: 2895667,
