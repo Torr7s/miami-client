@@ -120,7 +120,7 @@ export default class CryptoCommand extends CommandBase {
 
     const mainEmbed: EmbedBuilder = new this.client.embed(ctx.executor)
       .setAuthor(`[${symbol}] ${name} (${id})`)
-      .setDescription(`${description.join('\n')}`)
+      .setDescription(description.join('\n'))
       .build();
 
     const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
