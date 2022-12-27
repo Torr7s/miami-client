@@ -16,9 +16,9 @@ import {
 
 import MiamiClient from './client';
 
-type ResolvedUser = User;
-type ResolvedRole = Role|APIRole;
-type ResolvedChannel = Channel|APIInteractionDataResolvedChannel;
+export type ResolvedUser = User;
+export type ResolvedRole = Role|APIRole;
+export type ResolvedChannel = Channel|APIInteractionDataResolvedChannel;
 
 export default class CommandContext {
   private readonly client: MiamiClient;
