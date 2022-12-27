@@ -50,7 +50,7 @@ export default class RoleInfoCommand extends CommandBase {
     const role = resolvedRole as Role;
 
     role.hexColor && embed.addField(':paintbrush: Cor', role.hexColor.toUpperCase());
-    role.members.size && embed.addField(':busts_in_silhouette: Membros', `${role.members?.size}`);
+    role.members.size && embed.addField(':busts_in_silhouette: Membros', `${role.members.size}`);
     role.createdAt && embed.addField(':date: Data de Criação', `${formatTimestamp(role.createdAt)} (${formatTimestamp(role.createdTimestamp, 'R')})`, false);
 
     const { permissions: rolePermissions } = resolvePermissions(role.permissions?.toArray());
