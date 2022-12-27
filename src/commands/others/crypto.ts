@@ -22,7 +22,7 @@ import messariClient from '@/src/resources/messari/client';
 
 import { MessariAssetModel } from '@/src/resources/messari/models/asset.model';
 
-import { toCurrency, formatNumber, formatTimestamp } from '@/src/shared/utils/functions';
+import { formatNumber, formatTimestamp, toCurrency } from '@/src/shared/utils/functions';
 
 export default class CryptoCommand extends CommandBase {
   constructor(client: MiamiClient) {
@@ -79,24 +79,47 @@ export default class CryptoCommand extends CommandBase {
       return ctx.reply({ ephemeral: true, content: error });
     }
 
-    const assetModel: MessariAssetModel = MessariAssetModel.build(asset.data);
+    const {
+      id,
+      symbol,
+      name,
+      rank,
+      marketCapDominancePercent,
+      currentMarketCapUSD,
+      outstandingMarketCapUSD,
+      realizedMarketCapUSD,
+      priceUSD,
+      volumeLast24h,
+      realVolumeLast24h,
+      percentChangeLast1hUSD,
+      percentChangeLast24hUSD,
+      lastTradeAt,
+      redditActiveUsers,
+      redditSubscribers
+    }: MessariAssetModel = MessariAssetModel.build({
+      data: asset.data
+    });
 
-    const lastTrade: string = formatTimestamp(assetModel.lastTradeAt);
-    const lastTradeAt: string = formatTimestamp(assetModel.lastTradeAt, 'R');
+    const lastTradeTimestamp: string = formatTimestamp(lastTradeAt);
+    const lastTradeAtTimestamp: string = formatTimestamp(lastTradeAt, 'R');
 
     const description: string[] = [
+      `Este ativo tem **${formatNumber(redditActiveUsers)}** usuários ativos no Reddit e **${formatNumber(redditSubscribers)}** assinantes \n`,
       `» \`Dados\`: `,
-      `ㅤ• Preço USD: \`${toCurrency(assetModel.priceUsd)}\` (Alterou \`${assetModel.percentChangeUsdLast24h.toFixed(2)}%\` em 24h)`,
-      `ㅤ• Volume nas últimas 24h: ${formatNumber(assetModel.volumeLast24h)}`,
-      `ㅤ• Última transação em: ${lastTrade} (${lastTradeAt})`,
+      `ㅤ• Preço USD: \`${toCurrency(priceUSD)}\` (Alterou \`${percentChangeLast1hUSD.toFixed(2)}\` em 1h, \`${percentChangeLast24hUSD.toFixed(2)}%\` em 24h)`,
+      `ㅤ• Volume nas últimas 24h: **${formatNumber(volumeLast24h)}**`,
+      `ㅤ• Volume real: \`${formatNumber(realVolumeLast24h)}\``,
+      `ㅤ• Última transação em: ${lastTradeTimestamp} (${lastTradeAtTimestamp})`,
       `» \`Capitalização do mercado\`: `,
-      `ㅤ• Rank: ${assetModel.rank}`,
-      `ㅤ• Dominância: \`${assetModel.marketCapDominancePercent.toFixed(2)}%\``,
-      `ㅤ• Capital atual USD: \`${toCurrency(assetModel.currentMarketCapUsd)}\``
+      `ㅤ• Rank: :medal: ${rank}`,
+      `ㅤ• Dominância: \`${marketCapDominancePercent.toFixed(2)}%\``,
+      `ㅤ• Capital atual USD: \`${toCurrency(currentMarketCapUSD)}\``,
+      `ㅤ• Capital destaque USD: **${toCurrency(outstandingMarketCapUSD)}**`,
+      `ㅤ• Capital realizado USD: \`${toCurrency(realizedMarketCapUSD)}\``
     ];
 
     const mainEmbed: EmbedBuilder = new this.client.embed(ctx.executor)
-      .setAuthor(`[${assetModel.symbol}] ${assetModel.name} (${assetModel.id})`)
+      .setAuthor(`[${symbol}] ${name} (${id})`)
       .setDescription(`${description.join('\n')}`)
       .build();
 
@@ -119,7 +142,7 @@ export default class CryptoCommand extends CommandBase {
             id: '1011087460371017818',
             animated: false
           },
-          label: `${assetModel.name}`,
+          label: name,
           style: ButtonStyle.Secondary,
           disabled: true
         }).build()
@@ -129,7 +152,7 @@ export default class CryptoCommand extends CommandBase {
 
     const collector: InteractionCollector<ButtonInteraction> = ctx.channel.createMessageComponentCollector({
       componentType: ComponentType.Button,
-      time: 45000,
+      time: 240_000,
       filter: (i: Interaction): boolean => i.user.id === ctx.executor.id
     });
 
