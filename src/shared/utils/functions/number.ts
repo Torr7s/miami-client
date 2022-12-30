@@ -7,14 +7,14 @@ export const abbrevNumber = (numb: number, options?: Options): string => {
   const currency: string = options?.currency ?? 'USD';
   const locale: string = options?.locale ?? 'en-US';
 
-  return numb.toLocaleString(locale, {
+  return new Intl.NumberFormat(locale, {
     notation: 'compact',
     currency,
     currencyDisplay: 'narrowSymbol',
     maximumFractionDigits: 3,
     unitDisplay: 'short',
     style: 'currency'
-  });
+  }).format(numb);
 }
 
 export function formatNumber(numb: number, locale: string = 'en-US'): string {
