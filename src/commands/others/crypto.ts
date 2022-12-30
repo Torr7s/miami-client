@@ -20,7 +20,7 @@ import messariClient from '@/src/resources/messari/client';
 
 import { MessariAssetModel } from '@/src/resources/messari/models/asset.model';
 
-import { formatNumber, formatTimestamp, toCurrency } from '@/src/shared/utils/functions';
+import { abbrevNumber, formatNumber, formatTimestamp, toCurrency } from '@/src/shared/utils/functions';
 
 export default class CryptoCommand extends CommandBase {
   constructor(client: MiamiClient) {
@@ -107,15 +107,14 @@ export default class CryptoCommand extends CommandBase {
       `ㅤ• Assinantes: **${formatNumber(redditSubscribers)}**`,
       `» \`Dados\`: `,
       `ㅤ• Preço USD: \`${toCurrency(priceUSD)}\` (Alterou \`${percentChangeLast1hUSD.toFixed(2)}\` em 1h, \`${percentChangeLast24hUSD.toFixed(2)}%\` em 24h)`,
-      `ㅤ• Volume nas últimas 24h: **${formatNumber(volumeLast24h)}**`,
-      `ㅤ• Volume real: \`${formatNumber(realVolumeLast24h)}\``,
+      `ㅤ• Vol. relatado nas últimas 24h: **${abbrevNumber(volumeLast24h)}** (Vol. real: \`${abbrevNumber(realVolumeLast24h)}\`)`,
       `ㅤ• Última transação em: ${lastTradeTimestamp} (${lastTradeAtTimestamp})`,
       `» \`Capitalização do mercado\`: `,
       `ㅤ• Rank: :medal: ${rank}`,
-      `ㅤ• Dominância: \`${marketCapDominancePercent.toFixed(2)}%\``,
-      `ㅤ• Capital atual USD: \`${toCurrency(currentMarketCapUSD)}\``,
-      `ㅤ• Capital destaque USD: **${toCurrency(outstandingMarketCapUSD)}**`,
-      `ㅤ• Capital realizado USD: \`${toCurrency(realizedMarketCapUSD)}\``
+      `ㅤ• Dominância: **${marketCapDominancePercent.toFixed(2)}%**`,
+      `ㅤ• Capital atual USD: \`${abbrevNumber(currentMarketCapUSD)}\` (${toCurrency(currentMarketCapUSD)})`,
+      `ㅤ• Capital destaque USD: \`${abbrevNumber(outstandingMarketCapUSD)}\` (${toCurrency(outstandingMarketCapUSD)})`,
+      `ㅤ• Capital realizado USD: \`${abbrevNumber(realizedMarketCapUSD)}\` (${toCurrency(realizedMarketCapUSD)})`
     ];
 
     const mainEmbed: EmbedBuilder = new this.client.embed(ctx.executor)
