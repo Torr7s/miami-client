@@ -102,9 +102,6 @@ export default class CryptoCommand extends CommandBase {
     const lastTradeAtTimestamp: string = formatTimestamp(lastTradeAt, 'R');
 
     const description: string[] = [
-      `» \`Social\` (Reddit): `,
-      `ㅤ• Usuários ativos: :busts_in_silhouette: **${formatNumber(redditActiveUsers)}**`,
-      `ㅤ• Assinantes: **${formatNumber(redditSubscribers)}**`,
       `» \`Dados\`: `,
       `ㅤ• Preço USD: \`${toCurrency(priceUSD)}\` (Alterou \`${percentChangeLast1hUSD.toFixed(2)}\` em 1h, \`${percentChangeLast24hUSD.toFixed(2)}%\` em 24h)`,
       `ㅤ• Vol. relatado nas últimas 24h: **${abbrevNumber(volumeLast24h)}** (Vol. real: \`${abbrevNumber(realVolumeLast24h)}\`)`,
@@ -120,6 +117,8 @@ export default class CryptoCommand extends CommandBase {
     const mainEmbed: EmbedBuilder = new this.client.embed(ctx.executor)
       .setAuthor(`[${symbol}] ${name} (${id})`)
       .setDescription(description.join('\n'))
+      .addField(':busts_in_silhouette: Usuários assinantes no Reddit', formatNumber(redditSubscribers))
+      .addField(':dart: Usuários Ativos no Reddit', formatNumber(redditActiveUsers))
       .build();
 
     const row: ActionRowBuilder<ButtonBuilder> = new ActionRowBuilder<ButtonBuilder>()
