@@ -35,26 +35,9 @@ export default class CommandContext {
 
     const resolvedOptions: Readonly<CommandInteractionResolvedData<CacheType>> = interaction.options.resolved;
 
-    if (resolvedOptions?.users) {
-      this.resolvedUsers = resolvedOptions?.users?.map(
-        (user: ResolvedUser): ResolvedUser =>
-          user
-      );
-    }
-
-    if (resolvedOptions?.roles) {
-      this.resolvedRoles = resolvedOptions?.roles?.map(
-        (role: ResolvedRole): ResolvedRole =>
-          role
-      );
-    }
-
-    if (resolvedOptions?.channels) {
-      this.resolvedChannels = resolvedOptions?.channels?.map(
-        (channel: ResolvedChannel): ResolvedChannel =>
-          channel
-      );
-    }
+    if (resolvedOptions?.users) this.resolvedUsers = resolvedOptions?.users?.map(user => user as ResolvedUser);
+    if (resolvedOptions?.roles) this.resolvedRoles = resolvedOptions?.roles?.map(role => role as ResolvedRole);
+    if (resolvedOptions?.channels) this.resolvedChannels = resolvedOptions?.channels?.map(channel => channel as ResolvedChannel);
   }
 
   get channel(): GuildTextBasedChannel {
