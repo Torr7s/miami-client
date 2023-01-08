@@ -45,11 +45,11 @@ export default class InteractionCreateEvent extends EventBase {
               const clientHasPermissions: boolean = interaction.appPermissions.has(appPerms);
 
               if (!clientHasPermissions) {
-                const { permissions } = resolvePermissions(appPerms);
+                const missingPermissions: string = resolvePermissions(appPerms);
 
                 return interaction.reply({
                   ephemeral: true,
-                  content: `Preciso das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
+                  content: `Preciso das seguintes permissões para executar este comando: \n⤷ \`${missingPermissions}\`.`
                 });
               }
             }
@@ -58,11 +58,11 @@ export default class InteractionCreateEvent extends EventBase {
               const memberHasPermissions: boolean = interaction.memberPermissions.has(memberPerms);
 
               if (!memberHasPermissions) {
-                const { permissions } = resolvePermissions(memberPerms);
+                const missingPermissions: string = resolvePermissions(memberPerms);
 
                 return interaction.reply({
                   ephemeral: true,
-                  content: `Você precisa das seguintes permissões para executar este comando: \n⤷ \`${permissions}\`.`
+                  content: `Você precisa das seguintes permissões para executar este comando: \n⤷ \`${missingPermissions}\`.`
                 });
               }
             }
